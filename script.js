@@ -2323,6 +2323,24 @@ applyLang(currentLang);
   };
   const FLOW_COLORS = { oil: '#e0654a', dollars: '#7c73e6', recycle: '#5aa9e6' };
 
+  // Simplified continent outlines as [lat, lon] rings — low-poly, hand-tuned
+  // for the equirectangular 1000×500 map. Purely decorative context so the
+  // country markers sit on recognisable landmasses rather than an empty grid.
+  const CONTINENTS = [
+    // North America
+    [[71,-156],[70,-128],[60,-140],[55,-131],[48,-124],[33,-117],[23,-110],[18,-95],[21,-87],[30,-82],[25,-80],[35,-76],[45,-67],[52,-56],[60,-64],[58,-78],[63,-78],[68,-84],[70,-110],[71,-156]],
+    // South America
+    [[11,-72],[6,-77],[-5,-81],[-18,-70],[-32,-72],[-46,-75],[-54,-69],[-51,-59],[-38,-58],[-23,-43],[-8,-35],[0,-50],[6,-58],[11,-72]],
+    // Africa
+    [[35,-6],[32,10],[31,26],[24,35],[12,43],[0,42],[-15,40],[-26,33],[-34,26],[-34,19],[-22,14],[-6,9],[4,9],[5,-4],[10,-15],[20,-17],[31,-10],[35,-6]],
+    // Europe
+    [[71,25],[66,15],[58,5],[62,-2],[58,-6],[50,-5],[44,-2],[43,6],[40,18],[41,28],[45,30],[55,28],[60,30],[65,24],[71,25]],
+    // Asia
+    [[66,32],[62,60],[70,90],[73,110],[70,140],[60,160],[52,142],[43,132],[35,127],[30,122],[22,115],[10,105],[8,98],[15,95],[22,90],[20,72],[25,62],[26,52],[30,48],[38,46],[45,50],[55,55],[60,45],[66,32]],
+    // Australia
+    [[-12,131],[-11,142],[-20,149],[-28,154],[-38,147],[-38,140],[-32,130],[-35,118],[-22,114],[-15,124],[-12,131]],
+  ];
+
   let activeFlow = 'all';
   let selectedId = null;
 
@@ -2373,6 +2391,21 @@ applyLang(currentLang);
     function build() {
       if (built) return;
       built = true;
+
+      // landmasses (decorative context)
+      const land = document.createElementNS(NS, 'g');
+      land.setAttribute('class', 'g2d-land');
+      CONTINENTS.forEach(ring => {
+        const d = ring.map((pt, i) => {
+          const p = project(pt[0], pt[1]);
+          return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1);
+        }).join(' ') + ' Z';
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', d);
+        land.appendChild(path);
+      });
+      svg.appendChild(land);
+
       // subtle grid
       const grid = document.createElementNS(NS, 'g');
       grid.setAttribute('class', 'g2d-grid');
