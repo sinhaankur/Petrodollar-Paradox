@@ -35,6 +35,7 @@
     <ul class="nav-links" id="navL1" role="tablist" aria-label="Primary">
       <li><a href="#puzzle" data-i18n="nav.story">The Story</a></li>
       <li><a href="#system" data-i18n="nav.system">The System</a></li>
+      <li><a href="#globe" data-i18n="nav.globe">The Globe</a></li>
       <li><a href="#simulator" data-i18n="nav.tools">Tools</a></li>
       <li><a href="#currencies" data-i18n="nav.currencies">Currencies</a></li>
       <li><a href="#solutions" data-i18n="nav.solutions">The Way Out</a></li>
@@ -845,6 +846,81 @@
 
       </div>
     </div>
+  </div>
+</section>
+
+<section id="globe" class="section section--dark">
+  <div class="container">
+    <div class="section-label" data-i18n="globe.label">THE SYSTEM ON THE PLANET</div>
+    <h2 class="section-title" data-i18n="globe.title">Spin the world. Follow the dollars and the oil.</h2>
+    <p class="section-lede" data-i18n="globe.lede">The petrodollar system isn't an abstraction — it runs across real geography. The US prints, importers like India pay dollars for oil, Gulf exporters recycle the surplus into US Treasuries. Rotate and zoom the globe, then tap any country to see where it sits in the machine.</p>
+
+    <div class="globe">
+      <div class="globe-stage-wrap">
+        <div class="globe-toolbar">
+          <div class="globe-toggle" role="tablist" aria-label="2D or 3D view">
+            <button class="globe-toggle-btn active" id="globe2dBtn" role="tab" aria-selected="true">2D</button>
+            <button class="globe-toggle-btn" id="globe3dBtn" role="tab" aria-selected="false">3D</button>
+          </div>
+          <div class="globe-flow-filter" id="globeFlowFilter">
+            <button class="globe-flow-btn active" data-flow="all">All flows</button>
+            <button class="globe-flow-btn" data-flow="oil">Oil</button>
+            <button class="globe-flow-btn" data-flow="dollars">Dollars</button>
+            <button class="globe-flow-btn" data-flow="recycle">Recycling</button>
+          </div>
+        </div>
+
+        <div class="globe-stage" id="globeStage">
+          <!-- 2D flat map (default, always available, no dependencies) -->
+          <div class="globe-2d" id="globe2d">
+            <svg viewBox="0 0 1000 500" class="globe-2d-svg" id="globe2dSvg" role="img" aria-label="World map of petrodollar flows">
+              <!-- populated by JS: landmasses, country dots, flow arcs -->
+            </svg>
+          </div>
+          <!-- 3D canvas mount (lazy) -->
+          <div class="globe-3d" id="globe3d" hidden>
+            <canvas id="globeCanvas" aria-label="Interactive 3D globe of petrodollar flows"></canvas>
+            <div class="globe-loading" id="globeLoading" hidden>
+              <span class="globe-spinner" aria-hidden="true"></span>
+              <span>Loading 3D globe…</span>
+            </div>
+            <div class="globe-fallback" id="globeFallback" hidden>
+              <p>3D view needs WebGL, which isn't available here. The 2D map shows the same flows.</p>
+              <button class="btn btn--ghost" id="globeBackTo2d">Back to 2D</button>
+            </div>
+          </div>
+
+          <div class="globe-hint" id="globeHint">Drag to rotate · scroll to zoom · tap a country</div>
+        </div>
+      </div>
+
+      <aside class="globe-panel" id="globePanel" aria-live="polite">
+        <div class="globe-panel-empty" id="globePanelEmpty">
+          <div class="globe-panel-eyebrow">SELECT A COUNTRY</div>
+          <p>Tap any highlighted country on the map to see its role in the petrodollar system and its key numbers.</p>
+          <div class="globe-legend">
+            <div class="globe-legend-row"><span class="globe-legend-dot globe-legend-dot--printer"></span>Dollar issuer</div>
+            <div class="globe-legend-row"><span class="globe-legend-dot globe-legend-dot--importer"></span>Oil importer</div>
+            <div class="globe-legend-row"><span class="globe-legend-dot globe-legend-dot--exporter"></span>Oil exporter / recycler</div>
+            <div class="globe-legend-row"><span class="globe-legend-dot globe-legend-dot--india"></span>India (the focus)</div>
+          </div>
+        </div>
+        <div class="globe-panel-card" id="globePanelCard" hidden>
+          <div class="globe-card-head">
+            <span class="globe-card-flag" id="gcFlag">🏳️</span>
+            <div>
+              <div class="globe-card-name" id="gcName">—</div>
+              <div class="globe-card-role" id="gcRole">—</div>
+            </div>
+          </div>
+          <p class="globe-card-summary" id="gcSummary">—</p>
+          <div class="globe-card-stats" id="gcStats"></div>
+          <div class="globe-card-flows" id="gcFlows"></div>
+        </div>
+      </aside>
+    </div>
+
+    <p class="globe-note" data-i18n="globe.note">Country markers are placed at approximate capitals. Figures are the same snapshot used across this page (May 14, 2026) and are illustrative of each country's role, not a live feed.</p>
   </div>
 </section>
 

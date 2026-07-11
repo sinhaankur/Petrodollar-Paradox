@@ -299,7 +299,7 @@ reelTrigger.observe(document.querySelector('.reel-card'));
 
 // ─── Smooth nav highlight ─────────────────────────────────────
 const navLinks = document.querySelectorAll('.nav-links a');
-const sections = ['#puzzle', '#timeline', '#printing', '#system', '#forces', '#simulator', '#currencies', '#solutions', '#impact', '#references']
+const sections = ['#puzzle', '#timeline', '#printing', '#system', '#globe', '#forces', '#simulator', '#currencies', '#solutions', '#impact', '#references']
   .map(id => document.querySelector(id))
   .filter(Boolean);
 
@@ -601,9 +601,14 @@ const I18N = {
     'nav.forces': 'Forces',
     'nav.simulator': 'Simulator',
     'nav.currencies': 'Currencies',
+    'nav.globe': 'The Globe',
     'nav.solutions': 'The Way Out',
     'nav.impact': 'Impact',
     'nav.data': 'Data',
+    'globe.label': 'THE SYSTEM ON THE PLANET',
+    'globe.title': 'Spin the world. Follow the dollars and the oil.',
+    'globe.lede': "The petrodollar system isn't an abstraction — it runs across real geography. The US prints, importers like India pay dollars for oil, Gulf exporters recycle the surplus into US Treasuries. Rotate and zoom the globe, then tap any country to see where it sits in the machine.",
+    'globe.note': "Country markers are placed at approximate capitals. Figures are the same snapshot used across this page (May 14, 2026) and are illustrative of each country's role, not a live feed.",
     'sol.label': 'THE WAY OUT',
     'sol.title': 'The rupee is trapped — but not powerless. Pick the levers.',
     'sol.lede': 'Diagnosis is only half the story. Toggle the policy and structural moves India can actually make — each is real, already underway in some form — and watch how far they could pull the rupee back from ₹95.96. No single lever fixes it. Stacked together, they add up.',
@@ -2227,4 +2232,463 @@ applyLang(currentLang);
 
   window.addEventListener('resize', () => movePill(activeTab()));
   requestAnimationFrame(() => setTimeout(() => movePill(activeTab()), 60));
+})();
+
+// ─── THE GLOBE ────────────────────────────────────────────────
+// The petrodollar system mapped onto real geography. 2D SVG by default
+// (zero-dependency), with an opt-in 3D Three.js globe lazy-loaded on demand.
+(function () {
+  const stage = document.getElementById('globeStage');
+  if (!stage) return;
+
+  // ── Curated dataset: only countries that matter to the petrodollar story,
+  //    grouped by role. Figures are the same May-2026 snapshot used site-wide.
+  //    lat/lon are approximate capitals. Roles drive marker colour + grouping.
+  const COUNTRIES = [
+    { id: 'US', name: 'United States', flag: '🇺🇸', role: 'printer', lat: 38.9, lon: -77.0,
+      summary: 'Issues the world reserve currency. When the Fed prints, the new dollars get absorbed by global demand instead of weakening the dollar.',
+      stats: [['Currency', 'US Dollar'], ['Reserve share', '~58% of global'], ['FX share', '~90% of trades'], ['Fed balance sheet', '$7.0T']] },
+    { id: 'IN', name: 'India', flag: '🇮🇳', role: 'india', lat: 28.6, lon: 77.2,
+      summary: 'Earns rupees but must buy dollars for 85% of its crude. Sits at the wrong end of every dollar flow — the focus of this page.',
+      stats: [['USD / INR', '₹95.96'], ['Oil imported', '85%'], ['Forex reserves', '$728B peak'], ['FPI YTD 2026', '−$21B']] },
+    // Oil exporters / dollar recyclers
+    { id: 'SA', name: 'Saudi Arabia', flag: '🇸🇦', role: 'exporter', lat: 24.7, lon: 46.7,
+      summary: 'The archetypal petrodollar recycler. Prices oil in dollars, runs a currency pegged to the USD, and parks surpluses in US Treasuries.',
+      stats: [['Currency', 'Riyal (USD peg)'], ['Role', 'Swing oil exporter'], ['Recycles into', 'US Treasuries'], ['Oil pricing', 'USD']] },
+    { id: 'AE', name: 'UAE', flag: '🇦🇪', role: 'exporter', lat: 24.5, lon: 54.4,
+      summary: 'Gulf exporter and a growing hub for non-dollar oil deals — including rupee-settled trade with India.',
+      stats: [['Currency', 'Dirham (USD peg)'], ['Role', 'Exporter + trade hub'], ['With India', 'Rupee-settled deals'], ['Oil pricing', 'Mostly USD']] },
+    { id: 'RU', name: 'Russia', flag: '🇷🇺', role: 'exporter', lat: 55.8, lon: 37.6,
+      summary: 'Sanctioned out of much of the dollar system, Russia sells crude to India and China in rupees, rubles and yuan — the leading edge of de-dollarization.',
+      stats: [['Currency', 'Ruble'], ['Role', 'Exporter (non-USD)'], ['With India', 'Rupee–ruble trade'], ['Oil pricing', 'Yuan / rupee']] },
+    { id: 'IR', name: 'Iran', flag: '🇮🇷', role: 'exporter', lat: 35.7, lon: 51.4,
+      summary: 'Sells most crude in yuan and rupees outside the dollar system. The 2026 Iran–US conflict adds a Strait-of-Hormuz risk premium to every barrel.',
+      stats: [['Currency', 'Rial'], ['Role', 'Exporter (non-USD)'], ['Chokepoint', 'Strait of Hormuz'], ['Oil pricing', 'Yuan / rupee']] },
+    { id: 'IQ', name: 'Iraq', flag: '🇮🇶', role: 'exporter', lat: 33.3, lon: 44.4,
+      summary: 'Major OPEC exporter. Crude priced and settled overwhelmingly in dollars, feeding the recycling loop.',
+      stats: [['Currency', 'Dinar'], ['Role', 'OPEC exporter'], ['Oil pricing', 'USD'], ['Recycles into', 'USD assets']] },
+    // Oil importers
+    { id: 'CN', name: 'China', flag: '🇨🇳', role: 'importer', lat: 39.9, lon: 116.4,
+      summary: 'The largest oil importer, pushing yuan-settled deals with Saudi and Iran and building alternative payment rails (CIPS, mBridge).',
+      stats: [['Currency', 'Yuan (managed)'], ['Reserves', '~$3T'], ['Oil', 'Largest importer'], ['Rails', 'CIPS · mBridge']] },
+    { id: 'JP', name: 'Japan', flag: '🇯🇵', role: 'importer', lat: 35.7, lon: 139.7,
+      summary: 'A huge dollar-reserve holder, yet the yen is in its worst modern stretch — proof that reserve status alone can\'t offset a wide yield gap.',
+      stats: [['Currency', 'Yen'], ['USD / JPY', '¥158'], ['Oil', 'Near-total importer'], ['YTD vs USD', '−8.5%']] },
+    { id: 'KR', name: 'South Korea', flag: '🇰🇷', role: 'importer', lat: 37.6, lon: 127.0,
+      summary: 'Export-driven economy running a similar managed-depreciation playbook to India, with the same dollar-strength problem.',
+      stats: [['Currency', 'Won'], ['USD / KRW', '₩1,420'], ['Oil', 'Importer'], ['YTD vs USD', '−4.5%']] },
+    { id: 'EU', name: 'Eurozone', flag: '🇪🇺', role: 'importer', lat: 50.8, lon: 4.4,
+      summary: 'A reserve issuer in its own right, so the euro cushions better than EM currencies — but it still imports more energy than the US.',
+      stats: [['Currency', 'Euro'], ['Reserve share', '~20%'], ['Oil', 'Net importer'], ['YTD vs USD', '−2.4%']] },
+    { id: 'TR', name: 'Türkiye', flag: '🇹🇷', role: 'importer', lat: 39.9, lon: 32.9,
+      summary: 'Shows the downside case: an importer whose central-bank credibility broke, sending the lira into a multi-year free fall.',
+      stats: [['Currency', 'Lira'], ['USD / TRY', '₺48.5'], ['Oil', 'Importer'], ['YTD vs USD', '−22%']] },
+    { id: 'BR', name: 'Brazil', flag: '🇧🇷', role: 'importer', lat: -15.8, lon: -47.9,
+      summary: 'A commodity economy and BRICS member piloting yuan-settled trade and BRICS Pay — chipping slowly at dollar dominance.',
+      stats: [['Currency', 'Real'], ['USD / BRL', 'R$6.30'], ['Bloc', 'BRICS'], ['Rails', 'BRICS Pay pilot']] },
+    { id: 'ZA', name: 'South Africa', flag: '🇿🇦', role: 'importer', lat: -25.7, lon: 28.2,
+      summary: 'BRICS member and commodity exporter whose rand swings with global risk appetite and the strength of the dollar.',
+      stats: [['Currency', 'Rand'], ['Bloc', 'BRICS'], ['Driver', 'Risk-on / risk-off'], ['Oil', 'Net importer']] },
+  ];
+
+  const byId = Object.fromEntries(COUNTRIES.map(c => [c.id, c]));
+
+  // Flow arcs: from → to, typed. Types drive colour + the flow filter.
+  const FLOWS = [
+    // Dollars out from the US
+    { from: 'US', to: 'CN', type: 'dollars' },
+    { from: 'US', to: 'IN', type: 'dollars' },
+    { from: 'US', to: 'EU', type: 'dollars' },
+    { from: 'US', to: 'JP', type: 'dollars' },
+    // Oil to importers
+    { from: 'SA', to: 'IN', type: 'oil' },
+    { from: 'SA', to: 'CN', type: 'oil' },
+    { from: 'RU', to: 'IN', type: 'oil' },
+    { from: 'RU', to: 'CN', type: 'oil' },
+    { from: 'IR', to: 'CN', type: 'oil' },
+    { from: 'AE', to: 'IN', type: 'oil' },
+    { from: 'IQ', to: 'EU', type: 'oil' },
+    // Recycling back into US Treasuries
+    { from: 'SA', to: 'US', type: 'recycle' },
+    { from: 'AE', to: 'US', type: 'recycle' },
+    { from: 'JP', to: 'US', type: 'recycle' },
+    { from: 'CN', to: 'US', type: 'recycle' },
+  ];
+
+  const ROLE_COLORS = {
+    printer:  '#7c73e6',
+    importer: '#e6a15a',
+    exporter: '#e0654a',
+    india:    '#2fb98a',
+  };
+  const FLOW_COLORS = { oil: '#e0654a', dollars: '#7c73e6', recycle: '#5aa9e6' };
+
+  let activeFlow = 'all';
+  let selectedId = null;
+
+  // ── Shared: country selection updates the side panel ──
+  function selectCountry(id) {
+    selectedId = id;
+    const c = byId[id];
+    const empty = document.getElementById('globePanelEmpty');
+    const card = document.getElementById('globePanelCard');
+    if (!c) { empty.hidden = false; card.hidden = true; return; }
+    empty.hidden = true;
+    card.hidden = false;
+    document.getElementById('gcFlag').textContent = c.flag;
+    document.getElementById('gcName').textContent = c.name;
+    const roleLabel = { printer: 'Dollar issuer', importer: 'Oil importer', exporter: 'Oil exporter / recycler', india: 'The focus — India' }[c.role];
+    document.getElementById('gcRole').textContent = roleLabel;
+    document.getElementById('gcSummary').textContent = c.summary;
+    document.getElementById('gcStats').innerHTML = c.stats.map(([k, v]) =>
+      '<div class="globe-card-stat"><span class="gc-k">' + k + '</span><span class="gc-v">' + v + '</span></div>'
+    ).join('');
+    const related = FLOWS.filter(f => f.from === id || f.to === id);
+    document.getElementById('gcFlows').innerHTML = related.length
+      ? '<div class="gc-flows-title">FLOWS</div>' + related.map(f => {
+          const other = f.from === id ? byId[f.to] : byId[f.from];
+          const dir = f.from === id ? '→' : '←';
+          const label = { oil: 'oil', dollars: 'dollars', recycle: 'recycling' }[f.type];
+          return '<div class="gc-flow-row"><span class="gc-flow-dot" style="background:' + FLOW_COLORS[f.type] + '"></span>' +
+                 c.flag + ' ' + dir + ' ' + other.flag + ' <span class="gc-flow-label">' + label + '</span></div>';
+        }).join('')
+      : '';
+    // reflect selection in the active renderer
+    if (render2D.active) render2D.highlight(id);
+    if (window.__globe3d && window.__globe3d.highlight) window.__globe3d.highlight(id);
+  }
+
+  function flowVisible(type) { return activeFlow === 'all' || activeFlow === type; }
+
+  // ── 2D renderer (SVG, always available) ──
+  const render2D = (function () {
+    const svg = document.getElementById('globe2dSvg');
+    const NS = 'http://www.w3.org/2000/svg';
+    // Equirectangular projection into the 1000×500 viewBox
+    function project(lat, lon) {
+      return { x: (lon + 180) / 360 * 1000, y: (90 - lat) / 180 * 500 };
+    }
+    let built = false, active = false;
+
+    function build() {
+      if (built) return;
+      built = true;
+      // subtle grid
+      const grid = document.createElementNS(NS, 'g');
+      grid.setAttribute('class', 'g2d-grid');
+      for (let lon = -180; lon <= 180; lon += 30) {
+        const { x } = project(0, lon);
+        const l = document.createElementNS(NS, 'line');
+        l.setAttribute('x1', x); l.setAttribute('y1', 0); l.setAttribute('x2', x); l.setAttribute('y2', 500);
+        grid.appendChild(l);
+      }
+      for (let lat = -60; lat <= 60; lat += 30) {
+        const { y } = project(lat, 0);
+        const l = document.createElementNS(NS, 'line');
+        l.setAttribute('x1', 0); l.setAttribute('y1', y); l.setAttribute('x2', 1000); l.setAttribute('y2', y);
+        grid.appendChild(l);
+      }
+      svg.appendChild(grid);
+
+      // flow arcs (quadratic curves bending toward the pole)
+      const arcs = document.createElementNS(NS, 'g');
+      arcs.setAttribute('class', 'g2d-arcs');
+      FLOWS.forEach((f, i) => {
+        const a = project(byId[f.from].lat, byId[f.from].lon);
+        const b = project(byId[f.to].lat, byId[f.to].lon);
+        const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2 - Math.abs(b.x - a.x) * 0.18 - 20;
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', `M${a.x},${a.y} Q${mx},${my} ${b.x},${b.y}`);
+        path.setAttribute('class', 'g2d-arc');
+        path.setAttribute('data-flow', f.type);
+        path.setAttribute('stroke', FLOW_COLORS[f.type]);
+        arcs.appendChild(path);
+        // moving dot
+        const dot = document.createElementNS(NS, 'circle');
+        dot.setAttribute('r', '3');
+        dot.setAttribute('fill', FLOW_COLORS[f.type]);
+        dot.setAttribute('class', 'g2d-arc-dot');
+        dot.setAttribute('data-flow', f.type);
+        const anim = document.createElementNS(NS, 'animateMotion');
+        anim.setAttribute('dur', (2.4 + (i % 4) * 0.4) + 's');
+        anim.setAttribute('repeatCount', 'indefinite');
+        anim.setAttribute('path', `M${a.x},${a.y} Q${mx},${my} ${b.x},${b.y}`);
+        dot.appendChild(anim);
+        arcs.appendChild(dot);
+      });
+      svg.appendChild(arcs);
+
+      // country markers
+      const nodes = document.createElementNS(NS, 'g');
+      nodes.setAttribute('class', 'g2d-nodes');
+      COUNTRIES.forEach(c => {
+        const p = project(c.lat, c.lon);
+        const g = document.createElementNS(NS, 'g');
+        g.setAttribute('class', 'g2d-node');
+        g.setAttribute('data-id', c.id);
+        g.setAttribute('transform', `translate(${p.x},${p.y})`);
+        g.setAttribute('tabindex', '0');
+        g.setAttribute('role', 'button');
+        g.setAttribute('aria-label', c.name + ' — ' + c.role);
+        const halo = document.createElementNS(NS, 'circle');
+        halo.setAttribute('r', c.role === 'india' ? '11' : '8');
+        halo.setAttribute('class', 'g2d-node-halo');
+        halo.setAttribute('fill', ROLE_COLORS[c.role]);
+        const dot = document.createElementNS(NS, 'circle');
+        dot.setAttribute('r', c.role === 'india' ? '6' : '4.5');
+        dot.setAttribute('fill', ROLE_COLORS[c.role]);
+        dot.setAttribute('stroke', '#12100f');
+        dot.setAttribute('stroke-width', '1.5');
+        const label = document.createElementNS(NS, 'text');
+        label.setAttribute('y', '-12');
+        label.setAttribute('text-anchor', 'middle');
+        label.setAttribute('class', 'g2d-node-label');
+        label.textContent = c.id;
+        g.appendChild(halo); g.appendChild(dot); g.appendChild(label);
+        g.addEventListener('click', () => selectCountry(c.id));
+        g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCountry(c.id); } });
+        nodes.appendChild(g);
+      });
+      svg.appendChild(nodes);
+    }
+
+    function applyFilter() {
+      svg.querySelectorAll('[data-flow]').forEach(el => {
+        el.style.display = flowVisible(el.getAttribute('data-flow')) ? '' : 'none';
+      });
+    }
+    function highlight(id) {
+      svg.querySelectorAll('.g2d-node').forEach(n =>
+        n.classList.toggle('is-selected', n.getAttribute('data-id') === id));
+    }
+    return {
+      get active() { return active; },
+      show() { build(); applyFilter(); active = true; if (selectedId) highlight(selectedId); },
+      hide() { active = false; },
+      applyFilter, highlight,
+    };
+  })();
+
+  // ── 3D renderer (Three.js, lazy) ──
+  // Uses the modern ES-module build (the legacy UMD build/three.min.js is
+  // deprecated at r150+). Loaded on demand via dynamic import so it costs
+  // nothing until the user opts into 3D.
+  let threeLoading = null;
+  function loadThree() {
+    if (window.THREE) return Promise.resolve(window.THREE);
+    if (threeLoading) return threeLoading;
+    threeLoading = import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js')
+      .then(mod => { window.THREE = mod; return mod; });
+    return threeLoading;
+  }
+
+  function latLonToVec3(lat, lon, r, THREE) {
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = (lon + 180) * Math.PI / 180;
+    return new THREE.Vector3(
+      -r * Math.sin(phi) * Math.cos(theta),
+       r * Math.cos(phi),
+       r * Math.sin(phi) * Math.sin(theta)
+    );
+  }
+
+  function initGlobe3D(THREE) {
+    if (window.__globe3d) { window.__globe3d.resume(); return; }
+    const canvas = document.getElementById('globeCanvas');
+    const host = document.getElementById('globe3d');
+    const R = 1.6;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(0, 0, 5);
+
+    // globe
+    const globe = new THREE.Mesh(
+      new THREE.SphereGeometry(R, 48, 48),
+      new THREE.MeshPhongMaterial({ color: 0x1c3a4a, emissive: 0x0a1a24, shininess: 12, transparent: true, opacity: 0.94 })
+    );
+    scene.add(globe);
+    // wireframe graticule
+    const wire = new THREE.LineSegments(
+      new THREE.WireframeGeometry(new THREE.SphereGeometry(R * 1.001, 24, 16)),
+      new THREE.LineBasicMaterial({ color: 0x2f5a70, transparent: true, opacity: 0.28 })
+    );
+    scene.add(wire);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const dir = new THREE.DirectionalLight(0xffffff, 0.6); dir.position.set(3, 2, 4); scene.add(dir);
+
+    const group = new THREE.Group(); scene.add(group);
+
+    // country markers
+    const markerMeshes = [];
+    COUNTRIES.forEach(c => {
+      const pos = latLonToVec3(c.lat, c.lon, R * 1.02, THREE);
+      const m = new THREE.Mesh(
+        new THREE.SphereGeometry(c.role === 'india' ? 0.055 : 0.04, 16, 16),
+        new THREE.MeshBasicMaterial({ color: new THREE.Color(ROLE_COLORS[c.role]) })
+      );
+      m.position.copy(pos);
+      m.userData.id = c.id;
+      group.add(m);
+      markerMeshes.push(m);
+    });
+
+    // flow arcs as tube-ish curves lifted off the surface
+    const arcObjs = [];
+    FLOWS.forEach(f => {
+      const start = latLonToVec3(byId[f.from].lat, byId[f.from].lon, R * 1.02, THREE);
+      const end = latLonToVec3(byId[f.to].lat, byId[f.to].lon, R * 1.02, THREE);
+      const mid = start.clone().add(end).multiplyScalar(0.5).setLength(R * (1.15 + start.distanceTo(end) * 0.12));
+      const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+      const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(50));
+      const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: new THREE.Color(FLOW_COLORS[f.type]), transparent: true, opacity: 0.6 }));
+      line.userData.flow = f.type;
+      group.add(line);
+      // travelling dot
+      const dot = new THREE.Mesh(new THREE.SphereGeometry(0.02, 8, 8), new THREE.MeshBasicMaterial({ color: new THREE.Color(FLOW_COLORS[f.type]) }));
+      dot.userData.flow = f.type;
+      group.add(dot);
+      arcObjs.push({ curve, dot, line, speed: 0.12 + Math.random() * 0.08, t: Math.random() });
+    });
+
+    function applyFilter3D() {
+      arcObjs.forEach(a => {
+        const vis = flowVisible(a.line.userData.flow);
+        a.line.visible = vis; a.dot.visible = vis;
+      });
+    }
+    applyFilter3D();
+
+    // interaction: drag to rotate, wheel to zoom, click to select
+    let dragging = false, px = 0, py = 0, autoRotate = true;
+    let rotY = 0.4, rotX = 0.15, zoom = 5;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) autoRotate = false;
+
+    function onDown(e) { dragging = true; autoRotate = false; const t = e.touches ? e.touches[0] : e; px = t.clientX; py = t.clientY; }
+    function onMove(e) {
+      if (!dragging) return;
+      const t = e.touches ? e.touches[0] : e;
+      rotY += (t.clientX - px) * 0.005; rotX += (t.clientY - py) * 0.005;
+      rotX = Math.max(-1.2, Math.min(1.2, rotX));
+      px = t.clientX; py = t.clientY;
+    }
+    function onUp() { dragging = false; }
+    function onWheel(e) { e.preventDefault(); zoom = Math.max(3, Math.min(9, zoom + Math.sign(e.deltaY) * 0.4)); }
+    canvas.addEventListener('mousedown', onDown);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    canvas.addEventListener('touchstart', onDown, { passive: true });
+    canvas.addEventListener('touchmove', onMove, { passive: true });
+    canvas.addEventListener('touchend', onUp);
+    canvas.addEventListener('wheel', onWheel, { passive: false });
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let downX = 0, downY = 0;
+    canvas.addEventListener('mousedown', e => { downX = e.clientX; downY = e.clientY; });
+    canvas.addEventListener('click', e => {
+      if (Math.abs(e.clientX - downX) > 4 || Math.abs(e.clientY - downY) > 4) return; // was a drag
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+      const hits = raycaster.intersectObjects(markerMeshes);
+      if (hits.length) selectCountry(hits[0].object.userData.id);
+    });
+
+    function highlight3D(id) {
+      markerMeshes.forEach(m => {
+        const on = m.userData.id === id;
+        m.scale.setScalar(on ? 1.8 : 1);
+      });
+    }
+
+    function resize() {
+      const w = host.clientWidth, h = host.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h; camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    let running = true, clock = 0;
+    function frame() {
+      if (!running) return;
+      requestAnimationFrame(frame);
+      clock += 0.016;
+      if (autoRotate) rotY += 0.0018;
+      group.rotation.y = rotY; group.rotation.x = rotX;
+      globe.rotation.y = rotY; globe.rotation.x = rotX;
+      wire.rotation.y = rotY; wire.rotation.x = rotX;
+      camera.position.setLength(zoom);
+      camera.lookAt(0, 0, 0);
+      if (!reduced) arcObjs.forEach(a => {
+        if (!a.dot.visible) return;
+        a.t = (a.t + a.speed * 0.016) % 1;
+        a.dot.position.copy(a.curve.getPoint(a.t));
+      });
+      renderer.render(scene, camera);
+    }
+    frame();
+
+    window.__globe3d = {
+      highlight: highlight3D,
+      applyFilter: applyFilter3D,
+      pause() { running = false; },
+      resume() { if (!running) { running = true; resize(); frame(); } },
+    };
+    if (selectedId) highlight3D(selectedId);
+  }
+
+  // ── View toggle ──
+  const el2d = document.getElementById('globe2d');
+  const el3d = document.getElementById('globe3d');
+  const btn2d = document.getElementById('globe2dBtn');
+  const btn3d = document.getElementById('globe3dBtn');
+  const loading = document.getElementById('globeLoading');
+  const fallback = document.getElementById('globeFallback');
+  const hint = document.getElementById('globeHint');
+
+  function show2D() {
+    btn2d.classList.add('active'); btn2d.setAttribute('aria-selected', 'true');
+    btn3d.classList.remove('active'); btn3d.setAttribute('aria-selected', 'false');
+    el2d.hidden = false; el3d.hidden = true;
+    hint.textContent = 'Tap a country dot to see its role';
+    render2D.show();
+    if (window.__globe3d) window.__globe3d.pause();
+  }
+  function show3D() {
+    btn3d.classList.add('active'); btn3d.setAttribute('aria-selected', 'true');
+    btn2d.classList.remove('active'); btn2d.setAttribute('aria-selected', 'false');
+    el2d.hidden = true; el3d.hidden = false;
+    render2D.hide();
+    hint.textContent = 'Drag to rotate · scroll to zoom · tap a country';
+    loading.hidden = false; fallback.hidden = true;
+    loadThree().then(THREE => {
+      loading.hidden = true;
+      initGlobe3D(THREE);
+    }).catch(() => {
+      loading.hidden = true; fallback.hidden = false;
+    });
+  }
+  btn2d.addEventListener('click', show2D);
+  btn3d.addEventListener('click', show3D);
+  document.getElementById('globeBackTo2d').addEventListener('click', show2D);
+
+  // flow filter
+  document.querySelectorAll('.globe-flow-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.globe-flow-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      activeFlow = b.getAttribute('data-flow');
+      render2D.applyFilter();
+      if (window.__globe3d) window.__globe3d.applyFilter();
+    });
+  });
+
+  // default: 2D, and preselect India as the focus
+  show2D();
+  selectCountry('IN');
 })();

@@ -3941,3 +3941,199 @@ body {
 
 /* Prevent overflow from any wide child */
 html, body { overflow-x: hidden; }
+
+/* ─── THE GLOBE ─── */
+.globe {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 920px) { .globe { grid-template-columns: 1fr; } }
+
+.globe-stage-wrap {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+}
+
+.globe-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.globe-toggle {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.globe-toggle-btn {
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.globe-toggle-btn.active { background: white; color: var(--ink); }
+
+.globe-flow-filter { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+
+.globe-flow-btn {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: none;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+
+.globe-flow-btn:hover { border-color: rgba(255, 255, 255, 0.4); color: white; }
+.globe-flow-btn.active { background: rgba(255, 255, 255, 0.92); color: var(--ink); border-color: transparent; }
+
+.globe-stage {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(124, 115, 230, 0.14), transparent 60%),
+    #0c1420;
+  aspect-ratio: 2 / 1;
+}
+
+@media (max-width: 560px) { .globe-stage { aspect-ratio: 1 / 1; } }
+
+.globe-2d, .globe-3d { position: absolute; inset: 0; }
+.globe-2d-svg { width: 100%; height: 100%; display: block; }
+
+.g2d-grid line { stroke: rgba(255, 255, 255, 0.06); stroke-width: 1; }
+.g2d-arc { fill: none; stroke-width: 1.4; opacity: 0.5; }
+.g2d-arc-dot { filter: drop-shadow(0 0 3px currentColor); }
+
+.g2d-node { cursor: pointer; }
+.g2d-node-halo { opacity: 0.18; transition: opacity 0.2s, r 0.2s; }
+.g2d-node:hover .g2d-node-halo,
+.g2d-node.is-selected .g2d-node-halo { opacity: 0.42; }
+.g2d-node.is-selected .g2d-node-halo { animation: g2dPulse 2s ease-in-out infinite; }
+.g2d-node-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: rgba(255, 255, 255, 0.82);
+  font-weight: 500;
+  pointer-events: none;
+}
+.g2d-node:focus { outline: none; }
+.g2d-node:focus-visible .g2d-node-halo { opacity: 0.5; stroke: white; stroke-width: 1.5; }
+
+@keyframes g2dPulse { 0%, 100% { opacity: 0.42; } 50% { opacity: 0.7; } }
+
+#globeCanvas { width: 100%; height: 100%; display: block; cursor: grab; }
+#globeCanvas:active { cursor: grabbing; }
+
+.globe-loading, .globe-fallback {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; text-align: center; padding: 24px;
+  color: rgba(255, 255, 255, 0.85); font-size: 14px;
+  background: rgba(12, 20, 32, 0.6);
+}
+.globe-fallback p { max-width: 320px; }
+
+.globe-spinner {
+  width: 28px; height: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: gSpin 0.8s linear infinite;
+}
+@keyframes gSpin { to { transform: rotate(360deg); } }
+
+.globe-hint {
+  position: absolute;
+  left: 50%; bottom: 10px; transform: translateX(-50%);
+  font-size: 11.5px; color: rgba(255, 255, 255, 0.55);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 5px 12px; border-radius: 999px;
+  pointer-events: none;
+}
+
+/* Side panel */
+.globe-panel {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  min-height: 200px;
+  position: sticky;
+  top: 100px;
+}
+
+.globe-panel-eyebrow, .globe-panel-empty .globe-panel-eyebrow {
+  font-size: 10px; letter-spacing: 2px; font-weight: 600;
+  color: rgba(255, 255, 255, 0.5); margin-bottom: 10px;
+}
+.globe-panel-empty p { font-size: 13.5px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+
+.globe-legend { margin-top: 18px; display: flex; flex-direction: column; gap: 9px; }
+.globe-legend-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 12.5px; color: rgba(255, 255, 255, 0.78);
+}
+.globe-legend-dot { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+.globe-legend-dot--printer  { background: #7c73e6; }
+.globe-legend-dot--importer { background: #e6a15a; }
+.globe-legend-dot--exporter { background: #e0654a; }
+.globe-legend-dot--india    { background: #2fb98a; box-shadow: 0 0 0 3px rgba(47, 185, 138, 0.25); }
+
+.globe-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.globe-card-flag { font-size: 32px; line-height: 1; }
+.globe-card-name {
+  font-family: var(--font-serif); font-size: 22px; font-weight: 600;
+  color: white; letter-spacing: -0.01em;
+}
+.globe-card-role { font-size: 12px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }
+.globe-card-summary { font-size: 13.5px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 16px; }
+
+.globe-card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.globe-card-stat {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+}
+.gc-k { display: block; font-size: 10px; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; }
+.gc-v { display: block; font-size: 14px; color: white; font-weight: 600; margin-top: 3px; font-feature-settings: 'tnum'; }
+
+.gc-flows-title { font-size: 10px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.45); margin: 16px 0 8px; }
+.gc-flow-row { display: flex; align-items: center; gap: 7px; font-size: 13px; color: rgba(255, 255, 255, 0.82); padding: 3px 0; }
+.gc-flow-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.gc-flow-label { color: rgba(255, 255, 255, 0.55); font-size: 12px; }
+
+.globe-note {
+  margin-top: 18px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .g2d-node.is-selected .g2d-node-halo { animation: none; }
+  .globe-spinner { animation-duration: 0.001ms; }
+}
