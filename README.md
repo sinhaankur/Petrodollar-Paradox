@@ -33,7 +33,7 @@ The only optional dependency is [Three.js](https://threejs.org/) for the 3D glob
 - Visible keyboard focus (`:focus-visible`) on all interactive controls
 - Full `prefers-reduced-motion` support: CSS animations/transitions and SMIL SVG animations are disabled, the hero counters snap to their final value, and the globe stops auto-rotating and animating flows
 - Interactive map markers are keyboard-navigable (Tab + Enter/Space)
-- Multilingual: 11 languages via a `data-i18n` dictionary, with graceful fallback to English for any untranslated string
+- Multilingual: 11 languages via a `data-i18n` dictionary, with graceful fallback to English for any untranslated string. English and Hindi are fully translated; the other 9 languages currently cover the newer sections (The Globe, The Way Out) and fall back to English elsewhere. Translations are a machine-assisted first pass — a native-speaker proofread of the financial phrasing is recommended, especially for Tamil, Telugu, Malayalam, Punjabi and Urdu. Urdu renders but full RTL layout is not yet implemented.
 
 ## Deploy to GitHub Pages
 
