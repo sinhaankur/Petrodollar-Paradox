@@ -1,5 +1,8 @@
 // ─── Counter on hero ──────────────────────────────────────────
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 function animateCounter(el, target, decimals, duration = 1800) {
+  if (prefersReducedMotion) { el.textContent = target.toFixed(decimals); return; }
   const start = performance.now();
   const tick = (now) => {
     const t = Math.min(1, (now - start) / duration);

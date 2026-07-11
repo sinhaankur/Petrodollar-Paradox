@@ -60,6 +60,27 @@
   box-sizing: border-box;
 }
 
+/* Visible keyboard focus for all interactive elements.
+   Uses :focus-visible so a ring only shows for keyboard/AT users, not mouse clicks. */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible,
+.sol-lever:focus-visible,
+.lflow-tab:focus-visible,
+.preset-btn:focus-visible {
+  outline: 2px solid var(--purple-line);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Range sliders: ring the whole control so the thumb is clearly targeted */
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--purple-line);
+  outline-offset: 4px;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -2431,8 +2452,11 @@ body {
 }
 
 .math-input input:focus {
-  outline: none;
   border-color: var(--coral-line);
+}
+
+.math-input input:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .math-out-grid {
@@ -2512,7 +2536,7 @@ body {
   max-width: 130px;
 }
 
-.lang-picker select:focus { outline: none; }
+.lang-picker select:focus:not(:focus-visible) { outline: none; }
 
 @media (max-width: 720px) {
   .lang-picker { margin-left: auto; }
@@ -2784,6 +2808,28 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .lflow-line, .lflow-center, .lflow-ring, .lflow-fade { animation: none !important; }
   .lflow-fade { opacity: 1; }
+}
+
+/* Site-wide reduced-motion honouring: kill CSS animation/transition and pause
+   SMIL SVG animations for users who ask for less motion. Content stays fully usable. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* SMIL animations inside the SVG diagrams (flow dots, pulses) */
+  svg animate,
+  svg animateMotion,
+  svg animateTransform {
+    display: none;
+  }
+  /* Ensure reveal-on-scroll content isn't left hidden if its transition is skipped */
+  .reveal { opacity: 1 !important; transform: none !important; }
 }
 
 /* ─── LAYER 2 · INDIA IMPACT EXPANSION ─── */
