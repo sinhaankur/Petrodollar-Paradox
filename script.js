@@ -296,7 +296,7 @@ reelTrigger.observe(document.querySelector('.reel-card'));
 
 // ─── Smooth nav highlight ─────────────────────────────────────
 const navLinks = document.querySelectorAll('.nav-links a');
-const sections = ['#puzzle', '#timeline', '#printing', '#system', '#forces', '#simulator', '#currencies', '#impact', '#references']
+const sections = ['#puzzle', '#timeline', '#printing', '#system', '#forces', '#simulator', '#currencies', '#solutions', '#impact', '#references']
   .map(id => document.querySelector(id))
   .filter(Boolean);
 
@@ -598,8 +598,12 @@ const I18N = {
     'nav.forces': 'Forces',
     'nav.simulator': 'Simulator',
     'nav.currencies': 'Currencies',
+    'nav.solutions': 'The Way Out',
     'nav.impact': 'Impact',
     'nav.data': 'Data',
+    'sol.label': 'THE WAY OUT',
+    'sol.title': 'The rupee is trapped — but not powerless. Pick the levers.',
+    'sol.lede': 'Diagnosis is only half the story. Toggle the policy and structural moves India can actually make — each is real, already underway in some form — and watch how far they could pull the rupee back from ₹95.96. No single lever fixes it. Stacked together, they add up.',
     'hero.date': 'MAY 14, 2026',
     'hero.sub': 'All-time low against the dollar',
     'hero.puzzleLabel': 'THE PUZZLE',
@@ -926,6 +930,148 @@ function calcWorldOrder() {
 });
 
 if (document.getElementById('woOil')) calcWorldOrder();
+
+// ─── Solutions engine ("The Way Out") ─────────────────────────
+// Each lever pulls the rupee toward strength (a positive `pull` in ₹).
+// Pulls are calibrated off the same sensitivities as the value simulator.
+// Stacked levers get mild diminishing returns so you can't sum to parity.
+const SOL_BASE_RATE = 95.96;
+const SOL_LEVERS = [
+  { id: 'oil',     title: 'Diversify oil away from the dollar', pull: 2.1,
+    detail: 'Expand rupee–ruble, rupee–dirham and yuan-settled crude deals so more of the import bill escapes dollar demand.',
+    tag: 'Already underway · Russia, UAE' },
+  { id: 'exports', title: 'Grow non-oil exports ~8%/yr', pull: 1.7,
+    detail: 'Electronics (PLI schemes), pharma, and services widen the structural dollar supply that offsets the oil bill.',
+    tag: 'Structural · multi-year' },
+  { id: 'reserve', title: 'Build a strategic oil reserve', pull: 0.9,
+    detail: 'Buying crude when it is cheap smooths the import bill and blunts the FX shock of price spikes and Hormuz risk.',
+    tag: 'Policy lever' },
+  { id: 'rupee',   title: 'Push rupee invoicing & UPI rails', pull: 1.9,
+    detail: 'Vostro accounts, BRICS Pay and cross-border UPI let more trade settle in rupees instead of sourcing dollars first.',
+    tag: 'Live · Singapore, UAE, Nepal' },
+  { id: 'buffer',  title: 'Grow the RBI reserve buffer to $750B+', pull: 0.8,
+    detail: 'A deeper war chest lets the RBI smooth volatility for longer without signalling weakness or draining the cushion.',
+    tag: 'Central-bank defense' },
+  { id: 'gold',    title: 'Keep accumulating gold reserves', pull: 0.7,
+    detail: 'Gold now backs a rising share of reserves — a dollar-independent store of value that steadies the balance sheet.',
+    tag: 'Cumulative · record buying' },
+  { id: 'fdi',     title: 'Attract sticky FDI over hot FII', pull: 1.3,
+    detail: 'Long-horizon factory and infrastructure investment brings dollars that do not flee on the next risk-off headline.',
+    tag: 'Quality of flows' },
+];
+
+const solState = {};
+SOL_LEVERS.forEach(l => { solState[l.id] = false; });
+
+function solVerdict(rate, total) {
+  if (total < 0.05)
+    return { label: 'NO ACTION', text: 'No levers pulled. The four forces keep the rupee pinned near its all-time low. The way out exists — it just requires deliberate, stacked choices.' };
+  if (rate > 93)
+    return { label: 'FIRST STEPS', text: 'A start. A lever or two eases the pressure, but the rupee is still firmly in weak territory. Real stabilization needs the structural moves stacked together.' };
+  if (rate > 89)
+    return { label: 'STABILIZING', text: 'The slide is arrested. With de-dollarized trade and stronger export supply working together, the rupee steadies well off its lows — the realistic near-term ceiling.' };
+  if (rate > 85)
+    return { label: 'RESILIENT', text: 'A genuinely more resilient rupee. This is roughly the best a determined, multi-year policy push could achieve without a global tailwind — every major lever pulling at once.' };
+  return { label: 'FULL RECLAIM', text: 'The optimistic frontier. Every lever firing plus a friendlier world. Politically hard and years away — but it shows the ceiling of what deliberate policy can reclaim.' };
+}
+
+function updateSolutions() {
+  const list = document.getElementById('solLeverList');
+  if (!list) return;
+
+  // Sum raw pulls of active levers, then apply mild diminishing returns.
+  const active = SOL_LEVERS.filter(l => solState[l.id]);
+  const rawTotal = active.reduce((s, l) => s + l.pull, 0);
+  // Diminishing factor: the more you stack, the less each marginal ₹ lands.
+  const damp = rawTotal > 0 ? (1 - Math.min(0.32, rawTotal * 0.028)) : 1;
+  const total = rawTotal * damp;
+  const rate = SOL_BASE_RATE - total;
+
+  const bigEl = document.getElementById('solOut');
+  bigEl.textContent = '₹' + rate.toFixed(2);
+  bigEl.classList.toggle('is-better', total > 0.05);
+
+  const deltaEl = document.getElementById('solDelta');
+  deltaEl.textContent = total < 0.05
+    ? 'no levers pulled · rupee stays at today’s ₹95.96'
+    : '−₹' + total.toFixed(2) + ' stronger than today’s ₹95.96';
+
+  // Meter spans ₹100 (left, weak) → ₹80 (right, strong)
+  const meterMax = 100, meterMin = 80;
+  const clamped = Math.max(meterMin, Math.min(meterMax, rate));
+  const pct = ((meterMax - clamped) / (meterMax - meterMin)) * 100;
+  document.getElementById('solMarker').style.left = pct + '%';
+
+  // Breakdown
+  const bd = document.getElementById('solBreakdown');
+  if (!active.length) {
+    bd.innerHTML = '<div class="sol-bd-empty">Pull a lever to see its contribution.</div>';
+  } else {
+    bd.innerHTML = active.map(l =>
+      '<div class="sol-bd-row"><span>' + l.title + '</span>' +
+      '<span class="sol-bd-val up">−₹' + (l.pull * damp).toFixed(2) + '</span></div>'
+    ).join('');
+  }
+  const totEl = document.getElementById('solTotal');
+  totEl.textContent = total < 0.005 ? '+₹0.00' : '−₹' + total.toFixed(2);
+  totEl.classList.toggle('up', total > 0.005);
+
+  const v = solVerdict(rate, total);
+  const vEl = document.getElementById('solVerdict');
+  vEl.classList.toggle('is-better', total > 0.05);
+  vEl.querySelector('.sol-verdict-label').textContent = 'VERDICT · ' + v.label;
+  vEl.querySelector('.sol-verdict-text').textContent = v.text;
+
+  // Toggle-all button label
+  const allBtn = document.getElementById('solToggleAll');
+  if (allBtn) allBtn.textContent = active.length === SOL_LEVERS.length ? 'Clear all' : 'Select all';
+
+  // Sync card active states
+  list.querySelectorAll('.sol-lever').forEach(card => {
+    card.classList.toggle('active', solState[card.dataset.lever]);
+    card.setAttribute('aria-pressed', String(!!solState[card.dataset.lever]));
+  });
+}
+
+function initSolutions() {
+  const list = document.getElementById('solLeverList');
+  if (!list) return;
+
+  list.innerHTML = SOL_LEVERS.map(l =>
+    '<button class="sol-lever" type="button" data-lever="' + l.id + '" aria-pressed="false">' +
+      '<span class="sol-lever-check" aria-hidden="true"></span>' +
+      '<span class="sol-lever-body">' +
+        '<span class="sol-lever-head">' +
+          '<span class="sol-lever-title">' + l.title + '</span>' +
+          '<span class="sol-lever-pull">−₹' + l.pull.toFixed(1) + '</span>' +
+        '</span>' +
+        '<span class="sol-lever-detail">' + l.detail + '</span>' +
+        '<span class="sol-lever-tag">' + l.tag + '</span>' +
+      '</span>' +
+    '</button>'
+  ).join('');
+
+  list.querySelectorAll('.sol-lever').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.lever;
+      solState[id] = !solState[id];
+      updateSolutions();
+    });
+  });
+
+  const allBtn = document.getElementById('solToggleAll');
+  if (allBtn) {
+    allBtn.addEventListener('click', () => {
+      const allOn = SOL_LEVERS.every(l => solState[l.id]);
+      SOL_LEVERS.forEach(l => { solState[l.id] = !allOn; });
+      updateSolutions();
+    });
+  }
+
+  updateSolutions();
+}
+
+initSolutions();
 
 // ─── REEL GENERATOR ───────────────────────────────────────────
 // Each slide has a `type` that selects an infographic renderer.

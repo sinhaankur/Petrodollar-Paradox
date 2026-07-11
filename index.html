@@ -37,6 +37,7 @@
       <li><a href="#system" data-i18n="nav.system">The System</a></li>
       <li><a href="#simulator" data-i18n="nav.tools">Tools</a></li>
       <li><a href="#currencies" data-i18n="nav.currencies">Currencies</a></li>
+      <li><a href="#solutions" data-i18n="nav.solutions">The Way Out</a></li>
       <li><a href="#impact" data-i18n="nav.impact">Impact</a></li>
       <li><a href="#references" data-i18n="nav.data">Data</a></li>
     </ul>
@@ -1352,6 +1353,62 @@
 
     <div class="wo-disclaimer">
       <strong>How the math works.</strong> Dominance index = 100 at today's mix. Each input applies a calibrated drag: oil non-USD pricing (×0.45/pp), reserve diversification (×0.30/pp above today's 42%), and alternative rails (×0.40/pp). The horizon multiplier rewards patience — most shifts compound over 10+ years. Rupee projection assumes a roughly 8% INR appreciation per 10-point dominance fall. Real-world dynamics are nonlinear; treat this as intuition-building, not prediction.
+    </div>
+  </div>
+</section>
+
+<section id="solutions" class="section">
+  <div class="container">
+    <div class="section-label" data-i18n="sol.label">THE WAY OUT</div>
+    <h2 class="section-title" data-i18n="sol.title">The rupee is trapped — but not powerless. Pick the levers.</h2>
+    <p class="section-lede" data-i18n="sol.lede">Diagnosis is only half the story. Toggle the policy and structural moves India can actually make — each is real, already underway in some form — and watch how far they could pull the rupee back from ₹95.96. No single lever fixes it. Stacked together, they add up.</p>
+
+    <div class="sol">
+      <div class="sol-levers">
+        <div class="sol-levers-head">
+          <span class="sol-levers-title">POLICY &amp; STRUCTURAL LEVERS</span>
+          <button class="sol-toggle-all" id="solToggleAll" type="button">Select all</button>
+        </div>
+        <div class="sol-lever-list" id="solLeverList"></div>
+      </div>
+
+      <div class="sol-result">
+        <div class="sol-result-card">
+          <div class="sol-result-label">PROJECTED STABILIZED RATE</div>
+          <div class="sol-result-big" id="solOut">₹95.96</div>
+          <div class="sol-result-sub" id="solDelta">no levers pulled · rupee stays at today's ₹95.96</div>
+
+          <div class="sol-meter">
+            <div class="sol-meter-track">
+              <div class="sol-meter-band sol-meter-band--crisis"></div>
+              <div class="sol-meter-band sol-meter-band--weak"></div>
+              <div class="sol-meter-band sol-meter-band--steady"></div>
+              <div class="sol-meter-band sol-meter-band--strong"></div>
+              <div class="sol-meter-marker" id="solMarker"></div>
+            </div>
+            <div class="sol-meter-labels">
+              <span>₹100</span><span>₹95</span><span>₹88</span><span>₹80</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sol-breakdown">
+          <div class="sol-bd-title">Where the recovery comes from</div>
+          <div class="sol-bd-rows" id="solBreakdown">
+            <div class="sol-bd-empty">Pull a lever to see its contribution.</div>
+          </div>
+          <div class="sol-bd-row sol-bd-total"><span>Total recovery</span><span class="sol-bd-val" id="solTotal">+₹0.00</span></div>
+        </div>
+
+        <div class="sol-verdict" id="solVerdict">
+          <div class="sol-verdict-label">VERDICT</div>
+          <div class="sol-verdict-text" id="solVerdictText">No action taken. The four forces keep the rupee pinned near its all-time low. The way out exists — it just requires deliberate, stacked choices.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sol-disclaimer">
+      <strong>How the math works.</strong> Each lever applies a calibrated pull toward a stronger rupee, drawn from the same sensitivities as the value simulator above (oil de-dollarization eases dollar demand, export growth adds structural dollar supply, a bigger RBI buffer smooths volatility, and so on). Levers have mild diminishing returns when stacked — you can't simply add every maximum and reach parity. This is intuition-building, not a forecast. The real levers take years of political will, and each carries trade-offs the model doesn't price.
     </div>
   </div>
 </section>

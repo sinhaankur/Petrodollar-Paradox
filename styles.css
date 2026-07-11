@@ -3210,6 +3210,306 @@ body {
 
 .wo-disclaimer strong { color: var(--ink); font-weight: 600; }
 
+/* ─── SOLUTIONS ENGINE ("The Way Out") ─── */
+.sol {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 900px) { .sol { grid-template-columns: 1fr; } }
+
+.sol-levers {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 24px 26px;
+}
+
+.sol-levers-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.sol-levers-title {
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.sol-toggle-all {
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sol-toggle-all:hover { background: var(--teal-bg); color: var(--teal-deep); }
+
+.sol-lever-list { display: flex; flex-direction: column; gap: 12px; }
+
+.sol-lever {
+  display: flex;
+  gap: 14px;
+  text-align: left;
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+}
+
+.sol-lever:hover { border-color: var(--teal-line); }
+
+.sol-lever.active {
+  border-color: var(--teal-line);
+  background: var(--teal-bg);
+  box-shadow: 0 2px 10px rgba(29, 158, 117, 0.12);
+}
+
+.sol-lever-check {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border: 2px solid var(--line-strong);
+  border-radius: 6px;
+  position: relative;
+  transition: background 0.18s, border-color 0.18s;
+}
+
+.sol-lever.active .sol-lever-check {
+  background: var(--teal-line);
+  border-color: var(--teal-line);
+}
+
+.sol-lever.active .sol-lever-check::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.sol-lever-body { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+
+.sol-lever-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.sol-lever-title {
+  font-family: var(--font-serif);
+  font-size: 16.5px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.sol-lever-pull {
+  flex: none;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--teal-mid);
+  font-feature-settings: 'tnum';
+}
+
+.sol-lever-detail {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+.sol-lever-tag {
+  align-self: flex-start;
+  padding: 3px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.3px;
+}
+
+.sol-result {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sol-result-card {
+  background: var(--bg-dark);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 28px 30px;
+}
+
+.sol-result-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.sol-result-big {
+  font-family: var(--font-serif);
+  font-size: 64px;
+  line-height: 1;
+  color: white;
+  font-feature-settings: 'tnum';
+  letter-spacing: -0.03em;
+  transition: color 0.3s;
+}
+
+.sol-result-big.is-better { color: #98d4b8; }
+
+.sol-result-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 8px;
+}
+
+.sol-meter { margin-top: 22px; }
+
+.sol-meter-track {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.sol-meter-band { flex: 1; }
+.sol-meter-band--crisis { background: #8a3520; }
+.sol-meter-band--weak   { background: #c87958; }
+.sol-meter-band--steady { background: #b9a96b; }
+.sol-meter-band--strong { background: #5e8a6b; }
+
+.sol-meter-marker {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 4px;
+  height: 16px;
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
+  transition: left 0.45s cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+.sol-meter-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-feature-settings: 'tnum';
+}
+
+.sol-breakdown {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+}
+
+.sol-bd-title {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  font-weight: 600;
+  color: var(--ink-3);
+  margin-bottom: 12px;
+}
+
+.sol-bd-rows { display: flex; flex-direction: column; gap: 8px; }
+
+.sol-bd-empty { font-size: 13px; color: var(--ink-3); font-style: italic; }
+
+.sol-bd-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+
+.sol-bd-val {
+  font-family: var(--font-serif);
+  font-feature-settings: 'tnum';
+  color: var(--ink-3);
+}
+
+.sol-bd-val.up { color: var(--teal-mid); }
+
+.sol-bd-total {
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 14.5px;
+}
+
+.sol-bd-total .sol-bd-val { font-size: 18px; }
+
+.sol-verdict {
+  background: var(--teal-bg);
+  border-left: 3px solid var(--teal-line);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.sol-verdict-label {
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  color: var(--teal-deep);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.sol-verdict-text {
+  font-size: 14px;
+  color: var(--teal-deep);
+  line-height: 1.65;
+}
+
+.sol-disclaimer {
+  margin-top: 40px;
+  padding: 20px 24px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.65;
+}
+
+.sol-disclaimer strong { color: var(--ink); font-weight: 600; }
+
 /* ─── REEL GENERATOR ─── */
 .reel {
   margin-top: 48px;
