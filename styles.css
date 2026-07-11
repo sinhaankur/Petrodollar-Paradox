@@ -3257,6 +3257,22 @@ body {
 
 .sol-toggle-all:hover { background: var(--teal-bg); color: var(--teal-deep); }
 
+.sol-levers-actions { display: flex; gap: 8px; }
+
+.sol-reset {
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.sol-reset:hover { background: var(--coral-bg); color: var(--coral-deep); border-color: var(--coral-line); }
+
 .sol-lever-list { display: flex; flex-direction: column; gap: 12px; }
 
 .sol-lever {

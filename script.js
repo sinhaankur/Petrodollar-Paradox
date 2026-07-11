@@ -936,28 +936,30 @@ if (document.getElementById('woOil')) calcWorldOrder();
 // Pulls are calibrated off the same sensitivities as the value simulator.
 // Stacked levers get mild diminishing returns so you can't sum to parity.
 const SOL_BASE_RATE = 95.96;
+// Ordered biggest → smallest pull. Coefficients are deliberately conservative:
+// they represent a plausible multi-year ceiling, not a forecast.
 const SOL_LEVERS = [
-  { id: 'oil',     title: 'Diversify oil away from the dollar', pull: 2.1,
+  { id: 'oil',     title: 'Diversify oil away from the dollar', pull: 1.8,
     detail: 'Expand rupee–ruble, rupee–dirham and yuan-settled crude deals so more of the import bill escapes dollar demand.',
     tag: 'Already underway · Russia, UAE' },
-  { id: 'exports', title: 'Grow non-oil exports ~8%/yr', pull: 1.7,
-    detail: 'Electronics (PLI schemes), pharma, and services widen the structural dollar supply that offsets the oil bill.',
-    tag: 'Structural · multi-year' },
-  { id: 'reserve', title: 'Build a strategic oil reserve', pull: 0.9,
-    detail: 'Buying crude when it is cheap smooths the import bill and blunts the FX shock of price spikes and Hormuz risk.',
-    tag: 'Policy lever' },
-  { id: 'rupee',   title: 'Push rupee invoicing & UPI rails', pull: 1.9,
+  { id: 'rupee',   title: 'Push rupee invoicing & UPI rails', pull: 1.5,
     detail: 'Vostro accounts, BRICS Pay and cross-border UPI let more trade settle in rupees instead of sourcing dollars first.',
     tag: 'Live · Singapore, UAE, Nepal' },
-  { id: 'buffer',  title: 'Grow the RBI reserve buffer to $750B+', pull: 0.8,
-    detail: 'A deeper war chest lets the RBI smooth volatility for longer without signalling weakness or draining the cushion.',
-    tag: 'Central-bank defense' },
-  { id: 'gold',    title: 'Keep accumulating gold reserves', pull: 0.7,
-    detail: 'Gold now backs a rising share of reserves — a dollar-independent store of value that steadies the balance sheet.',
-    tag: 'Cumulative · record buying' },
-  { id: 'fdi',     title: 'Attract sticky FDI over hot FII', pull: 1.3,
+  { id: 'exports', title: 'Grow non-oil exports ~8%/yr', pull: 1.4,
+    detail: 'Electronics (PLI schemes), pharma, and services widen the structural dollar supply that offsets the oil bill.',
+    tag: 'Structural · multi-year' },
+  { id: 'fdi',     title: 'Attract sticky FDI over hot FII', pull: 1.0,
     detail: 'Long-horizon factory and infrastructure investment brings dollars that do not flee on the next risk-off headline.',
     tag: 'Quality of flows' },
+  { id: 'reserve', title: 'Build a strategic oil reserve', pull: 0.7,
+    detail: 'Buying crude when it is cheap smooths the import bill and blunts the FX shock of price spikes and Hormuz risk.',
+    tag: 'Policy lever' },
+  { id: 'buffer',  title: 'Grow the RBI reserve buffer to $750B+', pull: 0.6,
+    detail: 'A deeper war chest lets the RBI smooth volatility for longer without signalling weakness or draining the cushion.',
+    tag: 'Central-bank defense' },
+  { id: 'gold',    title: 'Keep accumulating gold reserves', pull: 0.5,
+    detail: 'Gold now backs a rising share of reserves — a dollar-independent store of value that steadies the balance sheet.',
+    tag: 'Cumulative · record buying' },
 ];
 
 const solState = {};
@@ -1064,6 +1066,14 @@ function initSolutions() {
     allBtn.addEventListener('click', () => {
       const allOn = SOL_LEVERS.every(l => solState[l.id]);
       SOL_LEVERS.forEach(l => { solState[l.id] = !allOn; });
+      updateSolutions();
+    });
+  }
+
+  const resetBtn = document.getElementById('solReset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      SOL_LEVERS.forEach(l => { solState[l.id] = false; });
       updateSolutions();
     });
   }
