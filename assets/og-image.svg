@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A1614"/>
+      <stop offset="1" stop-color="#0c1420"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.78" cy="0.28" r="0.6">
+      <stop offset="0" stop-color="#7c73e6" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#7c73e6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rate" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f5a78a"/>
+      <stop offset="1" stop-color="#e0654a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- flow-arc motif (echoes the globe) -->
+  <g fill="none" stroke-width="2" opacity="0.5">
+    <path d="M 760 470 Q 920 300 1080 200" stroke="#e0654a"/>
+    <path d="M 780 520 Q 980 420 1140 360" stroke="#7c73e6"/>
+    <path d="M 820 560 Q 1000 520 1150 500" stroke="#5aa9e6"/>
+  </g>
+  <g>
+    <circle cx="1080" cy="200" r="7" fill="#e0654a"/>
+    <circle cx="1140" cy="360" r="6" fill="#7c73e6"/>
+    <circle cx="1150" cy="500" r="6" fill="#5aa9e6"/>
+    <circle cx="760" cy="470" r="9" fill="#2fb98a"/>
+  </g>
+
+  <!-- eyebrow -->
+  <text x="90" y="150" font-family="Inter, -apple-system, sans-serif" font-size="26" font-weight="600" letter-spacing="4" fill="#8A847A">THE PETRODOLLAR PARADOX</text>
+
+  <!-- big rate -->
+  <text x="86" y="330" font-family="Inter, -apple-system, sans-serif" font-size="150" font-weight="800" letter-spacing="-4" fill="url(#rate)">₹95.96</text>
+  <text x="96" y="380" font-family="Inter, -apple-system, sans-serif" font-size="30" font-weight="500" fill="#c9c3b8">= $1 · all-time low against the dollar</text>
+
+  <!-- headline -->
+  <text x="90" y="480" font-family="Inter, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#FBF9F4">Why does the rupee keep falling</text>
+  <text x="90" y="532" font-family="Inter, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#FBF9F4">as the US prints trillions?</text>
+
+  <!-- footer -->
+  <text x="90" y="590" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="500" fill="#8A847A">Interactive explainer · charts · simulators · 3D globe</text>
+</svg>
