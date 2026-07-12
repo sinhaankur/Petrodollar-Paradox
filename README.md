@@ -33,7 +33,7 @@ The only optional dependency is [Three.js](https://threejs.org/) for the 3D glob
 - Visible keyboard focus (`:focus-visible`) on all interactive controls
 - Full `prefers-reduced-motion` support: CSS animations/transitions and SMIL SVG animations are disabled, the hero counters snap to their final value, and the globe stops auto-rotating and animating flows
 - Interactive map markers are keyboard-navigable (Tab + Enter/Space)
-- Multilingual: all 11 languages are fully translated via a `data-i18n` dictionary (English, Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Urdu), with graceful fallback to English for any string a dictionary happens to miss. Translations for the non-English languages are a machine-assisted first pass — a native-speaker proofread of the financial phrasing is recommended, especially for Tamil, Telugu, Malayalam, Punjabi and Urdu. Urdu text renders but full RTL layout is not yet implemented. The `scripts/merge-translations.js` one-off documents how the dictionaries were populated.
+- Multilingual: all 10 languages are fully translated via a `data-i18n` dictionary (English, Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi), with graceful fallback to English for any string a dictionary happens to miss. Translations for the non-English languages are a machine-assisted first pass — a native-speaker proofread of the financial phrasing is recommended, especially for Tamil, Telugu, Malayalam and Punjabi. The `scripts/merge-translations.js` one-off documents how the dictionaries were populated.
 
 ## Deploy to GitHub Pages
 
