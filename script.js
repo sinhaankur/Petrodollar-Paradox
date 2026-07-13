@@ -3271,9 +3271,9 @@ applyLang(currentLang);
     resize();
     window.addEventListener('resize', resize);
 
-    let running = true, clock = 0;
+    let running = true, clock = 0, contextLost = false;
     function frame() {
-      if (!running) return;
+      if (!running || contextLost) return;
       requestAnimationFrame(frame);
       clock += 0.016;
       if (autoRotate) rotY += 0.0018;
@@ -3291,11 +3291,32 @@ applyLang(currentLang);
     }
     frame();
 
+    // WebGL context loss (common on mobile under memory pressure or when the
+    // tab is backgrounded). Without this the globe freezes to a black square
+    // with no way back. Pause the loop and, if the GPU doesn't recover within
+    // a few seconds, drop to the always-available 2D map.
+    let restoreTimer = null;
+    canvas.addEventListener('webglcontextlost', e => {
+      e.preventDefault(); // required so the browser will try to restore
+      contextLost = true;
+      restoreTimer = setTimeout(() => {
+        if (contextLost && !el3d.hidden) show2D();
+      }, 4000);
+    }, false);
+    canvas.addEventListener('webglcontextrestored', () => {
+      if (restoreTimer) { clearTimeout(restoreTimer); restoreTimer = null; }
+      contextLost = false;
+      // Three.js re-uploads GPU resources automatically on restore; just
+      // re-sync the drawing buffer size and restart the loop.
+      resize();
+      if (running) frame();
+    }, false);
+
     window.__globe3d = {
       highlight: highlight3D,
       applyFilter: applyFilter3D,
       pause() { running = false; },
-      resume() { if (!running) { running = true; resize(); frame(); } },
+      resume() { if (!running && !contextLost) { running = true; resize(); frame(); } },
     };
     if (selectedId) highlight3D(selectedId);
   }
