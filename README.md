@@ -2,7 +2,7 @@
 
 An interactive web explainer on why the Indian rupee keeps falling even as the US prints trillions of dollars. Covers the petrodollar system, how USD printing actually works, and the six factors that move the rupee.
 
-**Live site:** Enable in your repo's `Settings → Pages` (see deploy instructions below).
+**Live site:** [sinhaankur.github.io/Petrodollar-Paradox](https://sinhaankur.github.io/Petrodollar-Paradox/)
 
 ## What's inside
 
