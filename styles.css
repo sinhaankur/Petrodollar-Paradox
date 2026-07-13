@@ -349,10 +349,6 @@ body {
 /* Logo / brand never wraps */
 .logo-text { white-space: nowrap; }
 
-@media (max-width: 720px) {
-  .nav-links { display: none; }
-}
-
 /* ─── HERO ─── */
 .hero {
   position: relative;
@@ -2644,7 +2640,7 @@ body {
 .lflow-tabs-pill.is-ready { opacity: 1; }
 
 @media (max-width: 720px) {
-  .lflow-tabs { grid-template-columns: 1fr; }
+  .lflow-tabs { display: grid; grid-template-columns: 1fr; }
 }
 
 .lflow-tab {
@@ -3873,7 +3869,7 @@ body {
   .section-lede { font-size: 15px; margin-top: 14px; }
 
   /* L2 layer tabs — vertical stack with pill that becomes horizontal */
-  .lflow-tabs { grid-template-columns: 1fr; gap: 6px; }
+  .lflow-tabs { display: grid; grid-template-columns: 1fr; gap: 6px; }
   .lflow-tabs-pill { display: none; }
   .lflow-tab.active {
     background: white;

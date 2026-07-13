@@ -594,12 +594,9 @@ if (ccyPick) {
 // ─── Internationalization (EN / HI) ────────────────────────────
 const I18N = {
   en: {
-    'nav.puzzle': 'Puzzle',
-    'nav.timeline': 'Timeline',
-    'nav.printing': 'USD Printing',
+    'nav.story': 'The Story',
     'nav.system': 'The System',
-    'nav.forces': 'Forces',
-    'nav.simulator': 'Simulator',
+    'nav.tools': 'Tools',
     'nav.currencies': 'Currencies',
     'nav.globe': 'The Globe',
     'nav.solutions': 'The Way Out',
@@ -612,6 +609,20 @@ const I18N = {
     'sol.label': 'THE WAY OUT',
     'sol.title': 'The rupee is trapped — but not powerless. Pick the levers.',
     'sol.lede': 'Diagnosis is only half the story. Toggle the policy and structural moves India can actually make — each is real, already underway in some form — and watch how far they could pull the rupee back from ₹95.96. No single lever fixes it. Stacked together, they add up.',
+    'lflow.label': 'DETAILED FLOW · ANIMATED',
+    'lflow.title': 'Watch each layer in motion.',
+    'lflow.lede': 'Dollars don\'t sit still. They circulate through specific channels that lock in their dominance. Pick a layer to see the flows.',
+    'lflow.tab1': 'Dollar as plumbing',
+    'lflow.tab2': 'Petrodollar engine',
+    'lflow.tab3': 'India squeezed',
+    'wo.label': 'CHANGING THE WORLD ORDER',
+    'wo.title': 'If the petrodollar shifts, what does the math look like?',
+    'wo.lede': 'Three slow-moving forces are chipping at dollar dominance. Move the sliders to see how the system would respond — and what it would mean for the rupee.',
+    'wo.realLabel': 'REAL-WORLD PROGRESS',
+    'wo.realTitle': 'What\'s already happening on the ground.',
+    'reel.label': 'SHARE AS A REEL',
+    'reel.title': 'Generate a video clip in your language.',
+    'reel.lede': 'An auto-built 30-second portrait video summarising the story, with narration in the language you picked above. Generated in your browser — nothing leaves your device.',
     'hero.date': 'MAY 14, 2026',
     'hero.sub': 'All-time low against the dollar',
     'hero.puzzleLabel': 'THE PUZZLE',
@@ -657,12 +668,9 @@ const I18N = {
     'math.flat': 'same as today',
   },
   hi: {
-    'nav.puzzle': 'पहेली',
-    'nav.timeline': 'समयरेखा',
-    'nav.printing': 'डॉलर छपाई',
+    'nav.story': 'कहानी',
     'nav.system': 'व्यवस्था',
-    'nav.forces': 'बल',
-    'nav.simulator': 'सिम्युलेटर',
+    'nav.tools': 'उपकरण',
     'nav.currencies': 'मुद्राएँ',
     'nav.impact': 'प्रभाव',
     'nav.data': 'डेटा',
@@ -718,6 +726,20 @@ const I18N = {
     'sol.label': 'रास्ता',
     'sol.title': 'रुपया फँसा है — पर बेबस नहीं। लीवर चुनिए।',
     'sol.lede': 'निदान तो कहानी का आधा हिस्सा है। भारत जो नीतिगत और संरचनात्मक कदम सचमुच उठा सकता है, उन्हें चुनिए — हर एक असली है, किसी न किसी रूप में पहले से जारी — और देखिए कि वे रुपये को ₹95.96 से कितना पीछे खींच सकते हैं। कोई अकेला लीवर इसे ठीक नहीं करता। मिलकर, ये जुड़ जाते हैं।',
+    'lflow.label': 'विस्तृत प्रवाह · एनिमेटेड',
+    'lflow.title': 'हर परत को गति में देखें।',
+    'lflow.lede': 'डॉलर स्थिर नहीं रहते। वे विशिष्ट माध्यमों से घूमते हैं जो उनके प्रभुत्व को मजबूत करते हैं। प्रवाह देखने के लिए एक परत चुनें।',
+    'lflow.tab1': 'प्लंबिंग के रूप में डॉलर',
+    'lflow.tab2': 'पेट्रोडॉलर इंजन',
+    'lflow.tab3': 'भारत दबाव में',
+    'wo.label': 'विश्व व्यवस्था बदलना',
+    'wo.title': 'यदि पेट्रोडॉलर बदलता है, तो गणित कैसा दिखता है?',
+    'wo.lede': 'तीन धीमी गति वाली शक्तियाँ डॉलर के प्रभुत्व को कमजोर कर रही हैं। स्लाइडर घुमाकर देखें कि व्यवस्था कैसे प्रतिक्रिया देगी — और रुपये के लिए इसका क्या अर्थ होगा।',
+    'wo.realLabel': 'वास्तविक प्रगति',
+    'wo.realTitle': 'ज़मीन पर पहले से क्या हो रहा है।',
+    'reel.label': 'रील के रूप में साझा करें',
+    'reel.title': 'अपनी भाषा में एक वीडियो क्लिप बनाएँ।',
+    'reel.lede': 'कहानी का सार प्रस्तुत करता एक स्वतः-निर्मित 30-सेकंड का पोर्ट्रेट वीडियो, ऊपर चुनी गई भाषा में वर्णन के साथ। आपके ब्राउज़र में बनता है — कुछ भी आपके डिवाइस से बाहर नहीं जाता।',
   },
   bn: {
     'nav.globe': 'বিশ্ব',
@@ -729,12 +751,23 @@ const I18N = {
     'sol.label': 'উপায়',
     'sol.title': 'রুপি আটকে আছে — কিন্তু অসহায় নয়। লিভারগুলি বাছুন।',
     'sol.lede': 'রোগনির্ণয় গল্পের অর্ধেক মাত্র। ভারত বাস্তবে যে নীতিগত ও কাঠামোগত পদক্ষেপ নিতে পারে সেগুলি টগল করুন — প্রতিটি বাস্তব, কোনো না কোনো রূপে ইতিমধ্যে চলছে — এবং দেখুন সেগুলি রুপিকে ₹95.96 থেকে কতটা ফিরিয়ে আনতে পারে। একটি লিভারও একা এটি ঠিক করে না। একসাথে, এগুলি যোগ হয়।',
-    'nav.puzzle': 'ধাঁধা',
-    'nav.timeline': 'কালরেখা',
-    'nav.printing': 'ডলার ছাপা',
+    'lflow.label': 'বিস্তারিত প্রবাহ · অ্যানিমেটেড',
+    'lflow.title': 'প্রতিটি স্তরকে গতিতে দেখুন।',
+    'lflow.lede': 'ডলার স্থির থাকে না। তারা নির্দিষ্ট চ্যানেলের মধ্য দিয়ে সঞ্চালিত হয় যা তাদের আধিপত্য দৃঢ় করে। প্রবাহ দেখতে একটি স্তর বেছে নিন।',
+    'lflow.tab1': 'পাইপলাইন হিসেবে ডলার',
+    'lflow.tab2': 'পেট্রোডলার ইঞ্জিন',
+    'lflow.tab3': 'ভারত চাপে',
+    'wo.label': 'বিশ্ব ব্যবস্থা বদলানো',
+    'wo.title': 'পেট্রোডলার সরে গেলে হিসাবটা কেমন দাঁড়ায়?',
+    'wo.lede': 'তিনটি ধীরগতির শক্তি ডলারের আধিপত্যে চিড় ধরাচ্ছে। স্লাইডার সরিয়ে দেখুন ব্যবস্থাটি কীভাবে সাড়া দেবে — এবং রুপির জন্য এর অর্থ কী।',
+    'wo.realLabel': 'বাস্তব অগ্রগতি',
+    'wo.realTitle': 'মাটিতে ইতিমধ্যে যা ঘটছে।',
+    'reel.label': 'রিল হিসেবে শেয়ার করুন',
+    'reel.title': 'আপনার ভাষায় একটি ভিডিও ক্লিপ তৈরি করুন।',
+    'reel.lede': 'গল্পের সারাংশ তুলে ধরা একটি স্বয়ংক্রিয়ভাবে তৈরি ৩০-সেকেন্ডের পোর্ট্রেট ভিডিও, উপরে বেছে নেওয়া ভাষায় বর্ণনা সহ। আপনার ব্রাউজারে তৈরি হয় — কিছুই আপনার ডিভাইস থেকে বেরোয় না।',
+    'nav.story': 'গল্প',
     'nav.system': 'ব্যবস্থা',
-    'nav.forces': 'শক্তি',
-    'nav.simulator': 'সিমুলেটর',
+    'nav.tools': 'সরঞ্জাম',
     'nav.currencies': 'মুদ্রা',
     'nav.impact': 'প্রভাব',
     'nav.data': 'তথ্য',
@@ -792,12 +825,23 @@ const I18N = {
     'sol.label': 'வழி',
     'sol.title': 'ரூபாய் சிக்கியுள்ளது — ஆனால் இயலாதல்ல. நெம்புகோல்களைத் தேர்ந்தெடுங்கள்.',
     'sol.lede': 'நோய் கண்டறிதல் கதையின் பாதி மட்டுமே. இந்தியா உண்மையில் எடுக்கக்கூடிய கொள்கை மற்றும் கட்டமைப்பு நடவடிக்கைகளை மாற்றுங்கள் — ஒவ்வொன்றும் உண்மையானது, ஏதோ ஒரு வடிவில் ஏற்கனவே நடந்து வருகிறது — அவை ரூபாயை ₹95.96 இலிருந்து எவ்வளவு பின்னால் இழுக்க முடியும் என்பதைப் பாருங்கள். எந்த ஒரு நெம்புகோலும் தனியாக இதைச் சரிசெய்யாது. சேர்ந்தால், அவை கூடுகின்றன.',
-    'nav.puzzle': 'புதிர்',
-    'nav.timeline': 'காலவரிசை',
-    'nav.printing': 'டாலர் அச்சிடல்',
+    'lflow.label': 'விரிவான ஓட்டம் · அசைவூட்டப்பட்டது',
+    'lflow.title': 'ஒவ்வொரு அடுக்கையும் இயக்கத்தில் காணுங்கள்.',
+    'lflow.lede': 'டாலர்கள் அசையாமல் இருப்பதில்லை. அவை தமது ஆதிக்கத்தை உறுதிப்படுத்தும் குறிப்பிட்ட வழிகளில் சுழல்கின்றன. ஓட்டங்களைக் காண ஒரு அடுக்கைத் தேர்ந்தெடுக்கவும்.',
+    'lflow.tab1': 'குழாய் அமைப்பாக டாலர்',
+    'lflow.tab2': 'பெட்ரோடாலர் இயந்திரம்',
+    'lflow.tab3': 'இந்தியா நெருக்கடியில்',
+    'wo.label': 'உலக ஒழுங்கை மாற்றுதல்',
+    'wo.title': 'பெட்ரோடாலர் மாறினால், கணக்கு எப்படி இருக்கும்?',
+    'wo.lede': 'மூன்று மெதுவான சக்திகள் டாலரின் ஆதிக்கத்தை அரித்து வருகின்றன. அமைப்பு எப்படி எதிர்வினையாற்றும் — ரூபாய்க்கு அது என்ன அர்த்தம் என்பதைப் பார்க்க ஸ்லைடர்களை நகர்த்துங்கள்.',
+    'wo.realLabel': 'நிஜ உலக முன்னேற்றம்',
+    'wo.realTitle': 'தரையில் ஏற்கனவே நடப்பது என்ன.',
+    'reel.label': 'ரீலாகப் பகிரவும்',
+    'reel.title': 'உங்கள் மொழியில் ஒரு வீடியோ கிளிப்பை உருவாக்குங்கள்.',
+    'reel.lede': 'கதையைச் சுருக்கமாகக் கூறும் தானாக உருவாக்கப்பட்ட 30-வினாடி செங்குத்து வீடியோ, மேலே தேர்ந்தெடுத்த மொழியில் விவரிப்புடன். உங்கள் உலாவியில் உருவாக்கப்படுகிறது — எதுவும் உங்கள் சாதனத்தை விட்டு வெளியேறாது.',
+    'nav.story': 'கதை',
     'nav.system': 'அமைப்பு',
-    'nav.forces': 'சக்திகள்',
-    'nav.simulator': 'உருவகி',
+    'nav.tools': 'கருவிகள்',
     'nav.currencies': 'நாணயங்கள்',
     'nav.impact': 'தாக்கம்',
     'nav.data': 'தரவு',
@@ -855,12 +899,23 @@ const I18N = {
     'sol.label': 'మార్గం',
     'sol.title': 'రూపాయి చిక్కుకుంది — కానీ నిస్సహాయం కాదు. లివర్‌లను ఎంచుకోండి.',
     'sol.lede': 'నిర్ధారణ కథలో సగం మాత్రమే. భారత్ నిజంగా తీసుకోగల విధాన, నిర్మాణాత్మక చర్యలను టోగుల్ చేయండి — ప్రతి ఒక్కటీ నిజమైనది, ఏదో ఒక రూపంలో ఇప్పటికే జరుగుతోంది — అవి రూపాయిని ₹95.96 నుండి ఎంత వెనక్కి లాగగలవో చూడండి. ఏ ఒక్క లివర్ కూడా దీన్ని ఒంటరిగా సరిచేయదు. కలిసి, అవి కూడతాయి.',
-    'nav.puzzle': 'చిక్కు',
-    'nav.timeline': 'కాలరేఖ',
-    'nav.printing': 'డాలర్ ముద్రణ',
+    'lflow.label': 'వివరణాత్మక ప్రవాహం · యానిమేటెడ్',
+    'lflow.title': 'ప్రతి పొరను చలనంలో చూడండి.',
+    'lflow.lede': 'డాలర్లు నిశ్చలంగా ఉండవు. అవి తమ ఆధిపత్యాన్ని పటిష్ఠం చేసే నిర్దిష్ట మార్గాల ద్వారా ప్రసరిస్తాయి. ప్రవాహాలను చూడటానికి ఒక పొరను ఎంచుకోండి.',
+    'lflow.tab1': 'పైప్‌లైన్‌గా డాలర్',
+    'lflow.tab2': 'పెట్రోడాలర్ ఇంజిన్',
+    'lflow.tab3': 'భారత్‌పై ఒత్తిడి',
+    'wo.label': 'ప్రపంచ క్రమాన్ని మార్చడం',
+    'wo.title': 'పెట్రోడాలర్ మారితే, లెక్క ఎలా ఉంటుంది?',
+    'wo.lede': 'మూడు నెమ్మదిగా కదిలే శక్తులు డాలర్ ఆధిపత్యాన్ని క్షీణింపజేస్తున్నాయి. వ్యవస్థ ఎలా స్పందిస్తుందో — రూపాయికి దాని అర్థం ఏమిటో చూడటానికి స్లయిడర్‌లను జరపండి.',
+    'wo.realLabel': 'వాస్తవ ప్రగతి',
+    'wo.realTitle': 'క్షేత్రస్థాయిలో ఇప్పటికే జరుగుతున్నది.',
+    'reel.label': 'రీల్‌గా షేర్ చేయండి',
+    'reel.title': 'మీ భాషలో ఒక వీడియో క్లిప్‌ను రూపొందించండి.',
+    'reel.lede': 'కథను సంక్షిప్తీకరించే స్వయంచాలకంగా రూపొందించిన 30-సెకన్ల నిలువు వీడియో, పైన ఎంచుకున్న భాషలో వ్యాఖ్యానంతో. మీ బ్రౌజర్‌లో రూపొందించబడుతుంది — ఏదీ మీ పరికరాన్ని విడిచిపెట్టదు.',
+    'nav.story': 'కథ',
     'nav.system': 'వ్యవస్థ',
-    'nav.forces': 'శక్తులు',
-    'nav.simulator': 'సిమ్యులేటర్',
+    'nav.tools': 'సాధనాలు',
     'nav.currencies': 'కరెన్సీలు',
     'nav.impact': 'ప్రభావం',
     'nav.data': 'డేటా',
@@ -918,12 +973,23 @@ const I18N = {
     'sol.label': 'मार्ग',
     'sol.title': 'रुपया अडकला आहे — पण असहाय नाही. लिव्हर निवडा.',
     'sol.lede': 'निदान ही कथेची अर्धीच बाजू. भारत प्रत्यक्षात करू शकेल अशी धोरणात्मक व संरचनात्मक पावले टॉगल करा — प्रत्येक खरी आहे, कोणत्या ना कोणत्या स्वरूपात आधीच सुरू आहे — आणि ती रुपयाला ₹95.96 वरून किती मागे खेचू शकतात ते पाहा. एकही लिव्हर एकट्याने हे ठीक करत नाही. एकत्र, ती जमा होतात.',
-    'nav.puzzle': 'कोडे',
-    'nav.timeline': 'कालरेखा',
-    'nav.printing': 'डॉलर छपाई',
+    'lflow.label': 'तपशीलवार प्रवाह · अ‍ॅनिमेटेड',
+    'lflow.title': 'प्रत्येक थर गतीमध्ये पाहा.',
+    'lflow.lede': 'डॉलर स्थिर राहत नाहीत. ते त्यांचे वर्चस्व दृढ करणाऱ्या विशिष्ट मार्गांतून फिरतात. प्रवाह पाहण्यासाठी एक थर निवडा.',
+    'lflow.tab1': 'नळयंत्रणा म्हणून डॉलर',
+    'lflow.tab2': 'पेट्रोडॉलर इंजिन',
+    'lflow.tab3': 'भारत दबावाखाली',
+    'wo.label': 'जागतिक व्यवस्था बदलणे',
+    'wo.title': 'पेट्रोडॉलर बदलल्यास गणित कसे दिसते?',
+    'wo.lede': 'तीन संथ शक्ती डॉलरचे वर्चस्व कमकुवत करत आहेत. व्यवस्था कशी प्रतिसाद देईल — आणि रुपयासाठी त्याचा काय अर्थ आहे हे पाहण्यासाठी स्लायडर हलवा.',
+    'wo.realLabel': 'प्रत्यक्ष प्रगती',
+    'wo.realTitle': 'प्रत्यक्षात आधीच काय घडत आहे.',
+    'reel.label': 'रील म्हणून शेअर करा',
+    'reel.title': 'तुमच्या भाषेत एक व्हिडिओ क्लिप तयार करा.',
+    'reel.lede': 'कथेचा सारांश देणारा स्वयं-निर्मित ३० सेकंदांचा उभा व्हिडिओ, वर निवडलेल्या भाषेत निवेदनासह. तुमच्या ब्राउझरमध्ये तयार होतो — काहीही तुमच्या डिव्हाइसमधून बाहेर जात नाही.',
+    'nav.story': 'कथा',
     'nav.system': 'व्यवस्था',
-    'nav.forces': 'शक्ती',
-    'nav.simulator': 'सिम्युलेटर',
+    'nav.tools': 'साधने',
     'nav.currencies': 'चलने',
     'nav.impact': 'परिणाम',
     'nav.data': 'डेटा',
@@ -981,12 +1047,23 @@ const I18N = {
     'sol.label': 'માર્ગ',
     'sol.title': 'રૂપિયો ફસાયેલો છે — પણ લાચાર નથી. લિવર પસંદ કરો.',
     'sol.lede': 'નિદાન એ વાર્તાનો અડધો ભાગ છે. ભારત ખરેખર લઈ શકે તેવા નીતિગત અને માળખાકીય પગલાં ટૉગલ કરો — દરેક વાસ્તવિક છે, કોઈને કોઈ સ્વરૂપે પહેલેથી ચાલુ છે — અને જુઓ કે તે રૂપિયાને ₹95.96 થી કેટલો પાછળ ખેંચી શકે છે. કોઈ એક લિવર એકલું આને ઠીક કરતું નથી. સાથે મળીને, તે ઉમેરાય છે.',
-    'nav.puzzle': 'કોયડો',
-    'nav.timeline': 'સમયરેખા',
-    'nav.printing': 'ડોલર છપાઈ',
+    'lflow.label': 'વિગતવાર પ્રવાહ · એનિમેટેડ',
+    'lflow.title': 'દરેક સ્તરને ગતિમાં જુઓ.',
+    'lflow.lede': 'ડોલર સ્થિર રહેતા નથી. તેઓ ચોક્કસ માર્ગો દ્વારા ફરે છે જે તેમનું પ્રભુત્વ મજબૂત કરે છે. પ્રવાહ જોવા માટે એક સ્તર પસંદ કરો.',
+    'lflow.tab1': 'પ્લમ્બિંગ તરીકે ડોલર',
+    'lflow.tab2': 'પેટ્રોડોલર એન્જિન',
+    'lflow.tab3': 'ભારત દબાણમાં',
+    'wo.label': 'વિશ્વ વ્યવસ્થા બદલવી',
+    'wo.title': 'જો પેટ્રોડોલર બદલાય, તો ગણિત કેવું દેખાય?',
+    'wo.lede': 'ત્રણ ધીમી ગતિની શક્તિઓ ડોલરના પ્રભુત્વને નબળું પાડી રહી છે. વ્યવસ્થા કેવી પ્રતિક્રિયા આપશે — અને રૂપિયા માટે તેનો શું અર્થ છે તે જોવા સ્લાઇડર ખસેડો.',
+    'wo.realLabel': 'વાસ્તવિક પ્રગતિ',
+    'wo.realTitle': 'જમીન પર પહેલેથી શું થઈ રહ્યું છે.',
+    'reel.label': 'રીલ તરીકે શેર કરો',
+    'reel.title': 'તમારી ભાષામાં એક વિડિઓ ક્લિપ બનાવો.',
+    'reel.lede': 'વાર્તાનો સારાંશ આપતો સ્વયં-નિર્મિત 30-સેકન્ડનો પોર્ટ્રેટ વિડિઓ, ઉપર પસંદ કરેલી ભાષામાં વર્ણન સાથે. તમારા બ્રાઉઝરમાં બને છે — કંઈપણ તમારા ડિવાઇસમાંથી બહાર જતું નથી.',
+    'nav.story': 'વાર્તા',
     'nav.system': 'વ્યવસ્થા',
-    'nav.forces': 'બળો',
-    'nav.simulator': 'સિમ્યુલેટર',
+    'nav.tools': 'સાધનો',
     'nav.currencies': 'ચલણો',
     'nav.impact': 'અસર',
     'nav.data': 'ડેટા',
@@ -1044,12 +1121,23 @@ const I18N = {
     'sol.label': 'ದಾರಿ',
     'sol.title': 'ರೂಪಾಯಿ ಸಿಕ್ಕಿಹಾಕಿಕೊಂಡಿದೆ — ಆದರೆ ಅಸಹಾಯಕವಲ್ಲ. ಲಿವರ್‌ಗಳನ್ನು ಆರಿಸಿ.',
     'sol.lede': 'ರೋಗನಿರ್ಣಯ ಕಥೆಯ ಅರ್ಧ ಮಾತ್ರ. ಭಾರತ ನಿಜವಾಗಿ ತೆಗೆದುಕೊಳ್ಳಬಹುದಾದ ನೀತಿ ಮತ್ತು ರಚನಾತ್ಮಕ ಕ್ರಮಗಳನ್ನು ಟಾಗಲ್ ಮಾಡಿ — ಪ್ರತಿಯೊಂದೂ ನಿಜ, ಯಾವುದೋ ರೂಪದಲ್ಲಿ ಈಗಾಗಲೇ ನಡೆಯುತ್ತಿದೆ — ಅವು ರೂಪಾಯಿಯನ್ನು ₹95.96 ರಿಂದ ಎಷ್ಟು ಹಿಂದಕ್ಕೆ ಎಳೆಯಬಹುದು ಎಂದು ನೋಡಿ. ಯಾವುದೇ ಒಂದು ಲಿವರ್ ಒಂಟಿಯಾಗಿ ಇದನ್ನು ಸರಿಪಡಿಸುವುದಿಲ್ಲ. ಒಟ್ಟಾಗಿ, ಅವು ಸೇರುತ್ತವೆ.',
-    'nav.puzzle': 'ಒಗಟು',
-    'nav.timeline': 'ಕಾಲರೇಖೆ',
-    'nav.printing': 'ಡಾಲರ್ ಮುದ್ರಣ',
+    'lflow.label': 'ವಿವರವಾದ ಹರಿವು · ಅನಿಮೇಟೆಡ್',
+    'lflow.title': 'ಪ್ರತಿ ಪದರವನ್ನು ಚಲನೆಯಲ್ಲಿ ನೋಡಿ.',
+    'lflow.lede': 'ಡಾಲರ್‌ಗಳು ಸ್ಥಿರವಾಗಿ ಇರುವುದಿಲ್ಲ. ಅವು ತಮ್ಮ ಪ್ರಾಬಲ್ಯವನ್ನು ಗಟ್ಟಿಗೊಳಿಸುವ ನಿರ್ದಿಷ್ಟ ಮಾರ್ಗಗಳ ಮೂಲಕ ಸಂಚರಿಸುತ್ತವೆ. ಹರಿವುಗಳನ್ನು ನೋಡಲು ಒಂದು ಪದರವನ್ನು ಆಯ್ಕೆಮಾಡಿ.',
+    'lflow.tab1': 'ಕೊಳವೆ ವ್ಯವಸ್ಥೆಯಾಗಿ ಡಾಲರ್',
+    'lflow.tab2': 'ಪೆಟ್ರೋಡಾಲರ್ ಎಂಜಿನ್',
+    'lflow.tab3': 'ಭಾರತ ಒತ್ತಡದಲ್ಲಿ',
+    'wo.label': 'ವಿಶ್ವ ವ್ಯವಸ್ಥೆ ಬದಲಾಯಿಸುವಿಕೆ',
+    'wo.title': 'ಪೆಟ್ರೋಡಾಲರ್ ಬದಲಾದರೆ, ಲೆಕ್ಕ ಹೇಗಿರುತ್ತದೆ?',
+    'wo.lede': 'ಮೂರು ನಿಧಾನ ಶಕ್ತಿಗಳು ಡಾಲರ್ ಪ್ರಾಬಲ್ಯವನ್ನು ಕುಗ್ಗಿಸುತ್ತಿವೆ. ವ್ಯವಸ್ಥೆ ಹೇಗೆ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತದೆ — ಮತ್ತು ರೂಪಾಯಿಗೆ ಅದರ ಅರ್ಥವೇನು ಎಂಬುದನ್ನು ನೋಡಲು ಸ್ಲೈಡರ್‌ಗಳನ್ನು ಸರಿಸಿ.',
+    'wo.realLabel': 'ವಾಸ್ತವ ಪ್ರಗತಿ',
+    'wo.realTitle': 'ನೆಲದ ಮಟ್ಟದಲ್ಲಿ ಈಗಾಗಲೇ ಏನು ನಡೆಯುತ್ತಿದೆ.',
+    'reel.label': 'ರೀಲ್ ಆಗಿ ಹಂಚಿಕೊಳ್ಳಿ',
+    'reel.title': 'ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಒಂದು ವೀಡಿಯೊ ಕ್ಲಿಪ್ ರಚಿಸಿ.',
+    'reel.lede': 'ಕಥೆಯನ್ನು ಸಂಕ್ಷೇಪಿಸುವ ಸ್ವಯಂ-ನಿರ್ಮಿತ 30-ಸೆಕೆಂಡ್ ಲಂಬ ವೀಡಿಯೊ, ಮೇಲೆ ಆಯ್ಕೆಮಾಡಿದ ಭಾಷೆಯಲ್ಲಿ ನಿರೂಪಣೆಯೊಂದಿಗೆ. ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ರಚಿಸಲಾಗುತ್ತದೆ — ಏನೂ ನಿಮ್ಮ ಸಾಧನವನ್ನು ಬಿಟ್ಟು ಹೋಗುವುದಿಲ್ಲ.',
+    'nav.story': 'ಕಥೆ',
     'nav.system': 'ವ್ಯವಸ್ಥೆ',
-    'nav.forces': 'ಶಕ್ತಿಗಳು',
-    'nav.simulator': 'ಸಿಮ್ಯುಲೇಟರ್',
+    'nav.tools': 'ಪರಿಕರಗಳು',
     'nav.currencies': 'ಕರೆನ್ಸಿಗಳು',
     'nav.impact': 'ಪರಿಣಾಮ',
     'nav.data': 'ಡೇಟಾ',
@@ -1107,12 +1195,23 @@ const I18N = {
     'sol.label': 'വഴി',
     'sol.title': 'രൂപ കുടുങ്ങിയിരിക്കുന്നു — പക്ഷേ നിസ്സഹായമല്ല. ലിവറുകൾ തിരഞ്ഞെടുക്കുക.',
     'sol.lede': 'രോഗനിർണയം കഥയുടെ പകുതി മാത്രം. ഇന്ത്യക്ക് യഥാർത്ഥത്തിൽ എടുക്കാവുന്ന നയപരവും ഘടനാപരവുമായ നടപടികൾ ടോഗിൾ ചെയ്യുക — ഓരോന്നും യഥാർത്ഥമാണ്, ഏതെങ്കിലും രൂപത്തിൽ ഇതിനകം നടക്കുന്നു — അവ രൂപയെ ₹95.96-ൽ നിന്ന് എത്ര പിന്നോട്ട് വലിക്കാമെന്ന് കാണുക. ഒരു ലിവറും ഒറ്റയ്ക്ക് ഇത് പരിഹരിക്കില്ല. ഒരുമിച്ച്, അവ കൂടിച്ചേരുന്നു.',
-    'nav.puzzle': 'കടങ്കഥ',
-    'nav.timeline': 'കാലരേഖ',
-    'nav.printing': 'ഡോളർ അച്ചടി',
+    'lflow.label': 'വിശദമായ ഒഴുക്ക് · ആനിമേറ്റഡ്',
+    'lflow.title': 'ഓരോ പാളിയും ചലനത്തിൽ കാണുക.',
+    'lflow.lede': 'ഡോളറുകൾ നിശ്ചലമായി ഇരിക്കില്ല. അവയുടെ ആധിപത്യം ഉറപ്പിക്കുന്ന പ്രത്യേക വഴികളിലൂടെ അവ ചുറ്റിക്കറങ്ങുന്നു. ഒഴുക്കുകൾ കാണാൻ ഒരു പാളി തിരഞ്ഞെടുക്കുക.',
+    'lflow.tab1': 'പൈപ്പ്‌ലൈനായി ഡോളർ',
+    'lflow.tab2': 'പെട്രോഡോളർ എൻജിൻ',
+    'lflow.tab3': 'ഇന്ത്യ ഞെരുക്കത്തിൽ',
+    'wo.label': 'ലോകക്രമം മാറ്റുന്നു',
+    'wo.title': 'പെട്രോഡോളർ മാറിയാൽ, കണക്ക് എങ്ങനെ ആയിരിക്കും?',
+    'wo.lede': 'മൂന്ന് പതുക്കെ നീങ്ങുന്ന ശക്തികൾ ഡോളറിന്റെ ആധിപത്യത്തെ ദുർബലപ്പെടുത്തുന്നു. വ്യവസ്ഥ എങ്ങനെ പ്രതികരിക്കും — രൂപയ്ക്ക് അതിന്റെ അർത്ഥം എന്താണ് എന്ന് കാണാൻ സ്ലൈഡറുകൾ നീക്കുക.',
+    'wo.realLabel': 'യഥാർത്ഥ പുരോഗതി',
+    'wo.realTitle': 'നിലത്ത് ഇപ്പോൾ തന്നെ എന്താണ് സംഭവിക്കുന്നത്.',
+    'reel.label': 'റീലായി പങ്കിടുക',
+    'reel.title': 'നിങ്ങളുടെ ഭാഷയിൽ ഒരു വീഡിയോ ക്ലിപ്പ് സൃഷ്ടിക്കുക.',
+    'reel.lede': 'കഥ സംഗ്രഹിക്കുന്ന സ്വയം-നിർമ്മിത 30-സെക്കൻഡ് പോർട്രെയ്റ്റ് വീഡിയോ, മുകളിൽ തിരഞ്ഞെടുത്ത ഭാഷയിൽ വിവരണത്തോടെ. നിങ്ങളുടെ ബ്രൗസറിൽ സൃഷ്ടിക്കപ്പെടുന്നു — ഒന്നും നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്ന് പുറത്തുപോകുന്നില്ല.',
+    'nav.story': 'കഥ',
     'nav.system': 'വ്യവസ്ഥ',
-    'nav.forces': 'ശക്തികൾ',
-    'nav.simulator': 'സിമുലേറ്റർ',
+    'nav.tools': 'ഉപകരണങ്ങൾ',
     'nav.currencies': 'നാണയങ്ങൾ',
     'nav.impact': 'സ്വാധീനം',
     'nav.data': 'ഡാറ്റ',
@@ -1170,12 +1269,23 @@ const I18N = {
     'sol.label': 'ਰਾਹ',
     'sol.title': 'ਰੁਪਿਆ ਫਸਿਆ ਹੈ — ਪਰ ਬੇਵੱਸ ਨਹੀਂ। ਲੀਵਰ ਚੁਣੋ।',
     'sol.lede': 'ਨਿਦਾਨ ਕਹਾਣੀ ਦਾ ਅੱਧਾ ਹਿੱਸਾ ਹੈ। ਭਾਰਤ ਜੋ ਨੀਤੀਗਤ ਤੇ ਢਾਂਚਾਗਤ ਕਦਮ ਸੱਚਮੁੱਚ ਚੁੱਕ ਸਕਦਾ ਹੈ, ਉਹਨਾਂ ਨੂੰ ਟੌਗਲ ਕਰੋ — ਹਰ ਇੱਕ ਅਸਲੀ ਹੈ, ਕਿਸੇ ਨਾ ਕਿਸੇ ਰੂਪ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਜਾਰੀ — ਅਤੇ ਵੇਖੋ ਕਿ ਉਹ ਰੁਪਏ ਨੂੰ ₹95.96 ਤੋਂ ਕਿੰਨਾ ਪਿੱਛੇ ਖਿੱਚ ਸਕਦੇ ਹਨ। ਕੋਈ ਇੱਕ ਲੀਵਰ ਇਕੱਲਾ ਇਸ ਨੂੰ ਠੀਕ ਨਹੀਂ ਕਰਦਾ। ਇਕੱਠੇ, ਇਹ ਜੁੜ ਜਾਂਦੇ ਹਨ।',
-    'nav.puzzle': 'ਬੁਝਾਰਤ',
-    'nav.timeline': 'ਸਮਾਂਰੇਖਾ',
-    'nav.printing': 'ਡਾਲਰ ਛਪਾਈ',
+    'lflow.label': 'ਵਿਸਤ੍ਰਿਤ ਵਹਾਅ · ਐਨੀਮੇਟਡ',
+    'lflow.title': 'ਹਰ ਪਰਤ ਨੂੰ ਗਤੀ ਵਿੱਚ ਵੇਖੋ।',
+    'lflow.lede': 'ਡਾਲਰ ਸਥਿਰ ਨਹੀਂ ਰਹਿੰਦੇ। ਉਹ ਖਾਸ ਰਾਹਾਂ ਰਾਹੀਂ ਘੁੰਮਦੇ ਹਨ ਜੋ ਉਨ੍ਹਾਂ ਦੀ ਸਰਦਾਰੀ ਪੱਕੀ ਕਰਦੇ ਹਨ। ਵਹਾਅ ਵੇਖਣ ਲਈ ਇੱਕ ਪਰਤ ਚੁਣੋ।',
+    'lflow.tab1': 'ਪਲੰਬਿੰਗ ਵਜੋਂ ਡਾਲਰ',
+    'lflow.tab2': 'ਪੈਟਰੋਡਾਲਰ ਇੰਜਣ',
+    'lflow.tab3': 'ਭਾਰਤ ਦਬਾਅ ਹੇਠ',
+    'wo.label': 'ਵਿਸ਼ਵ ਵਿਵਸਥਾ ਬਦਲਣਾ',
+    'wo.title': 'ਜੇ ਪੈਟਰੋਡਾਲਰ ਬਦਲੇ, ਤਾਂ ਹਿਸਾਬ ਕਿਵੇਂ ਦਿਸੇਗਾ?',
+    'wo.lede': 'ਤਿੰਨ ਹੌਲੀ ਚੱਲਣ ਵਾਲੀਆਂ ਤਾਕਤਾਂ ਡਾਲਰ ਦੀ ਸਰਦਾਰੀ ਨੂੰ ਕਮਜ਼ੋਰ ਕਰ ਰਹੀਆਂ ਹਨ। ਸਲਾਈਡਰ ਹਿਲਾ ਕੇ ਵੇਖੋ ਕਿ ਵਿਵਸਥਾ ਕਿਵੇਂ ਹੁੰਗਾਰਾ ਭਰੇਗੀ — ਅਤੇ ਰੁਪਏ ਲਈ ਇਸਦਾ ਕੀ ਅਰਥ ਹੈ।',
+    'wo.realLabel': 'ਅਸਲ ਪ੍ਰਗਤੀ',
+    'wo.realTitle': 'ਜ਼ਮੀਨ ਉੱਤੇ ਪਹਿਲਾਂ ਹੀ ਕੀ ਹੋ ਰਿਹਾ ਹੈ।',
+    'reel.label': 'ਰੀਲ ਵਜੋਂ ਸਾਂਝਾ ਕਰੋ',
+    'reel.title': 'ਆਪਣੀ ਭਾਸ਼ਾ ਵਿੱਚ ਇੱਕ ਵੀਡੀਓ ਕਲਿੱਪ ਬਣਾਓ।',
+    'reel.lede': 'ਕਹਾਣੀ ਦਾ ਸਾਰ ਦੱਸਦਾ ਇੱਕ ਆਪੇ-ਬਣਿਆ 30-ਸਕਿੰਟ ਦਾ ਪੋਰਟਰੇਟ ਵੀਡੀਓ, ਉੱਪਰ ਚੁਣੀ ਭਾਸ਼ਾ ਵਿੱਚ ਬਿਆਨ ਨਾਲ। ਤੁਹਾਡੇ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਬਣਦਾ ਹੈ — ਕੁਝ ਵੀ ਤੁਹਾਡੇ ਡਿਵਾਈਸ ਤੋਂ ਬਾਹਰ ਨਹੀਂ ਜਾਂਦਾ।',
+    'nav.story': 'ਕਹਾਣੀ',
     'nav.system': 'ਵਿਵਸਥਾ',
-    'nav.forces': 'ਤਾਕਤਾਂ',
-    'nav.simulator': 'ਸਿਮੂਲੇਟਰ',
+    'nav.tools': 'ਸੰਦ',
     'nav.currencies': 'ਮੁਦਰਾਵਾਂ',
     'nav.impact': 'ਅਸਰ',
     'nav.data': 'ਡਾਟਾ',
@@ -1798,6 +1908,24 @@ function rgSlides() {
   const slides = REEL_SLIDES_BY_LANG[rgLang()];
   return slides || REEL_SLIDES_BY_LANG.en;
 }
+
+// Preferred male English voice names (in order). Picked across macOS / iOS /
+// Windows / Chrome / Android — first match wins. For non-English languages
+// we just trust the OS to pick a sensible voice for that BCP-47 tag.
+// Declared here (before its first use in checkVoice) so an early synchronous
+// `onvoiceschanged` / checkVoice() call can't hit the temporal dead zone.
+const MALE_EN_VOICES = [
+  'Daniel',                          // macOS / iOS UK male
+  'Daniel (Enhanced)',
+  'Oliver',                          // macOS UK male
+  'Arthur',                          // macOS UK male (newer)
+  'Alex',                            // macOS US male
+  'Google UK English Male',          // Chrome / Android
+  'Microsoft Ryan Online (Natural)', // Windows Edge UK male
+  'Microsoft George',                // Windows UK male
+  'Microsoft Mark',                  // Windows US male
+  'Microsoft David Desktop',         // Windows US male (legacy)
+];
 
 function checkVoice() {
   if (!('speechSynthesis' in window)) {
@@ -2468,22 +2596,6 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
   let startY = y - totalH / 2 + lineHeight / 2;
   lines.forEach(l => { ctx.fillText(l, x, startY); startY += lineHeight; });
 }
-
-// Preferred male English voice names (in order). Picked across macOS / iOS /
-// Windows / Chrome / Android — first match wins. For non-English languages
-// we just trust the OS to pick a sensible voice for that BCP-47 tag.
-const MALE_EN_VOICES = [
-  'Daniel',                          // macOS / iOS UK male
-  'Daniel (Enhanced)',
-  'Oliver',                          // macOS UK male
-  'Arthur',                          // macOS UK male (newer)
-  'Alex',                            // macOS US male
-  'Google UK English Male',          // Chrome / Android
-  'Microsoft Ryan Online (Natural)', // Windows Edge UK male
-  'Microsoft George',                // Windows UK male
-  'Microsoft Mark',                  // Windows US male
-  'Microsoft David Desktop',         // Windows US male (legacy)
-];
 
 function pickEnglishMaleVoice() {
   if (!('speechSynthesis' in window)) return null;
@@ -3234,7 +3346,26 @@ applyLang(currentLang);
     });
   });
 
-  // default: 2D, and preselect India as the focus
-  show2D();
-  selectCountry('IN');
+  // Cheap one-off WebGL capability probe. If the context can't be created we
+  // stay on the dependency-free 2D map instead of flashing the 3D fallback.
+  function canUseWebGL() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext &&
+        (c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch (e) { return false; }
+  }
+
+  // Default to the interactive 3D globe when the device can render it. Fall back
+  // to 2D when WebGL is unavailable, or when the user prefers reduced motion
+  // (the 3D globe auto-rotates, so 2D is the calmer, honest default there).
+  const prefersReducedMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (canUseWebGL() && !prefersReducedMotion) {
+    show3D();
+  } else {
+    show2D();
+  }
+  selectCountry('IN'); // preselect India as the focus in either view
 })();
