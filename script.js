@@ -299,7 +299,7 @@ reelTrigger.observe(document.querySelector('.reel-card'));
 
 // ─── Smooth nav highlight ─────────────────────────────────────
 const navLinks = document.querySelectorAll('.nav-links a');
-const sections = ['#puzzle', '#timeline', '#printing', '#system', '#globe', '#forces', '#simulator', '#currencies', '#solutions', '#impact', '#references']
+const sections = ['#puzzle', '#timeline', '#printing', '#system', '#globe', '#forces', '#simulator', '#currencies', '#solutions', '#impact', '#knowledge']
   .map(id => document.querySelector(id))
   .filter(Boolean);
 
@@ -601,7 +601,7 @@ const I18N = {
     'nav.globe': 'The Globe',
     'nav.solutions': 'The Way Out',
     'nav.impact': 'Impact',
-    'nav.data': 'Data',
+    'nav.learn': 'Learn',
     'globe.label': 'THE SYSTEM ON THE PLANET',
     'globe.title': 'Spin the world. Follow the dollars and the oil.',
     'globe.lede': "The petrodollar system isn't an abstraction — it runs across real geography. The US prints, importers like India pay dollars for oil, Gulf exporters recycle the surplus into US Treasuries. Rotate and zoom the globe, then tap any country to see where it sits in the machine.",
@@ -673,7 +673,7 @@ const I18N = {
     'nav.tools': 'उपकरण',
     'nav.currencies': 'मुद्राएँ',
     'nav.impact': 'प्रभाव',
-    'nav.data': 'डेटा',
+    'nav.learn': 'जानें',
     'hero.date': '14 मई, 2026',
     'hero.sub': 'डॉलर के मुकाबले अब तक का सबसे कम स्तर',
     'hero.puzzleLabel': 'पहेली',
@@ -770,7 +770,7 @@ const I18N = {
     'nav.tools': 'সরঞ্জাম',
     'nav.currencies': 'মুদ্রা',
     'nav.impact': 'প্রভাব',
-    'nav.data': 'তথ্য',
+    'nav.learn': 'জানুন',
     'hero.date': '১৪ মে, ২০২৬',
     'hero.sub': 'ডলারের বিপরীতে সর্বকালের সর্বনিম্ন',
     'hero.puzzleLabel': 'ধাঁধা',
@@ -844,7 +844,7 @@ const I18N = {
     'nav.tools': 'கருவிகள்',
     'nav.currencies': 'நாணயங்கள்',
     'nav.impact': 'தாக்கம்',
-    'nav.data': 'தரவு',
+    'nav.learn': 'அறிக',
     'hero.date': 'மே 14, 2026',
     'hero.sub': 'டாலருக்கு எதிராக எப்போதும் இல்லாத தாழ்வு',
     'hero.puzzleLabel': 'புதிர்',
@@ -918,7 +918,7 @@ const I18N = {
     'nav.tools': 'సాధనాలు',
     'nav.currencies': 'కరెన్సీలు',
     'nav.impact': 'ప్రభావం',
-    'nav.data': 'డేటా',
+    'nav.learn': 'తెలుసుకోండి',
     'hero.date': 'మే 14, 2026',
     'hero.sub': 'డాలర్‌తో పోలిస్తే సర్వకాల కనిష్ఠం',
     'hero.puzzleLabel': 'చిక్కు',
@@ -992,7 +992,7 @@ const I18N = {
     'nav.tools': 'साधने',
     'nav.currencies': 'चलने',
     'nav.impact': 'परिणाम',
-    'nav.data': 'डेटा',
+    'nav.learn': 'जानें',
     'hero.date': '१४ मे, २०२६',
     'hero.sub': 'डॉलरच्या तुलनेत सार्वकालिक नीचांक',
     'hero.puzzleLabel': 'कोडे',
@@ -1066,7 +1066,7 @@ const I18N = {
     'nav.tools': 'સાધનો',
     'nav.currencies': 'ચલણો',
     'nav.impact': 'અસર',
-    'nav.data': 'ડેટા',
+    'nav.learn': 'જાણો',
     'hero.date': '૧૪ મે, ૨૦૨૬',
     'hero.sub': 'ડોલર સામે સર્વકાલીન નીચલી સપાટી',
     'hero.puzzleLabel': 'કોયડો',
@@ -1140,7 +1140,7 @@ const I18N = {
     'nav.tools': 'ಪರಿಕರಗಳು',
     'nav.currencies': 'ಕರೆನ್ಸಿಗಳು',
     'nav.impact': 'ಪರಿಣಾಮ',
-    'nav.data': 'ಡೇಟಾ',
+    'nav.learn': 'ತಿಳಿಯಿರಿ',
     'hero.date': 'ಮೇ 14, 2026',
     'hero.sub': 'ಡಾಲರ್ ವಿರುದ್ಧ ಸಾರ್ವಕಾಲಿಕ ಕನಿಷ್ಠ',
     'hero.puzzleLabel': 'ಒಗಟು',
@@ -1214,7 +1214,7 @@ const I18N = {
     'nav.tools': 'ഉപകരണങ്ങൾ',
     'nav.currencies': 'നാണയങ്ങൾ',
     'nav.impact': 'സ്വാധീനം',
-    'nav.data': 'ഡാറ്റ',
+    'nav.learn': 'അറിയുക',
     'hero.date': 'മേയ് 14, 2026',
     'hero.sub': 'ഡോളറിനെതിരെ എക്കാലത്തെയും താഴ്ന്ന നില',
     'hero.puzzleLabel': 'കടങ്കഥ',
@@ -1288,7 +1288,7 @@ const I18N = {
     'nav.tools': 'ਸੰਦ',
     'nav.currencies': 'ਮੁਦਰਾਵਾਂ',
     'nav.impact': 'ਅਸਰ',
-    'nav.data': 'ਡਾਟਾ',
+    'nav.learn': 'ਜਾਣੋ',
     'hero.date': '14 ਮਈ, 2026',
     'hero.sub': 'ਡਾਲਰ ਦੇ ਮੁਕਾਬਲੇ ਹਰ ਸਮੇਂ ਦਾ ਹੇਠਲਾ ਪੱਧਰ',
     'hero.puzzleLabel': 'ਬੁਝਾਰਤ',
