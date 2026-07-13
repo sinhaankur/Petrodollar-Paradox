@@ -2962,6 +2962,18 @@ applyLang(currentLang);
   };
   const FLOW_COLORS = { oil: '#e0654a', dollars: '#7c73e6', recycle: '#5aa9e6' };
 
+  // 2D-map label placement for the crowded Gulf–India cluster. Default (any
+  // country not listed) is centred 12px above the dot. Values are in the SVG's
+  // 1000×500 units. Fanning IQ left, SA below-left, AE below-right and keeping
+  // IR/IN above stops the two-letter codes from overlapping each other.
+  const LABEL_OFFSETS = {
+    IQ: { x: -9, y: -3,  anchor: 'end' },     // Iraq → left of its dot
+    IR: { x: 0,  y: -12, anchor: 'middle' },  // Iran → above
+    SA: { x: -3, y: 15,  anchor: 'end' },     // Saudi → below-left
+    AE: { x: 3,  y: 15,  anchor: 'start' },   // UAE → below-right
+    IN: { x: 0,  y: -13, anchor: 'middle' },  // India → above (the focus)
+  };
+
   // Simplified continent outlines as [lat, lon] rings — low-poly, hand-tuned
   // for the equirectangular 1000×500 map. Purely decorative context so the
   // country markers sit on recognisable landmasses rather than an empty grid.
@@ -3121,8 +3133,12 @@ applyLang(currentLang);
         dot.setAttribute('stroke', '#12100f');
         dot.setAttribute('stroke-width', '1.5');
         const label = document.createElementNS(NS, 'text');
-        label.setAttribute('y', '-12');
-        label.setAttribute('text-anchor', 'middle');
+        // The Gulf–India band (IQ/IR/SA/AE/IN) is crowded, so fan those labels
+        // out to different sides instead of stacking them all above their dots.
+        const off = LABEL_OFFSETS[c.id] || { x: 0, y: -12, anchor: 'middle' };
+        label.setAttribute('x', off.x);
+        label.setAttribute('y', off.y);
+        label.setAttribute('text-anchor', off.anchor);
         label.setAttribute('class', 'g2d-node-label');
         label.textContent = c.id;
         g.appendChild(halo); g.appendChild(dot); g.appendChild(label);
