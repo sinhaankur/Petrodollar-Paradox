@@ -622,7 +622,7 @@ const I18N = {
     'wo.realTitle': 'What\'s already happening on the ground.',
     'reel.label': 'SHARE AS A REEL',
     'reel.title': 'Generate a video clip in your language.',
-    'reel.lede': 'An auto-built 30-second portrait video summarising the story, with narration in the language you picked above. Generated in your browser — nothing leaves your device.',
+    'reel.lede': 'An auto-built 30-second portrait video summarizing the story, with narration in the language you picked above. Generated in your browser — nothing leaves your device.',
     'hero.date': 'MAY 14, 2026',
     'hero.sub': 'All-time low against the dollar',
     'hero.puzzleLabel': 'THE PUZZLE',
@@ -2738,7 +2738,7 @@ if (reelPlayBtn) reelPlayBtn.addEventListener('click', () => playRg(false));
 if (reelDlBtn) reelDlBtn.addEventListener('click', () => playRg(true));
 if (reelStopBtn) reelStopBtn.addEventListener('click', stopRg);
 
-// Initialise first frame
+// Initialize first frame
 if (reelCtx) {
   drawRgFrame(rgSlides()[0], 0);
 }
@@ -2868,7 +2868,7 @@ applyLang(currentLang);
 
   // ── Curated dataset: only countries that matter to the petrodollar story,
   //    grouped by role. Figures are the same May-2026 snapshot used site-wide.
-  //    lat/lon are approximate capitals. Roles drive marker colour + grouping.
+  //    lat/lon are approximate capitals. Roles drive marker color + grouping.
   const COUNTRIES = [
     { id: 'US', name: 'United States', flag: '🇺🇸', role: 'printer', lat: 38.9, lon: -77.0,
       summary: 'Issues the world reserve currency. When the Fed prints, the new dollars get absorbed by global demand instead of weakening the dollar.',
@@ -2932,7 +2932,7 @@ applyLang(currentLang);
 
   const byId = Object.fromEntries(COUNTRIES.map(c => [c.id, c]));
 
-  // Flow arcs: from → to, typed. Types drive colour + the flow filter.
+  // Flow arcs: from → to, typed. Types drive color + the flow filter.
   const FLOWS = [
     // Dollars out from the US
     { from: 'US', to: 'CN', type: 'dollars' },
