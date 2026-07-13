@@ -4154,6 +4154,72 @@ html, body { overflow-x: hidden; }
 .gc-flow-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .gc-flow-label { color: rgba(255, 255, 255, 0.55); font-size: 12px; }
 
+/* "How to read this" reader's guide under the globe */
+.globe-guide {
+  margin-top: 28px;
+  padding: 24px 26px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+}
+.globe-guide-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.globe-guide-intro {
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.65;
+  max-width: 760px;
+  margin: 0 0 22px;
+}
+.globe-guide-intro strong { color: white; font-weight: 600; }
+.globe-guide-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.globe-guide-col-title {
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.globe-guide-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-bottom: 12px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.55;
+}
+.globe-guide-item:last-child { margin-bottom: 0; }
+.globe-guide-item strong { color: rgba(255, 255, 255, 0.95); font-weight: 600; }
+.globe-guide-item .globe-legend-dot { margin-top: 4px; }
+/* Short line sample for each flow type */
+.globe-guide-line {
+  flex: none;
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 8px;
+}
+.globe-guide-line--oil     { background: #e0654a; }
+.globe-guide-line--dollars { background: #7c73e6; }
+.globe-guide-line--recycle { background: #5aa9e6; }
+
+@media (max-width: 720px) {
+  .globe-guide { padding: 20px; }
+  .globe-guide-cols { grid-template-columns: 1fr; gap: 22px; }
+}
+
 .globe-note {
   margin-top: 18px;
   font-size: 12px;
