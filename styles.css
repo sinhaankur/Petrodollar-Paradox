@@ -4117,7 +4117,28 @@ html, body { overflow-x: hidden; }
   color: white; letter-spacing: -0.01em;
 }
 .globe-card-role { font-size: 12px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }
-.globe-card-summary { font-size: 13.5px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 16px; }
+.globe-card-summary { font-size: 13.5px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 14px; }
+
+/* "For the rupee" takeaway — ties each country back to the page's subject. */
+.globe-card-rupee {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  padding: 11px 13px;
+  background: rgba(47, 185, 138, 0.1);
+  border-left: 2px solid #2fb98a;
+  border-radius: var(--radius-sm);
+}
+.gc-rupee-label {
+  display: block;
+  font-size: 9.5px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #56d3a6;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
 
 .globe-card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .globe-card-stat {

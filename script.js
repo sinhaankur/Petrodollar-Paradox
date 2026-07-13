@@ -2872,48 +2872,62 @@ applyLang(currentLang);
   const COUNTRIES = [
     { id: 'US', name: 'United States', flag: '🇺🇸', role: 'printer', lat: 38.9, lon: -77.0,
       summary: 'Issues the world reserve currency. When the Fed prints, the new dollars get absorbed by global demand instead of weakening the dollar.',
-      stats: [['Currency', 'US Dollar'], ['Reserve share', '~58% of global'], ['FX share', '~90% of trades'], ['Fed balance sheet', '$7.0T']] },
+      stats: [['Currency', 'US Dollar'], ['Reserve share', '~58% of global'], ['FX share', '~90% of trades'], ['Fed balance sheet', '$7.0T']],
+      rupee: 'Sets the price of the rupee indirectly: Fed rate hikes and a strong dollar pull capital out of India and push USD/INR up.' },
     { id: 'IN', name: 'India', flag: '🇮🇳', role: 'india', lat: 28.6, lon: 77.2,
       summary: 'Earns rupees but must buy dollars for 85% of its crude. Sits at the wrong end of every dollar flow — the focus of this page.',
-      stats: [['USD / INR', '₹95.96'], ['Oil imported', '85%'], ['Forex reserves', '$728B peak'], ['FPI YTD 2026', '−$21B']] },
+      stats: [['USD / INR', '₹95.96'], ['Oil imported', '85%'], ['Forex reserves', '$728B peak'], ['FPI YTD 2026', '−$21B']],
+      rupee: 'The subject of the whole page: every oil import, every FII exit, every strong-dollar day shows up as a weaker rupee.' },
     // Oil exporters / dollar recyclers
     { id: 'SA', name: 'Saudi Arabia', flag: '🇸🇦', role: 'exporter', lat: 24.7, lon: 46.7,
       summary: 'The archetypal petrodollar recycler. Prices oil in dollars, runs a currency pegged to the USD, and parks surpluses in US Treasuries.',
-      stats: [['Currency', 'Riyal (USD peg)'], ['Role', 'Swing oil exporter'], ['Recycles into', 'US Treasuries'], ['Oil pricing', 'USD']] },
+      stats: [['Currency', 'Riyal (USD peg)'], ['Role', 'Swing oil exporter'], ['Recycles into', 'US Treasuries'], ['Oil pricing', 'USD']],
+      rupee: 'India\'s top crude supplier still invoices in dollars, so every Saudi barrel is a standing bid for dollars against the rupee.' },
     { id: 'AE', name: 'UAE', flag: '🇦🇪', role: 'exporter', lat: 24.5, lon: 54.4,
       summary: 'Gulf exporter and a growing hub for non-dollar oil deals — including rupee-settled trade with India.',
-      stats: [['Currency', 'Dirham (USD peg)'], ['Role', 'Exporter + trade hub'], ['With India', 'Rupee-settled deals'], ['Oil pricing', 'Mostly USD']] },
+      stats: [['Currency', 'Dirham (USD peg)'], ['Role', 'Exporter + trade hub'], ['With India', 'Rupee-settled deals'], ['Oil pricing', 'Mostly USD']],
+      rupee: 'The rare bright spot: rupee-settled oil deals with the UAE let India pay for some crude without first buying dollars.' },
     { id: 'RU', name: 'Russia', flag: '🇷🇺', role: 'exporter', lat: 55.8, lon: 37.6,
       summary: 'Sanctioned out of much of the dollar system, Russia sells crude to India and China in rupees, rubles and yuan — the leading edge of de-dollarization.',
-      stats: [['Currency', 'Ruble'], ['Role', 'Exporter (non-USD)'], ['With India', 'Rupee–ruble trade'], ['Oil pricing', 'Yuan / rupee']] },
+      stats: [['Currency', 'Ruble'], ['Role', 'Exporter (non-USD)'], ['With India', 'Rupee–ruble trade'], ['Oil pricing', 'Yuan / rupee']],
+      rupee: 'Discounted, non-dollar Russian crude eases the rupee\'s dollar bill — but stranded rupee balances in Russian banks are the catch.' },
     { id: 'IR', name: 'Iran', flag: '🇮🇷', role: 'exporter', lat: 35.7, lon: 51.4,
       summary: 'Sells most crude in yuan and rupees outside the dollar system. The 2026 Iran–US conflict adds a Strait-of-Hormuz risk premium to every barrel.',
-      stats: [['Currency', 'Rial'], ['Role', 'Exporter (non-USD)'], ['Chokepoint', 'Strait of Hormuz'], ['Oil pricing', 'Yuan / rupee']] },
+      stats: [['Currency', 'Rial'], ['Role', 'Exporter (non-USD)'], ['Chokepoint', 'Strait of Hormuz'], ['Oil pricing', 'Yuan / rupee']],
+      rupee: 'Hormuz risk is a direct rupee tax: any threat to the strait spikes oil, widens India\'s import bill and drags USD/INR higher.' },
     { id: 'IQ', name: 'Iraq', flag: '🇮🇶', role: 'exporter', lat: 33.3, lon: 44.4,
       summary: 'Major OPEC exporter. Crude priced and settled overwhelmingly in dollars, feeding the recycling loop.',
-      stats: [['Currency', 'Dinar'], ['Role', 'OPEC exporter'], ['Oil pricing', 'USD'], ['Recycles into', 'USD assets']] },
+      stats: [['Currency', 'Dinar'], ['Role', 'OPEC exporter'], ['Oil pricing', 'USD'], ['Recycles into', 'USD assets']],
+      rupee: 'Another dollar-invoiced supplier to India — its barrels add to the monthly demand for dollars that weighs on the rupee.' },
     // Oil importers
     { id: 'CN', name: 'China', flag: '🇨🇳', role: 'importer', lat: 39.9, lon: 116.4,
       summary: 'The largest oil importer, pushing yuan-settled deals with Saudi and Iran and building alternative payment rails (CIPS, mBridge).',
-      stats: [['Currency', 'Yuan (managed)'], ['Reserves', '~$3T'], ['Oil', 'Largest importer'], ['Rails', 'CIPS · mBridge']] },
+      stats: [['Currency', 'Yuan (managed)'], ['Reserves', '~$3T'], ['Oil', 'Largest importer'], ['Rails', 'CIPS · mBridge']],
+      rupee: 'China\'s yuan-settlement push is the template India is watching — if it works, the rupee gets a real path out of the dollar trap.' },
     { id: 'JP', name: 'Japan', flag: '🇯🇵', role: 'importer', lat: 35.7, lon: 139.7,
       summary: 'A huge dollar-reserve holder, yet the yen is in its worst modern stretch — proof that reserve status alone can\'t offset a wide yield gap.',
-      stats: [['Currency', 'Yen'], ['USD / JPY', '¥158'], ['Oil', 'Near-total importer'], ['YTD vs USD', '−8.5%']] },
+      stats: [['Currency', 'Yen'], ['USD / JPY', '¥158'], ['Oil', 'Near-total importer'], ['YTD vs USD', '−8.5%']],
+      rupee: 'A warning for the rupee: even a rich, reserve-heavy currency slides when the US–home yield gap stays wide.' },
     { id: 'KR', name: 'South Korea', flag: '🇰🇷', role: 'importer', lat: 37.6, lon: 127.0,
       summary: 'Export-driven economy running a similar managed-depreciation playbook to India, with the same dollar-strength problem.',
-      stats: [['Currency', 'Won'], ['USD / KRW', '₩1,420'], ['Oil', 'Importer'], ['YTD vs USD', '−4.5%']] },
+      stats: [['Currency', 'Won'], ['USD / KRW', '₩1,420'], ['Oil', 'Importer'], ['YTD vs USD', '−4.5%']],
+      rupee: 'A close peer: the won and rupee tend to weaken together whenever the dollar strengthens against Asian exporters.' },
     { id: 'EU', name: 'Eurozone', flag: '🇪🇺', role: 'importer', lat: 50.8, lon: 4.4,
       summary: 'A reserve issuer in its own right, so the euro cushions better than EM currencies — but it still imports more energy than the US.',
-      stats: [['Currency', 'Euro'], ['Reserve share', '~20%'], ['Oil', 'Net importer'], ['YTD vs USD', '−2.4%']] },
+      stats: [['Currency', 'Euro'], ['Reserve share', '~20%'], ['Oil', 'Net importer'], ['YTD vs USD', '−2.4%']],
+      rupee: 'Shows the cushion the rupee lacks: reserve status lets the euro hold far better than an emerging-market importer can.' },
     { id: 'TR', name: 'Türkiye', flag: '🇹🇷', role: 'importer', lat: 39.9, lon: 32.9,
       summary: 'Shows the downside case: an importer whose central-bank credibility broke, sending the lira into a multi-year free fall.',
-      stats: [['Currency', 'Lira'], ['USD / TRY', '₺48.5'], ['Oil', 'Importer'], ['YTD vs USD', '−22%']] },
+      stats: [['Currency', 'Lira'], ['USD / TRY', '₺48.5'], ['Oil', 'Importer'], ['YTD vs USD', '−22%']],
+      rupee: 'The cautionary tale: it\'s what the rupee avoids precisely because the RBI defends credibility instead of chasing cheap money.' },
     { id: 'BR', name: 'Brazil', flag: '🇧🇷', role: 'importer', lat: -15.8, lon: -47.9,
       summary: 'A commodity economy and BRICS member piloting yuan-settled trade and BRICS Pay — chipping slowly at dollar dominance.',
-      stats: [['Currency', 'Real'], ['USD / BRL', 'R$6.30'], ['Bloc', 'BRICS'], ['Rails', 'BRICS Pay pilot']] },
+      stats: [['Currency', 'Real'], ['USD / BRL', 'R$6.30'], ['Bloc', 'BRICS'], ['Rails', 'BRICS Pay pilot']],
+      rupee: 'A BRICS partner in the same project: every non-dollar rail Brazil pilots is one the rupee could eventually ride too.' },
     { id: 'ZA', name: 'South Africa', flag: '🇿🇦', role: 'importer', lat: -25.7, lon: 28.2,
       summary: 'BRICS member and commodity exporter whose rand swings with global risk appetite and the strength of the dollar.',
-      stats: [['Currency', 'Rand'], ['Bloc', 'BRICS'], ['Driver', 'Risk-on / risk-off'], ['Oil', 'Net importer']] },
+      stats: [['Currency', 'Rand'], ['Bloc', 'BRICS'], ['Driver', 'Risk-on / risk-off'], ['Oil', 'Net importer']],
+      rupee: 'Moves on the same risk-on/risk-off tide as the rupee: when global money flees to dollars, both currencies fall together.' },
   ];
 
   const byId = Object.fromEntries(COUNTRIES.map(c => [c.id, c]));
@@ -2983,6 +2997,15 @@ applyLang(currentLang);
     const roleLabel = { printer: 'Dollar issuer', importer: 'Oil importer', exporter: 'Oil exporter / recycler', india: 'The focus — India' }[c.role];
     document.getElementById('gcRole').textContent = roleLabel;
     document.getElementById('gcSummary').textContent = c.summary;
+    const rupeeEl = document.getElementById('gcRupee');
+    if (rupeeEl) {
+      if (c.rupee) {
+        rupeeEl.innerHTML = '<span class="gc-rupee-label">FOR THE RUPEE</span>' + c.rupee;
+        rupeeEl.hidden = false;
+      } else {
+        rupeeEl.hidden = true;
+      }
+    }
     document.getElementById('gcStats').innerHTML = c.stats.map(([k, v]) =>
       '<div class="globe-card-stat"><span class="gc-k">' + k + '</span><span class="gc-v">' + v + '</span></div>'
     ).join('');
