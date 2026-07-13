@@ -3368,4 +3368,20 @@ applyLang(currentLang);
     show2D();
   }
   selectCountry('IN'); // preselect India as the focus in either view
+
+  // Pause the 3D render loop while the globe is scrolled out of view so it
+  // doesn't burn GPU/battery running at 60fps in the background. Only touches
+  // the loop when the 3D view is the active one; the 2D map is static anyway.
+  if ('IntersectionObserver' in window) {
+    const stage = document.getElementById('globeStage');
+    if (stage) {
+      const visObserver = new IntersectionObserver(entries => {
+        const visible = entries[0].isIntersecting;
+        if (!window.__globe3d || el3d.hidden) return;
+        if (visible) window.__globe3d.resume();
+        else window.__globe3d.pause();
+      }, { threshold: 0.05 });
+      visObserver.observe(stage);
+    }
+  }
 })();
