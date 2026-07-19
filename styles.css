@@ -444,6 +444,7 @@ body {
   font-size: 12px;
   color: var(--ink-3);
   font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 .hero-live-note.is-error { color: var(--coral-mid); }
 @media (prefers-reduced-motion: reduce) {
@@ -2759,7 +2760,9 @@ body {
   width: 100%;
   padding: 12px 40px 12px 40px;
   font: inherit;
-  font-size: 14.5px;
+  /* 16px avoids iOS Safari auto-zooming the page on focus (it's the only
+     free-text input on the page; sliders/selects don't trigger it). */
+  font-size: 16px;
   color: var(--ink);
   background: var(--paper, #fff);
   border: 1px solid var(--line-strong);
@@ -3032,6 +3035,7 @@ body {
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .scn-year {
   font-size: 13px;
@@ -3043,6 +3047,7 @@ body {
   font-size: 13px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   padding: 3px 9px;
   border-radius: 999px;
 }
