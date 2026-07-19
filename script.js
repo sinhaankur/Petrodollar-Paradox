@@ -299,7 +299,7 @@ reelTrigger.observe(document.querySelector('.reel-card'));
 
 // ─── Smooth nav highlight ─────────────────────────────────────
 const navLinks = document.querySelectorAll('.nav-links a');
-const sections = ['#puzzle', '#timeline', '#printing', '#history', '#system', '#globe', '#forces', '#simulator', '#currencies', '#solutions', '#impact', '#knowledge']
+const sections = ['#puzzle', '#timeline', '#printing', '#history', '#system', '#globe', '#forces', '#simulator', '#scenarios', '#currencies', '#solutions', '#impact', '#knowledge']
   .map(id => document.querySelector(id))
   .filter(Boolean);
 
@@ -533,18 +533,23 @@ function updateSim() {
 
 Object.values(sim).forEach(el => el.addEventListener('input', updateSim));
 
+function applySimState(p) {
+  if (!p) return;
+  sim.oil.value = p.oil;
+  sim.dxy.value = p.dxy;
+  sim.fii.value = p.fii;
+  sim.fed.value = p.fed;
+  sim.rbi.value = p.rbi;
+  updateSim();
+}
+
 document.querySelectorAll('.preset-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const p = SIM_PRESETS[btn.dataset.preset];
-    if (!p) return;
-    sim.oil.value = p.oil;
-    sim.dxy.value = p.dxy;
-    sim.fii.value = p.fii;
-    sim.fed.value = p.fed;
-    sim.rbi.value = p.rbi;
-    updateSim();
-  });
+  btn.addEventListener('click', () => applySimState(SIM_PRESETS[btn.dataset.preset]));
 });
+
+// Exposed so the scenario library can drive the simulator with a historical
+// episode's conditions ("Replay in simulator") without duplicating logic.
+window.applyScenario = applySimState;
 
 updateSim();
 
@@ -660,6 +665,7 @@ const I18N = {
     'nav.history': 'History',
     'nav.system': 'The System',
     'nav.tools': 'Tools',
+    'nav.scenarios': 'Scenarios',
     'nav.currencies': 'Currencies',
     'nav.globe': 'The Globe',
     'nav.solutions': 'The Way Out',
@@ -738,6 +744,7 @@ const I18N = {
     'nav.story': 'कहानी',
     'nav.system': 'व्यवस्था',
     'nav.tools': 'उपकरण',
+    'nav.scenarios': 'परिदृश्य',
     'nav.currencies': 'मुद्राएँ',
     'nav.impact': 'प्रभाव',
     'nav.learn': 'जानें',
@@ -835,6 +842,7 @@ const I18N = {
     'nav.story': 'গল্প',
     'nav.system': 'ব্যবস্থা',
     'nav.tools': 'সরঞ্জাম',
+    'nav.scenarios': 'পরিস্থিতি',
     'nav.currencies': 'মুদ্রা',
     'nav.impact': 'প্রভাব',
     'nav.learn': 'জানুন',
@@ -909,6 +917,7 @@ const I18N = {
     'nav.story': 'கதை',
     'nav.system': 'அமைப்பு',
     'nav.tools': 'கருவிகள்',
+    'nav.scenarios': 'காட்சிகள்',
     'nav.currencies': 'நாணயங்கள்',
     'nav.impact': 'தாக்கம்',
     'nav.learn': 'அறிக',
@@ -983,6 +992,7 @@ const I18N = {
     'nav.story': 'కథ',
     'nav.system': 'వ్యవస్థ',
     'nav.tools': 'సాధనాలు',
+    'nav.scenarios': 'సన్నివేశాలు',
     'nav.currencies': 'కరెన్సీలు',
     'nav.impact': 'ప్రభావం',
     'nav.learn': 'తెలుసుకోండి',
@@ -1057,6 +1067,7 @@ const I18N = {
     'nav.story': 'कथा',
     'nav.system': 'व्यवस्था',
     'nav.tools': 'साधने',
+    'nav.scenarios': 'परिस्थिती',
     'nav.currencies': 'चलने',
     'nav.impact': 'परिणाम',
     'nav.learn': 'जानें',
@@ -1131,6 +1142,7 @@ const I18N = {
     'nav.story': 'વાર્તા',
     'nav.system': 'વ્યવસ્થા',
     'nav.tools': 'સાધનો',
+    'nav.scenarios': 'પરિદૃશ્યો',
     'nav.currencies': 'ચલણો',
     'nav.impact': 'અસર',
     'nav.learn': 'જાણો',
@@ -1205,6 +1217,7 @@ const I18N = {
     'nav.story': 'ಕಥೆ',
     'nav.system': 'ವ್ಯವಸ್ಥೆ',
     'nav.tools': 'ಪರಿಕರಗಳು',
+    'nav.scenarios': 'ಸನ್ನಿವೇಶಗಳು',
     'nav.currencies': 'ಕರೆನ್ಸಿಗಳು',
     'nav.impact': 'ಪರಿಣಾಮ',
     'nav.learn': 'ತಿಳಿಯಿರಿ',
@@ -1279,6 +1292,7 @@ const I18N = {
     'nav.story': 'കഥ',
     'nav.system': 'വ്യവസ്ഥ',
     'nav.tools': 'ഉപകരണങ്ങൾ',
+    'nav.scenarios': 'സാഹചര്യങ്ങൾ',
     'nav.currencies': 'നാണയങ്ങൾ',
     'nav.impact': 'സ്വാധീനം',
     'nav.learn': 'അറിയുക',
@@ -1353,6 +1367,7 @@ const I18N = {
     'nav.story': 'ਕਹਾਣੀ',
     'nav.system': 'ਵਿਵਸਥਾ',
     'nav.tools': 'ਸੰਦ',
+    'nav.scenarios': 'ਹਾਲਾਤ',
     'nav.currencies': 'ਮੁਦਰਾਵਾਂ',
     'nav.impact': 'ਅਸਰ',
     'nav.learn': 'ਜਾਣੋ',
@@ -4027,4 +4042,122 @@ applyLang(currentLang);
 
   csvBtn.addEventListener('click', () => download('petrodollar-paradox-m2-vs-usdinr.csv', toCsv(), 'text/csv'));
   jsonBtn.addEventListener('click', () => download('petrodollar-paradox-m2-vs-usdinr.json', toJson(), 'application/json'));
+})();
+
+/* ── Scenario library ────────────────────────────────────────────────────
+   Real episodes that shaped the rupee. Market-era cards carry a `sim` config
+   that drives the value simulator (via window.applyScenario) so the model
+   reproduces history. Deep-history cards predate the float and don't map onto
+   the market sliders, so they omit `sim`. USD/INR levels align with the
+   page's own reelData series where they overlap; each card is sourced. */
+(function initScenarios() {
+  const grid = document.getElementById('scnGrid');
+  const gridDeep = document.getElementById('scnGridDeep');
+  if (!grid) return;
+
+  const SCENARIOS = [
+    {
+      year: '2013', title: 'The taper tantrum', from: 54, to: 68, dir: 'down',
+      body: 'The Fed merely hinted it would slow bond-buying. Capital rushed out of emerging markets and the rupee fell ~20% in months — the textbook case of India\'s sensitivity to Fed signals.',
+      lesson: 'A <strong>Fed signal</strong>, not an Indian problem, drove the crash. Capital flows front-run policy.',
+      sim: { oil: 110, dxy: 85.0, fii: -35, fed: 2.25, rbi: 30 },
+      src: { label: 'Taper tantrum', url: 'https://en.wikipedia.org/wiki/Taper_tantrum' }
+    },
+    {
+      year: '2018', title: 'Oil + the EM selloff', from: 63, to: 74, dir: 'down',
+      body: 'Fed hikes and quantitative tightening pulled dollars home while Brent pushed past $80. India\'s oil bill and a strong dollar squeezed the rupee past ₹70 for the first time.',
+      lesson: 'Two of India\'s six factors — <strong>oil and the dollar</strong> — firing together is enough on its own.',
+      sim: { oil: 80, dxy: 96.0, fii: -18, fed: 2.5, rbi: 15 },
+      src: { label: 'Indian rupee · exchange rate', url: 'https://en.wikipedia.org/wiki/Indian_rupee#Exchange_rate' }
+    },
+    {
+      year: '2020', title: 'The COVID money printer', from: 71, to: 77, dir: 'down',
+      body: 'The Fed created ~$4T in months — the largest expansion in history. Paradoxically the dollar first surged in the panic ("dash for cash"), dragging the rupee to record lows before liquidity calmed it.',
+      lesson: 'In a crisis the world runs <strong>to</strong> dollars, not away — so printing can strengthen the dollar short-term.',
+      sim: { oil: 40, dxy: 92.5, fii: -28, fed: 0.25, rbi: 12 },
+      src: { label: 'Quantitative easing', url: 'https://en.wikipedia.org/wiki/Quantitative_easing' }
+    },
+    {
+      year: '2022', title: 'Inflation breaks out', from: 74, to: 83, dir: 'down',
+      body: 'US inflation hit ~9% and the Fed hiked 525 bps in the fastest cycle in decades. The dollar surged worldwide and the rupee slid past ₹80 — "payback" for the pandemic printing.',
+      lesson: 'The <strong>reversal</strong> of easy money is when emerging markets pay. QT and rate hikes pull capital back.',
+      sim: { oil: 95, dxy: 106.0, fii: -30, fed: 4.5, rbi: 35 },
+      src: { label: '2021–2023 inflation surge', url: 'https://en.wikipedia.org/wiki/2021%E2%80%932023_inflation_surge' }
+    },
+    {
+      year: '2026', title: 'The Iran–US conflict', from: 88, to: 96, dir: 'down',
+      body: 'Conflict near the Strait of Hormuz pushed Brent to ~$105 while the dollar stayed strong. With India importing ~85% of its crude, the rupee became Asia\'s weakest currency at ₹95.96.',
+      lesson: 'The <strong>perfect storm</strong>: an oil shock and a strong dollar at once, against a structural import bill.',
+      sim: { oil: 105, dxy: 98.3, fii: -21, fed: 5.0, rbi: 0 },
+      src: { label: 'Strait of Hormuz', url: 'https://en.wikipedia.org/wiki/Strait_of_Hormuz' }
+    },
+    {
+      year: '2017', title: 'The year it held', from: 68, to: 64, dir: 'up',
+      body: 'The one recent stretch the rupee actually strengthened. A weak-dollar year, heavy foreign inflows into Indian equities and bonds, and calm oil let the rupee firm from ~₹68 toward ₹64.',
+      lesson: 'The rupee is <strong>not one-directional</strong>. When the dollar is soft and inflows are strong, it can rise.',
+      sim: { oil: 55, dxy: 92.0, fii: 30, fed: 1.25, rbi: 0 },
+      src: { label: 'Indian rupee · exchange rate', url: 'https://en.wikipedia.org/wiki/Indian_rupee#Exchange_rate' }
+    }
+  ];
+
+  const DEEP = [
+    {
+      year: '1966', title: 'The first big devaluation', from: 4.76, to: 7.50, dir: 'down',
+      body: 'Facing war, drought and a balance-of-payments squeeze, India devalued the rupee ~57% against the dollar — a politically explosive move tied to foreign-aid conditions.',
+      lesson: 'Even under a <strong>fixed peg</strong>, a currency can\'t defy its trade balance forever.',
+      src: { label: 'History of the rupee', url: 'https://en.wikipedia.org/wiki/History_of_the_rupee#Post-independence' }
+    },
+    {
+      year: '1975', title: 'Off sterling, onto a basket', from: 8.4, to: 8.4, dir: 'flat',
+      body: 'India ended the rupee\'s link to the pound and pegged it to a basket of trading-partner currencies instead — an early step away from a single-anchor system toward managed flexibility.',
+      lesson: 'Choosing <strong>what to peg to</strong> is itself a policy lever — and a bet on whose economy to ride.',
+      src: { label: 'History of the rupee', url: 'https://en.wikipedia.org/wiki/History_of_the_rupee#Post-independence' }
+    },
+    {
+      year: '1991', title: 'The crisis that opened India', from: 21, to: 26, dir: 'down',
+      body: 'Reserves fell to barely two weeks of imports. India airlifted gold to the Bank of England as collateral, devalued sharply, and launched the liberalisation that reshaped the economy.',
+      lesson: 'The rupee\'s modern story starts here: crisis forced the <strong>market-based system</strong> we model today.',
+      src: { label: '1991 economic crisis', url: 'https://en.wikipedia.org/wiki/1991_Indian_economic_crisis' }
+    }
+  ];
+
+  const extIcon = '<svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const replayIcon = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function moveBadge(s) {
+    if (s.dir === 'flat') return '<span class="scn-move">₹' + s.from + ' held</span>';
+    const arrow = s.dir === 'up' ? '↑' : '↓';
+    const cls = s.dir === 'up' ? 'scn-move--up' : 'scn-move--down';
+    return '<span class="scn-move ' + cls + '">₹' + s.from + ' ' + arrow + ' ₹' + s.to + '</span>';
+  }
+
+  function card(s, deep) {
+    const replay = (!deep && s.sim)
+      ? '<button type="button" class="scn-replay" data-replay>' + replayIcon + 'Replay in simulator</button>'
+      : '';
+    const src = '<a class="scn-src" href="' + s.src.url + '" target="_blank" rel="noopener">' + s.src.label + ' ' + extIcon + '</a>';
+    const el = document.createElement('article');
+    el.className = 'scn-card' + (deep ? ' scn-card--deep' : '');
+    el.innerHTML =
+      '<div class="scn-card-top"><span class="scn-year">' + s.year + '</span>' + moveBadge(s) + '</div>' +
+      '<h3 class="scn-title">' + s.title + '</h3>' +
+      '<p class="scn-body">' + s.body + '</p>' +
+      '<div class="scn-lesson">' + s.lesson + '</div>' +
+      '<div class="scn-foot">' + replay + src + '</div>';
+
+    if (!deep && s.sim) {
+      el.querySelector('[data-replay]').addEventListener('click', () => {
+        if (typeof window.applyScenario === 'function') window.applyScenario(s.sim);
+        const target = document.getElementById('simulator');
+        if (target) {
+          const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }
+      });
+    }
+    return el;
+  }
+
+  SCENARIOS.forEach(s => grid.appendChild(card(s, false)));
+  DEEP.forEach(s => gridDeep.appendChild(card(s, true)));
 })();

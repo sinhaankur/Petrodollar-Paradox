@@ -14,13 +14,15 @@ An interactive web explainer on why the Indian rupee keeps falling even as the U
 - **The Globe** — the petrodollar system mapped onto real geography. A 2D SVG world map (default) with animated oil/dollar/recycling flow arcs and 14 curated countries, plus an opt-in **3D globe** (drag to rotate, scroll to zoom, tap a country). Toggle 2D/3D; filter by flow type.
 - **Four forces firing now** — oil dependency, Iran conflict, capital flight, strong dollar
 - **Value simulator** — move sliders for oil, DXY, FII, Fed rate, RBI defense; see the projected USD/INR, a contribution breakdown, and the formula
+- **Scenario library** — real episodes that shaped the rupee (2013 taper tantrum, 2018 EM selloff, 2020 COVID, 2022 hikes, 2026 Iran, plus the 2017 recovery), each cited; market-era cards **replay into the simulator** so the model reproduces history. A "deep history" row covers the 1966/1975 pegs and the 1991 crisis
 - **Cross-currency scoreboard** — how 15 other currencies respond to the same forces
 - **Changing the world order** — a de-dollarization simulator (oil pricing, reserves, payment rails, time horizon)
 - **The Way Out** — a solutions engine: toggle real policy/structural levers (oil de-dollarization, rupee invoicing, export growth, sticky FDI, reserve buffers, gold) and watch how far they could stabilize the rupee, with a contribution breakdown and verdict
 - **Impact chain** — how rupee weakness reaches households, firms, and reserves
 - **The one upside** — IT/pharma exporters quietly benefit
 - **Share as a reel** — auto-built 30s portrait video summarising the story, narrated in your chosen language (browser TTS, or Sarvam AI with a key)
-- **References & data** — every figure with its source and last-verified date
+- **Knowledge Base** — a searchable glossary + FAQ, an 8-question self-test quiz, and a reading list
+- **References & data** — every figure with its source and last-verified date, plus a one-click CSV/JSON download of the 2000–2026 M2-vs-rupee series
 
 ## Stack
 
