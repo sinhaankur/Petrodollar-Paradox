@@ -35,6 +35,10 @@
 <body>
 
 <div class="read-progress" id="readProgress" aria-hidden="true"></div>
+
+<!-- Section roadmap: a "you are here" dot-rail, built in JS from the sections -->
+<nav class="section-rail" id="sectionRail" aria-label="Jump to section"></nav>
+
 <button class="back-to-top" id="backToTop" aria-label="Back to top">
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
     <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -54,6 +58,7 @@
     </button>
     <ul class="nav-links" id="navL1" role="tablist" aria-label="Primary">
       <li><a href="#puzzle" data-i18n="nav.story">The Story</a></li>
+      <li><a href="#history" data-i18n="nav.history">History</a></li>
       <li><a href="#system" data-i18n="nav.system">The System</a></li>
       <li><a href="#globe" data-i18n="nav.globe">The Globe</a></li>
       <li><a href="#simulator" data-i18n="nav.tools">Tools</a></li>
@@ -339,64 +344,131 @@
   </div>
 </section>
 
+<section id="history" class="section section--dark">
+  <div class="container">
+    <div class="section-label">A LONG WAY FROM BARTER</div>
+    <h2 class="section-title">Money kept changing. So did who got to print the money the world trusts.</h2>
+    <p class="section-lede">Before you can see why the dollar rules today, it helps to see the whole road: from swapping goods, to shells and metal, to one country's currency running global trade — a crown that has changed heads six times in 600 years. Then the rupee's own journey inside it, from silver coins and annas to today's ₹95.96.</p>
+
+    <!-- Barter → money → reserve currency: the setup -->
+    <div class="evo-strip">
+      <div class="evo-step">
+        <div class="evo-ico">🤝</div>
+        <div class="evo-name">Barter</div>
+        <div class="evo-desc">Trade goods for goods. Only works if both sides want what the other has — the "double coincidence of wants."</div>
+      </div>
+      <div class="evo-arrow">→</div>
+      <div class="evo-step">
+        <div class="evo-ico">🐚</div>
+        <div class="evo-name">Commodity money</div>
+        <div class="evo-desc">Cowrie shells, cattle, salt, then gold &amp; silver — something everyone accepts, so trade no longer needs a perfect match.</div>
+      </div>
+      <div class="evo-arrow">→</div>
+      <div class="evo-step">
+        <div class="evo-ico">🪙</div>
+        <div class="evo-name">Coins &amp; paper</div>
+        <div class="evo-desc">States stamp metal, then issue paper claims on it. Money becomes a promise backed by a government.</div>
+      </div>
+      <div class="evo-arrow">→</div>
+      <div class="evo-step evo-step--now">
+        <div class="evo-ico">🌐</div>
+        <div class="evo-name">A reserve currency</div>
+        <div class="evo-desc">One nation's money becomes the default for global trade &amp; savings. Today that's the dollar. It wasn't always.</div>
+      </div>
+    </div>
+
+    <!-- ─── TIMELINE 1: reserve-currency dynasties ─── -->
+    <div class="tl" id="tlDynasty">
+      <div class="tl-head">
+        <div class="section-label" style="margin-bottom:8px">600 YEARS · WHO HELD THE CROWN</div>
+        <h3 class="tl-title">The world's reserve currency has changed hands six times.</h3>
+        <p class="tl-lede">Each dominant power lasted roughly a century, then over-borrowed, lost a war, or got out-traded. The dollar has held the crown since ~1920. On the historical clock, it's middle-aged.</p>
+        <div class="ui-hint">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 11V6a2 2 0 0 1 4 0v5m0-3a2 2 0 0 1 4 0v3m0-1a2 2 0 0 1 4 0v5a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-2.7L5 15a1.5 1.5 0 0 1 2.5-1.7L9 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Tap an era to read what made it — and what ended it</span>
+        </div>
+      </div>
+
+      <div class="tl-track" role="tablist" aria-label="Reserve currency eras">
+        <button class="tl-node" role="tab" data-era="0" aria-selected="true" style="--reign:80px">
+          <span class="tl-node-dot"></span><span class="tl-node-year">1450</span><span class="tl-node-flag">🇵🇹</span>
+        </button>
+        <button class="tl-node" role="tab" data-era="1" aria-selected="false" style="--reign:110px">
+          <span class="tl-node-dot"></span><span class="tl-node-year">1530</span><span class="tl-node-flag">🇪🇸</span>
+        </button>
+        <button class="tl-node" role="tab" data-era="2" aria-selected="false" style="--reign:80px">
+          <span class="tl-node-dot"></span><span class="tl-node-year">1640</span><span class="tl-node-flag">🇳🇱</span>
+        </button>
+        <button class="tl-node" role="tab" data-era="3" aria-selected="false" style="--reign:95px">
+          <span class="tl-node-dot"></span><span class="tl-node-year">1720</span><span class="tl-node-flag">🇫🇷</span>
+        </button>
+        <button class="tl-node" role="tab" data-era="4" aria-selected="false" style="--reign:105px">
+          <span class="tl-node-dot"></span><span class="tl-node-year">1815</span><span class="tl-node-flag">🇬🇧</span>
+        </button>
+        <button class="tl-node tl-node--now" role="tab" data-era="5" aria-selected="false" style="--reign:106px">
+          <span class="tl-node-dot"></span><span class="tl-node-year">1920</span><span class="tl-node-flag">🇺🇸</span>
+        </button>
+      </div>
+
+      <div class="tl-panel" id="tlDynastyPanel" role="tabpanel" aria-live="polite"></div>
+    </div>
+
+    <!-- ─── TIMELINE 2: history of the rupee ─── -->
+    <div class="tl" id="tlRupee">
+      <div class="tl-head">
+        <div class="section-label" style="margin-bottom:8px">₹ · FROM SILVER COINS TO ₹95.96</div>
+        <h3 class="tl-title">The rupee: 500 years, from annas to the open market.</h3>
+        <p class="tl-lede">The rupee is one of the world's oldest continuously used currencies. It went from silver, to 16 annas, to 100 paise, to a market-set exchange rate — and each regime change shows up as a jump in the chart.</p>
+        <div class="ui-hint">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 11V6a2 2 0 0 1 4 0v5m0-3a2 2 0 0 1 4 0v3m0-1a2 2 0 0 1 4 0v5a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-2.7L5 15a1.5 1.5 0 0 1 2.5-1.7L9 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Tap a milestone to see what changed and how it hit prices</span>
+        </div>
+      </div>
+
+      <div class="tl-track tl-track--rupee" role="tablist" aria-label="Rupee history milestones">
+        <button class="tl-node" role="tab" data-era="0" aria-selected="true"><span class="tl-node-dot"></span><span class="tl-node-year">1540</span></button>
+        <button class="tl-node" role="tab" data-era="1" aria-selected="false"><span class="tl-node-dot"></span><span class="tl-node-year">1835</span></button>
+        <button class="tl-node" role="tab" data-era="2" aria-selected="false"><span class="tl-node-dot"></span><span class="tl-node-year">1898</span></button>
+        <button class="tl-node" role="tab" data-era="3" aria-selected="false"><span class="tl-node-dot"></span><span class="tl-node-year">1947</span></button>
+        <button class="tl-node" role="tab" data-era="4" aria-selected="false"><span class="tl-node-dot"></span><span class="tl-node-year">1957</span></button>
+        <button class="tl-node" role="tab" data-era="5" aria-selected="false"><span class="tl-node-dot"></span><span class="tl-node-year">1966</span></button>
+        <button class="tl-node" role="tab" data-era="6" aria-selected="false"><span class="tl-node-dot"></span><span class="tl-node-year">1991</span></button>
+        <button class="tl-node" role="tab" data-era="7" aria-selected="false"><span class="tl-node-dot"></span><span class="tl-node-year">1993</span></button>
+        <button class="tl-node tl-node--now" role="tab" data-era="8" aria-selected="false"><span class="tl-node-dot"></span><span class="tl-node-year">2026</span></button>
+      </div>
+
+      <div class="tl-panel" id="tlRupeePanel" role="tabpanel" aria-live="polite"></div>
+
+      <div class="tl-anna">
+        <div class="tl-anna-tag">THE OLD MONEY · WHY "64 ANNA" WASN'T QUITE RIGHT</div>
+        <p>Before 1957 the rupee wasn't decimal. It split into <strong>16 annas</strong>, and each anna into <strong>4 pice</strong> (or 12 pies) — so <strong>1 rupee = 16 anna = 64 pice = 192 pies</strong>. In 1957 India switched to <strong>100 naye paise</strong> ("new paise") to the rupee. That's the real "64 → 100" jump: the base changed from a 64-pice system to a clean 100-paise decimal one, making arithmetic — and trade — far simpler.</p>
+      </div>
+    </div>
+
+    <!-- Tie-back to the dollar question -->
+    <div class="tl-verdict">
+      <div class="tl-verdict-tag">SO — IS THE DOLLAR NEXT?</div>
+      <p>Every previous crown fell eventually, but never quickly and never without a ready replacement. The dollar still settles ~88% of FX trades and holds ~58% of reserves; the yuan is under 3%. History says dominance is temporary — but it also says the successor takes decades to arrive. For the rupee, the lesson is narrow: you don't have to replace the dollar to stop being squeezed by it. You just have to need it a little less.</p>
+      <a class="tl-verdict-link" href="#system">See how today's system actually works ↓</a>
+    </div>
+  </div>
+</section>
+
 <section id="system" class="section">
   <div class="container">
     <div class="section-label" data-i18n="system.label">THE SYSTEM</div>
     <h2 class="section-title" data-i18n="system.title">The puzzle resolves in three layers.</h2>
-
-    <div class="layer-cards">
-      <article class="layer-card layer-card--purple">
-        <div class="layer-number">01</div>
-        <h3>The dollar is the world's plumbing</h3>
-        <p>Every cross-border transaction, every barrel of oil, every central bank reserve — the dollar is the default rail. Demand is structural, not optional.</p>
-        <ul class="layer-stats">
-          <li><span class="layer-stat-value">~90%</span><span class="layer-stat-text">of global FX trades involve the dollar</span></li>
-          <li><span class="layer-stat-value">~58%</span><span class="layer-stat-text">of central bank reserves held in dollars</span></li>
-          <li><span class="layer-stat-value">Most</span><span class="layer-stat-text">cross-border debt is dollar-denominated</span></li>
-        </ul>
-      </article>
-
-      <article class="layer-card layer-card--teal">
-        <div class="layer-number">02</div>
-        <h3>The petrodollar engine</h3>
-        <p>Oil is priced in dollars. Always. Everywhere. Every barrel forces importers to source dollars and exporters to recycle their surplus back into US Treasuries.</p>
-        <div class="petro-loop">
-          <div class="petro-node petro-node--blue">
-            <div class="petro-label">US</div>
-            <div class="petro-sub">Prints dollars</div>
-          </div>
-          <div class="petro-arrow">→</div>
-          <div class="petro-node petro-node--amber">
-            <div class="petro-label">Importers</div>
-            <div class="petro-sub">India, EU, China</div>
-          </div>
-          <div class="petro-arrow">→</div>
-          <div class="petro-node petro-node--coral">
-            <div class="petro-label">Exporters</div>
-            <div class="petro-sub">Saudi, UAE</div>
-          </div>
-          <div class="petro-recycle">
-            <span>↻ recycled into US Treasuries</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="layer-card layer-card--coral">
-        <div class="layer-number">03</div>
-        <h3>India sits at the wrong end</h3>
-        <p>Inside this system, India is uniquely exposed. It earns rupees but must buy dollars — for oil, for debt, for everything imported. Four forces are firing at once.</p>
-        <div class="layer-foot">
-          <div class="layer-foot-rate">₹95.96</div>
-          <div class="layer-foot-text">Asia's weakest currency · May 2026</div>
-        </div>
-      </article>
-    </div>
+    <p class="section-lede" data-i18n="system.lede">Start here. Tap the three tabs below to watch the money actually move — first how the dollar became the world's plumbing, then how oil locks the loop in place, then why India ends up squeezed. Once the animation makes it click, the written breakdown underneath fills in the detail.</p>
 
     <div class="lflow">
       <div class="lflow-head">
         <div class="section-label" style="margin-bottom:8px" data-i18n="lflow.label">DETAILED FLOW · ANIMATED</div>
         <h3 class="lflow-title" data-i18n="lflow.title">Watch each layer in motion.</h3>
         <p class="lflow-lede" data-i18n="lflow.lede">Dollars don't sit still. They circulate through specific channels that lock in their dominance. Pick a layer to see the flows.</p>
+        <div class="ui-hint">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 11V6a2 2 0 0 1 4 0v5m0-3a2 2 0 0 1 4 0v3m0-1a2 2 0 0 1 4 0v5a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-2.7L5 15a1.5 1.5 0 0 1 2.5-1.7L9 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-i18n="lflow.hint">Tap a layer to switch the animation</span>
+        </div>
       </div>
 
       <div class="lflow-tabs" role="tablist" id="lflowTabs">
@@ -865,6 +937,154 @@
 
       </div>
     </div>
+
+    <div class="lflow-cards-intro">
+      <span class="section-label" data-i18n="system.cardsLabel">THE SAME THREE LAYERS, IN WORDS</span>
+    </div>
+
+    <div class="layer-cards">
+      <article class="layer-card layer-card--purple">
+        <div class="layer-number">01</div>
+        <h3>The dollar is the world's plumbing</h3>
+        <p>Every cross-border transaction, every barrel of oil, every central bank reserve — the dollar is the default rail. Demand is structural, not optional.</p>
+        <ul class="layer-stats">
+          <li><span class="layer-stat-value">~90%</span><span class="layer-stat-text">of global FX trades involve the dollar</span></li>
+          <li><span class="layer-stat-value">~58%</span><span class="layer-stat-text">of central bank reserves held in dollars</span></li>
+          <li><span class="layer-stat-value">Most</span><span class="layer-stat-text">cross-border debt is dollar-denominated</span></li>
+        </ul>
+      </article>
+
+      <article class="layer-card layer-card--teal">
+        <div class="layer-number">02</div>
+        <h3>The petrodollar engine</h3>
+        <p>Oil is priced in dollars. Always. Everywhere. Every barrel forces importers to source dollars and exporters to recycle their surplus back into US Treasuries.</p>
+        <div class="petro-loop">
+          <div class="petro-node petro-node--blue">
+            <div class="petro-label">US</div>
+            <div class="petro-sub">Prints dollars</div>
+          </div>
+          <div class="petro-arrow">→</div>
+          <div class="petro-node petro-node--amber">
+            <div class="petro-label">Importers</div>
+            <div class="petro-sub">India, EU, China</div>
+          </div>
+          <div class="petro-arrow">→</div>
+          <div class="petro-node petro-node--coral">
+            <div class="petro-label">Exporters</div>
+            <div class="petro-sub">Saudi, UAE</div>
+          </div>
+          <div class="petro-recycle">
+            <span>↻ recycled into US Treasuries</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="layer-card layer-card--coral">
+        <div class="layer-number">03</div>
+        <h3>India sits at the wrong end</h3>
+        <p>Inside this system, India is uniquely exposed. It earns rupees but must buy dollars — for oil, for debt, for everything imported. Four forces are firing at once.</p>
+        <div class="layer-foot">
+          <div class="layer-foot-rate">₹95.96</div>
+          <div class="layer-foot-text">Asia's weakest currency · May 2026</div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ─── WHERE EACH COUNTRY SITS: the plumbing, upstream → downstream ─── -->
+    <div class="plumb">
+      <div class="plumb-head">
+        <div class="section-label">THE PLUMBING · WHO SITS WHERE</div>
+        <h3 class="plumb-title">The dollar isn't just a currency. It's the world's plumbing — and every country sits somewhere on the pipe.</h3>
+        <p class="plumb-lede">Think of dollars as water in a single pipe. It's pumped in at the source and flows downhill. Where a country sits on that pipe decides how much power it has — and how hard it gets squeezed when the pressure drops. India sits near the bottom. Here's the whole run, top to bottom.</p>
+      </div>
+
+      <ol class="plumb-stream">
+        <li class="plumb-stage plumb-stage--source">
+          <div class="plumb-marker"><span class="plumb-depth">SOURCE</span></div>
+          <div class="plumb-body">
+            <div class="plumb-role">The tap</div>
+            <h4 class="plumb-country">🇺🇸 United States</h4>
+            <p class="plumb-what">Prints the water everyone downstream needs. Every barrel of oil, most cross-border debt and ~58% of central-bank reserves are denominated in its currency, so demand never runs dry.</p>
+            <div class="plumb-power plumb-power--high">Leverage: sets the weather for everyone</div>
+          </div>
+        </li>
+
+        <li class="plumb-stage plumb-stage--gate">
+          <div class="plumb-marker"><span class="plumb-depth">UPSTREAM</span></div>
+          <div class="plumb-body">
+            <div class="plumb-role">The reservoir keepers</div>
+            <h4 class="plumb-country">🇸🇦 Saudi Arabia · 🇦🇪 UAE · 🇶🇦 Qatar</h4>
+            <p class="plumb-what">Sell oil, collect dollars they can't spend fast enough, and choose where to park the surplus — mostly back into US Treasuries. They hold real leverage: they decide whether the loop keeps closing.</p>
+            <div class="plumb-power plumb-power--high">Leverage: can choose to price oil elsewhere</div>
+          </div>
+        </li>
+
+        <li class="plumb-stage plumb-stage--mid">
+          <div class="plumb-marker"><span class="plumb-depth">MIDSTREAM</span></div>
+          <div class="plumb-body">
+            <div class="plumb-role">The big buyers</div>
+            <h4 class="plumb-country">🇪🇺 Eurozone · 🇯🇵 Japan</h4>
+            <p class="plumb-what">Large importers that also issue reserve-grade currencies (euro, yen). They pay dollars for oil, but the world holds their money too — so a wobble doesn't threaten their survival. A cushion India doesn't have.</p>
+            <div class="plumb-power plumb-power--mid">Leverage: own a partial alternative currency</div>
+          </div>
+        </li>
+
+        <li class="plumb-stage plumb-stage--india">
+          <div class="plumb-marker"><span class="plumb-depth">DOWNSTREAM</span></div>
+          <div class="plumb-body">
+            <div class="plumb-role">The squeezed</div>
+            <h4 class="plumb-country">🇮🇳 India</h4>
+            <p class="plumb-what">Earns rupees, but must buy dollars for oil, debt and most imports. No reserve currency, 85% of crude imported, and four pressures firing at once. When flow slows, India feels it first and worst.</p>
+            <div class="plumb-power plumb-power--low">Leverage: low — the rupee absorbs the shock</div>
+            <div class="plumb-rate">₹95.96 <span>= $1 · all-time low</span></div>
+          </div>
+        </li>
+      </ol>
+
+      <!-- The two who dug their own channel -->
+      <div class="plumb-bypass">
+        <div class="plumb-bypass-head">
+          <div class="section-label">THE WORKAROUND · HOW CHINA AND RUSSIA ROUTE AROUND THE DOLLAR</div>
+          <h4 class="plumb-bypass-title">Two countries stopped waiting downstream and dug their own pipe.</h4>
+          <p class="plumb-bypass-lede">India mostly plays inside the dollar system. China and Russia are the two large economies actively building an alternative — for very different reasons. Neither has replaced the dollar. But they show what "sitting downstream" doesn't have to look like.</p>
+        </div>
+
+        <div class="plumb-bypass-grid">
+          <article class="bypass-card bypass-card--china">
+            <div class="bypass-flag">🇨🇳</div>
+            <h5 class="bypass-name">China — building a parallel system</h5>
+            <p class="bypass-sub">Position: a huge importer that refuses to stay downstream.</p>
+            <ul class="bypass-list">
+              <li><strong>CIPS.</strong> Its own cross-border payment rail, an alternative to the US-linked SWIFT/dollar plumbing.</li>
+              <li><strong>Yuan-priced oil.</strong> Buys crude from Russia, Iran and increasingly the Gulf settled partly in yuan, chipping at oil's dollar monopoly.</li>
+              <li><strong>Swap lines &amp; the digital yuan.</strong> Dozens of central-bank currency swaps and the e-CNY let trade partners hold and settle yuan directly.</li>
+              <li><strong>The catch.</strong> The yuan isn't freely convertible and capital controls scare off reserve managers, so it's still &lt;3% of global reserves.</li>
+            </ul>
+            <div class="bypass-tag">Strategy: patient, state-built alternative rails</div>
+          </article>
+
+          <article class="bypass-card bypass-card--russia">
+            <div class="bypass-flag">🇷🇺</div>
+            <h5 class="bypass-name">Russia — forced off the pipe</h5>
+            <p class="bypass-sub">Position: an exporter cut off from dollar plumbing by sanctions.</p>
+            <ul class="bypass-list">
+              <li><strong>Sanctions shock.</strong> After 2022, frozen reserves and SWIFT cutoffs made dollars/euros unusable — de-dollarization became survival, not choice.</li>
+              <li><strong>Yuan &amp; rupee settlement.</strong> Sells oil for yuan and rupees; the rupee balances piled up so fast they became a problem to spend.</li>
+              <li><strong>Gold &amp; national currencies.</strong> Shifted reserves into gold and yuan, and prices energy in "friendly" currencies.</li>
+              <li><strong>The catch.</strong> Trapped rupee revenue and a thin yuan market show how clumsy life is once you're pushed off the dollar rail.</li>
+            </ul>
+            <div class="bypass-tag">Strategy: improvised exit under sanctions pressure</div>
+          </article>
+        </div>
+
+        <div class="plumb-india-verdict">
+          <span class="plumb-india-verdict-tag">WHERE THIS LEAVES INDIA</span>
+          <p>India sits between the two: too integrated with the West to break away like Russia, too dependent on imported capital to go it alone like China. Its play is quieter — rupee invoicing with Russia and the UAE, local-currency trade deals, and bigger reserves — chipping at the edges rather than digging a whole new pipe. That's why the rupee slides while it waits.</p>
+          <a class="plumb-refs-link" href="#references">See the sources for these figures ↓</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1044,6 +1264,10 @@
     <div class="section-label" data-i18n="sim.label">VALUE SIMULATOR</div>
     <h2 class="section-title" data-i18n="sim.title">Move the sliders. Watch the rupee respond.</h2>
     <p class="section-lede" data-i18n="sim.lede">A simplified linear model of the five major forces — oil, dollar strength, capital flows, Fed policy, and RBI defense. Adjust any input and the projected USD/INR updates instantly.</p>
+    <div class="ui-hint">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h10m0 0-3-3m3 3-3 3M20 5v14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-i18n="sim.hint">Drag any slider — the rate, breakdown and verdict update live</span>
+    </div>
 
     <div class="sim">
       <div class="sim-controls">
@@ -1160,12 +1384,19 @@
           <div class="sim-verdict-label">VERDICT</div>
           <div class="sim-verdict-text">The rupee is at its current level — neither force pushing it higher nor lower than today.</div>
         </div>
+
+        <div class="sim-solution" id="simSolution">
+          <div class="sim-solution-label">WHAT WOULD PULL IT BACK?</div>
+          <p class="sim-solution-text" id="simSolutionText">You're at today's level. Push any slider into the red and this box will name the fastest lever to recover — and where to fix it for real.</p>
+          <a class="sim-solution-link" href="#solutions">Explore the full way out ↓</a>
+        </div>
       </div>
     </div>
 
-    <div class="sim-disclaimer">
-      <strong>How the model works.</strong> Starting from today's ₹95.96, each slider applies a calibrated sensitivity: $10 in oil moves the rupee ₹0.50, one DXY point moves it ₹0.25, $5B in FII flows moves it ₹0.20, 0.25% in Fed rate moves it ₹0.30, and $5B in RBI dollar sales moves it −₹0.30. Coefficients are derived from historical regressions but the real world has nonlinearities, interactions, and shocks no linear model captures. Use this to build intuition — not to make trades.
-    </div>
+    <details class="disclosure sim-disclaimer">
+      <summary><span>How the model works</span></summary>
+      <p>Starting from today's ₹95.96, each slider applies a calibrated sensitivity: $10 in oil moves the rupee ₹0.50, one DXY point moves it ₹0.25, $5B in FII flows moves it ₹0.20, 0.25% in Fed rate moves it ₹0.30, and $5B in RBI dollar sales moves it −₹0.30. Coefficients are derived from historical regressions but the real world has nonlinearities, interactions, and shocks no linear model captures. Use this to build intuition — not to make trades.</p>
+    </details>
 
     <div class="math-block">
       <div class="math-head">
@@ -1894,6 +2125,34 @@
         <a href="https://ppac.gov.in/" target="_blank" rel="noopener" class="ref-link">
           <span class="ref-link-name">PPAC · India</span>
           <span class="ref-link-detail">Crude import share · pricing</span>
+        </a>
+        <a href="https://www.atlanticcouncil.org/programs/geoeconomics-center/dollar-dominance-monitor/" target="_blank" rel="noopener" class="ref-link">
+          <span class="ref-link-name">Atlantic Council · Dollar Dominance Monitor</span>
+          <span class="ref-link-detail">Reserve share · de-dollarization trends · CIPS vs SWIFT</span>
+        </a>
+        <a href="https://www.swift.com/about-us/discover-swift/rmb-tracker" target="_blank" rel="noopener" class="ref-link">
+          <span class="ref-link-name">SWIFT · RMB Tracker</span>
+          <span class="ref-link-detail">Yuan's share of global payments &amp; trade finance</span>
+        </a>
+        <a href="https://home.treasury.gov/policy-issues/financial-sanctions" target="_blank" rel="noopener" class="ref-link">
+          <span class="ref-link-name">US Treasury · OFAC</span>
+          <span class="ref-link-detail">Russia sanctions &amp; frozen-reserve actions (2022–)</span>
+        </a>
+        <a href="https://www.pboc.gov.cn/en/3688006/index.html" target="_blank" rel="noopener" class="ref-link">
+          <span class="ref-link-name">People's Bank of China</span>
+          <span class="ref-link-detail">CIPS · bilateral swap lines · e-CNY</span>
+        </a>
+        <a href="https://www.federalreservehistory.org/essays/bretton-woods-created" target="_blank" rel="noopener" class="ref-link">
+          <span class="ref-link-name">Fed History · Bretton Woods</span>
+          <span class="ref-link-detail">1944 gold-dollar system · 1971 Nixon shock</span>
+        </a>
+        <a href="https://www.bankofengland.co.uk/museum/online-collections/banknotes/history-of-sterling" target="_blank" rel="noopener" class="ref-link">
+          <span class="ref-link-name">Bank of England</span>
+          <span class="ref-link-detail">Sterling &amp; the classic gold standard era</span>
+        </a>
+        <a href="https://www.rbi.org.in/scripts/hn1.aspx" target="_blank" rel="noopener" class="ref-link">
+          <span class="ref-link-name">RBI · History &amp; Monetary Museum</span>
+          <span class="ref-link-detail">Rupee history · 1957 decimalization · devaluations</span>
         </a>
       </div>
     </div>

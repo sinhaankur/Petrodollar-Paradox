@@ -299,9 +299,29 @@ reelTrigger.observe(document.querySelector('.reel-card'));
 
 // ─── Smooth nav highlight ─────────────────────────────────────
 const navLinks = document.querySelectorAll('.nav-links a');
-const sections = ['#puzzle', '#timeline', '#printing', '#system', '#globe', '#forces', '#simulator', '#currencies', '#solutions', '#impact', '#knowledge']
+const sections = ['#puzzle', '#timeline', '#printing', '#history', '#system', '#globe', '#forces', '#simulator', '#currencies', '#solutions', '#impact', '#knowledge']
   .map(id => document.querySelector(id))
   .filter(Boolean);
+
+// ─── Section roadmap rail ("you are here") ────────────────────
+const RAIL_LABELS = {
+  puzzle: 'The puzzle', timeline: 'Timeline', printing: 'How printing works',
+  history: 'History of money', system: 'The system', globe: 'The globe',
+  forces: 'Four forces', simulator: 'Simulator', currencies: 'Currencies',
+  solutions: 'The way out', impact: 'Impact', knowledge: 'Learn'
+};
+const railEl = document.getElementById('sectionRail');
+const railLinks = {};
+if (railEl) {
+  sections.forEach(sec => {
+    const a = document.createElement('a');
+    a.href = '#' + sec.id;
+    a.setAttribute('aria-label', RAIL_LABELS[sec.id] || sec.id);
+    a.innerHTML = '<span class="rail-label">' + (RAIL_LABELS[sec.id] || sec.id) + '</span>';
+    railEl.appendChild(a);
+    railLinks[sec.id] = a;
+  });
+}
 
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -310,11 +330,28 @@ const navObserver = new IntersectionObserver((entries) => {
       navLinks.forEach(a => {
         a.style.color = a.getAttribute('href') === id ? 'var(--ink)' : '';
       });
+      Object.entries(railLinks).forEach(([sid, a]) => {
+        a.classList.toggle('is-active', sid === e.target.id);
+      });
     }
   });
 }, { rootMargin: '-40% 0px -55% 0px' });
 
 sections.forEach(s => navObserver.observe(s));
+
+// Show the rail only after the user scrolls past the hero
+if (railEl) {
+  const heroEl = document.querySelector('.hero');
+  if (heroEl) {
+    const railToggle = new IntersectionObserver((entries) => {
+      // hero mostly out of view → show rail
+      railEl.classList.toggle('is-visible', !entries[0].isIntersecting);
+    }, { threshold: 0.15 });
+    railToggle.observe(heroEl);
+  } else {
+    railEl.classList.add('is-visible');
+  }
+}
 
 // ─── Value simulator ───────────────────────────────────────────
 const SIM_BASE = { oil: 105, dxy: 98.3, fii: -21, fed: 5.0, rbi: 0 };
@@ -457,6 +494,31 @@ function updateSim() {
   vEl.querySelector('.sim-verdict-label').textContent = 'VERDICT · ' + verdict.label;
   vEl.querySelector('.sim-verdict-text').textContent = verdict.text;
 
+  // ── Actionable "what would pull it back?" solution ──
+  const solEl = document.getElementById('simSolutionText');
+  if (solEl) {
+    const drivers = [
+      { key: 'oil', val: c.oil, weak: 'oil at $' + v.oil.toFixed(0) + '/bbl', fix: 'cutting oil dependency — rupee invoicing, discounted Russian crude and faster clean-energy buildout' },
+      { key: 'dxy', val: c.dxy, weak: 'a strong dollar (DXY ' + v.dxy.toFixed(1) + ')', fix: 'a wait for the Fed to ease and DXY to cool — India can only cushion this one, not control it' },
+      { key: 'fii', val: c.fii, weak: 'foreign capital outflows', fix: 'stickier inflows — deeper bond-index inclusion and long-term FDI over hot money' },
+      { key: 'fed', val: c.fed, weak: 'the Fed rate at ' + v.fed.toFixed(2) + '%', fix: 'narrowing the rate gap, or building reserves to ride out the carry-trade pull' },
+    ];
+    // biggest positive (weakening) contributor
+    const worst = drivers.filter(d => d.val > 0.02).sort((a, b) => b.val - a.val)[0];
+    const rbiRoom = v.rbi < 40; // is there defense headroom left?
+
+    if (total <= 0.02) {
+      solEl.innerHTML = rate < 95.96
+        ? 'This scenario already <strong>strengthens</strong> the rupee. Whatever you changed is exactly the kind of lever the "Way Out" section builds on.'
+        : "You're at today's level. Push any slider into the red and this box will name the fastest lever to recover — and where to fix it for real.";
+    } else if (worst) {
+      const defense = rbiRoom
+        ? ' In the short run, RBI can lean against it by selling reserves (the RBI slider) — but that buys time, not a fix.'
+        : ' RBI is already spending heavily to defend it, so the durable fix has to be structural.';
+      solEl.innerHTML = 'The biggest drag here is <strong>' + worst.weak + '</strong>. The real answer is <strong>' + worst.fix + '</strong>.' + defense;
+    }
+  }
+
   // Highlight active preset if matches
   const presetKey = Object.keys(SIM_PRESETS).find(k => {
     const p = SIM_PRESETS[k];
@@ -595,6 +657,7 @@ if (ccyPick) {
 const I18N = {
   en: {
     'nav.story': 'The Story',
+    'nav.history': 'History',
     'nav.system': 'The System',
     'nav.tools': 'Tools',
     'nav.currencies': 'Currencies',
@@ -638,12 +701,16 @@ const I18N = {
     'printing.lede': 'The dollar supply expands through the banking system — and the way it expands determines whether the rupee gets a boost or a beating.',
     'system.label': 'THE SYSTEM',
     'system.title': 'The puzzle resolves in three layers.',
+    'system.lede': 'Start here. Tap the three tabs below to watch the money actually move — first how the dollar became the world\'s plumbing, then how oil locks the loop in place, then why India ends up squeezed. Once the animation makes it click, the written breakdown underneath fills in the detail.',
+    'system.cardsLabel': 'THE SAME THREE LAYERS, IN WORDS',
+    'lflow.hint': 'Tap a layer to switch the animation',
     'forces.label': 'THE FOUR FORCES',
     'forces.title': 'Every dollar-demand stream is firing at once.',
     'forces.lede': 'No single factor explains the slide. Four forces are stacking on top of each other in 2026 — and the rupee has nowhere to hide.',
     'sim.label': 'VALUE SIMULATOR',
     'sim.title': 'Move the sliders. Watch the rupee respond.',
     'sim.lede': 'A simplified linear model of the five major forces — oil, dollar strength, capital flows, Fed policy, and RBI defense. Adjust any input and the projected USD/INR updates instantly.',
+    'sim.hint': 'Drag any slider — the rate, breakdown and verdict update live',
     'ccy.label': 'CROSS-CURRENCY IMPACT',
     'ccy.title': "India isn't alone. The dollar is moving everyone.",
     'ccy.lede': "Pick any currency below to see how it's responding to the same forces hitting the rupee — and why some are holding up while others are buckling.",
@@ -1447,6 +1514,125 @@ document.querySelectorAll('.lflow-tab').forEach(tab => {
     });
   });
 });
+
+// ─── History timelines: reserve-currency dynasties + the rupee ──
+const DYNASTY_ERAS = [
+  {
+    flag: '🇵🇹', name: 'Portugal', unit: 'the real / cruzado', reign: '~1450–1530', span: '≈80 yrs',
+    rise: 'First to master ocean navigation. Control of the spice route round Africa made Lisbon the hub of world trade, and Portuguese gold coin the trusted settlement metal.',
+    fall: 'A small population couldn\'t hold a global empire. Spain absorbed the crown (1580) and the trade shifted.',
+    injected: 'Pumped African gold and Asian spices into Europe — the first time one small nation set the price of global goods.',
+    impact: 'Established the template: sea power + trade routes = monetary power.'
+  },
+  {
+    flag: '🇪🇸', name: 'Spain', unit: 'the silver real / "pieces of eight"', reign: '~1530–1640', span: '≈110 yrs',
+    rise: 'New World silver from Potosí and Mexico flooded the globe. The Spanish silver dollar became the first truly worldwide money — accepted from Manila to Amsterdam to the American colonies.',
+    fall: 'Too much silver caused inflation ("the price revolution"); endless wars and defaults (Spain defaulted repeatedly) drained the treasury.',
+    injected: 'Injected so much silver into world trade that it literally minted the money Asia and Europe used for centuries — the peso underpinned the later US dollar sign.',
+    impact: 'Proved a reserve currency can be inflated away by its own issuer\'s overspending — the first cautionary tale.'
+  },
+  {
+    flag: '🇳🇱', name: 'Netherlands', unit: 'the Dutch guilder', reign: '~1640–1720', span: '≈80 yrs',
+    rise: 'The Dutch invented modern finance: the first central bank (Amsterdam), the first stock exchange, and the first joint-stock multinational (the VOC). The guilder was backed by the deepest, safest capital market in the world.',
+    fall: 'Wars with England and France, plus the 1720 speculative bubbles, sapped the edge. Financial leadership drifted to London.',
+    injected: 'Exported credit and trade finance — Dutch capital funded ventures worldwide, showing that finance, not just gold, confers currency power.',
+    impact: 'Introduced the idea that trust in institutions — not just metal — makes a currency global.'
+  },
+  {
+    flag: '🇫🇷', name: 'France', unit: 'the livre / franc', reign: '~1720–1815', span: '≈95 yrs',
+    rise: 'Europe\'s largest, richest economy for much of the 18th century. The livre, and later the franc, rivalled sterling as a settlement currency across the continent.',
+    fall: 'The John Law paper-money bubble (1720), the cost of the American and Napoleonic wars, and the Revolution\'s hyperinflation (the assignats) destroyed monetary credibility.',
+    injected: 'Financed revolutions and wars abroad, spreading French coin — but also spread the first modern paper-money collapse.',
+    impact: 'A second warning: print to fund war and you forfeit the trust a reserve currency runs on.'
+  },
+  {
+    flag: '🇬🇧', name: 'Britain', unit: 'the pound sterling £', reign: '~1815–1944', span: '≈130 yrs',
+    rise: 'Victory at Waterloo, the Industrial Revolution and a global empire made sterling the anchor of the classic gold standard. By 1900, ~60% of world trade was invoiced in pounds; London was the world\'s bank.',
+    fall: 'Two world wars turned Britain from the world\'s biggest creditor into a huge debtor. It sold assets to survive, and the US emerged with the gold and the industry.',
+    injected: 'Exported sterling credit across the empire and beyond — the City of London financed global trade for over a century.',
+    impact: 'The clearest modern parallel to the dollar: dominance ended not overnight, but through war debt and a rising challenger already in place.'
+  },
+  {
+    flag: '🇺🇸', name: 'United States', unit: 'the US dollar $', reign: '~1920–today', span: '≈105 yrs & counting', now: true,
+    rise: 'WWII left the US with most of the world\'s gold and industry. Bretton Woods (1944) pegged the world to a gold-backed dollar. When Nixon cut the gold link (1971), the petrodollar deal (1974) — oil priced only in dollars — kept demand structural.',
+    fall: 'Not fallen — but challenged. Weaponized sanctions (freezing Russia\'s reserves, 2022) pushed rivals toward alternatives; huge deficits and money-printing raise long-run credibility questions.',
+    injected: 'The great injector. The US flooded the world with dollars via the Marshall Plan (rebuilding Europe), Bretton Woods reserves, the petrodollar recycling loop, and post-2008/2020 QE (~$8T+). Other central banks hold those dollars as reserves — which is exactly why "printing" doesn\'t sink the dollar.',
+    impact: 'This is the system the rest of this page dissects. India — and the rupee — live downstream of every dollar the US injects.'
+  }
+];
+
+const RUPEE_ERAS = [
+  { year: '1540', title: 'The silver rupee is born', body: 'Sher Shah Suri issues the "rupiya" — a standardized 11.5g silver coin. It becomes the subcontinent\'s money for centuries and one of the longest-lived currencies on Earth.', tag: 'SILVER STANDARD', stat: '1 rupiya = 11.5g silver' },
+  { year: '1835', title: 'One rupee for all of British India', body: 'The Coinage Act makes the silver rupee the single legal tender across British India, ending a patchwork of regional coins. Split into 16 annas, 64 pice.', tag: 'UNIFIED COINAGE', stat: '1 rupee = 16 anna = 64 pice' },
+  { year: '1898', title: 'Pegged to the pound', body: 'India moves onto a gold-exchange standard, fixing the rupee to sterling at 1 shilling 4 pence (≈15 rupees to the pound). The rupee\'s value now rides on Britain\'s.', tag: 'STERLING PEG', stat: '₹15 ≈ £1' },
+  { year: '1947', title: 'Independence — and a dollar rate', body: 'At independence the rupee is worth about ₹4.16 to the US dollar, still tied to sterling. India inherits a currency built for a colonial trade system it must now re-engineer.', tag: 'INDEPENDENCE', stat: '₹4.16 = $1' },
+  { year: '1957', title: 'Decimalization: annas become paise', body: 'The rupee is split into 100 "naye paise" instead of 16 annas / 64 pice. The messy 64-base system gives way to clean decimal maths — simpler pricing, accounting and trade.', tag: 'THE 64 → 100 SHIFT', stat: '1 rupee = 100 paise' },
+  { year: '1966', title: 'First big devaluation', body: 'After war, drought and a balance-of-payments crisis, India devalues the rupee 57% — from ₹4.76 to ₹7.50 per dollar — to boost exports and secure foreign aid. Imports get sharply costlier overnight.', tag: 'DEVALUATION', stat: '₹4.76 → ₹7.50 = $1' },
+  { year: '1991', title: 'The crisis that changed everything', body: 'Foreign reserves fall to two weeks of imports. India airlifts gold to London as collateral, devalues sharply, and launches the liberalization reforms that open the economy. The rupee roughly halves.', tag: 'BOP CRISIS', stat: '₹17.9 = $1' },
+  { year: '1993', title: 'The rupee floats', body: 'India moves to a market-determined exchange rate (a managed float). From now on, oil, capital flows and the dollar — not a government decree — set the rupee\'s daily value. The modern FX era begins.', tag: 'MARKET FLOAT', stat: '~₹31 = $1' },
+  { year: '2026', title: 'Today: ₹95.96 and downstream', body: 'A managed float inside a dollar-centric world. Oil shocks, Fed policy, capital flight and a strong dollar now move the rupee in real time — the forces the simulator on this page lets you play with.', tag: 'ALL-TIME LOW', stat: '₹95.96 = $1', now: true },
+];
+
+function renderDynasty(i) {
+  const e = DYNASTY_ERAS[i];
+  const panel = document.getElementById('tlDynastyPanel');
+  if (!panel || !e) return;
+  panel.innerHTML =
+    '<div class="tl-card' + (e.now ? ' tl-card--now' : '') + '">' +
+      '<div class="tl-card-head">' +
+        '<span class="tl-card-flag">' + e.flag + '</span>' +
+        '<div><div class="tl-card-name">' + e.name + '</div>' +
+        '<div class="tl-card-unit">' + e.unit + '</div></div>' +
+        '<div class="tl-card-reign"><span>' + e.reign + '</span><em>' + e.span + '</em></div>' +
+      '</div>' +
+      '<div class="tl-card-grid">' +
+        '<div class="tl-card-block"><h5>How it rose</h5><p>' + e.rise + '</p></div>' +
+        '<div class="tl-card-block"><h5>' + (e.now ? 'What\'s challenging it' : 'What ended it') + '</h5><p>' + e.fall + '</p></div>' +
+        '<div class="tl-card-block"><h5>How it injected money into the world</h5><p>' + e.injected + '</p></div>' +
+        '<div class="tl-card-block tl-card-block--impact"><h5>Why it matters here</h5><p>' + e.impact + '</p></div>' +
+      '</div>' +
+    '</div>';
+}
+
+function renderRupee(i) {
+  const e = RUPEE_ERAS[i];
+  const panel = document.getElementById('tlRupeePanel');
+  if (!panel || !e) return;
+  panel.innerHTML =
+    '<div class="tl-card' + (e.now ? ' tl-card--now' : '') + '">' +
+      '<div class="tl-card-head tl-card-head--rupee">' +
+        '<div class="tl-rupee-year">' + e.year + '</div>' +
+        '<div class="tl-card-title-wrap"><span class="tl-card-tag">' + e.tag + '</span>' +
+        '<div class="tl-card-name">' + e.title + '</div></div>' +
+        '<div class="tl-rupee-stat">' + e.stat + '</div>' +
+      '</div>' +
+      '<p class="tl-rupee-body">' + e.body + '</p>' +
+    '</div>';
+}
+
+function wireTimeline(trackSel, renderFn) {
+  const nodes = Array.from(document.querySelectorAll(trackSel + ' .tl-node'));
+  if (!nodes.length) return;
+  nodes.forEach(node => {
+    const activate = () => {
+      nodes.forEach(n => n.setAttribute('aria-selected', n === node ? 'true' : 'false'));
+      renderFn(parseInt(node.dataset.era, 10));
+    };
+    node.addEventListener('click', activate);
+    node.addEventListener('keydown', (ev) => {
+      const idx = nodes.indexOf(node);
+      if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
+        ev.preventDefault();
+        const next = nodes[(idx + (ev.key === 'ArrowRight' ? 1 : nodes.length - 1)) % nodes.length];
+        next.focus(); next.click();
+      }
+    });
+  });
+  renderFn(0);
+}
+
+wireTimeline('#tlDynasty', renderDynasty);
+wireTimeline('#tlRupee', renderRupee);
 
 // ─── Reading progress bar ──────────────────────────────────────
 const readBar = document.getElementById('readProgress');
