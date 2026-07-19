@@ -6,7 +6,7 @@ An interactive web explainer on why the Indian rupee keeps falling even as the U
 
 ## What's inside
 
-- **Hero** — the headline rate and the puzzle that frames the story
+- **Hero** — the headline rate and the puzzle that frames the story, with an opt-in **"Use live rate"** button that fetches the current USD/INR from a free no-key API (two independent sources, graceful fallback to the verified snapshot) and shows how far the rupee has moved since
 - **Timeline reel** — interactive 2000 → 2026 chart of US M2 vs USD/INR
 - **How USD printing works** — the 4-step mechanism (QE → bank lending → carry trade → reversal)
 - **Six factors** — Fed policy, oil, FII flows, DXY, current account, RBI intervention
@@ -29,6 +29,8 @@ An interactive web explainer on why the Indian rupee keeps falling even as the U
 Pure HTML / CSS / vanilla JS. No build step. The base page has no dependencies beyond Google Fonts.
 
 The only optional dependency is [Three.js](https://threejs.org/) for the 3D globe — it's **lazy-loaded from a CDN (ES-module build) only when the user opts into the 3D view**, so the default page stays dependency-free and fast. If WebGL is unavailable, the 3D view falls back to the always-on 2D map.
+
+No network call is made on load. The optional "Use live rate" button is the only runtime request, and only when clicked — it hits a free no-key FX API ([exchangerate-api](https://www.exchangerate-api.com/) with [Frankfurter](https://frankfurter.dev/) as fallback) and reverts to the static snapshot if both are unreachable.
 
 ### Accessibility
 

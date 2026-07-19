@@ -4161,3 +4161,112 @@ applyLang(currentLang);
   SCENARIOS.forEach(s => grid.appendChild(card(s, false)));
   DEEP.forEach(s => gridDeep.appendChild(card(s, true)));
 })();
+
+/* ── Live hero rate (opt-in) ─────────────────────────────────────────────
+   The page is static by design (snapshot as of the verified date). This lets
+   a reader pull the *current* USD/INR on demand and see how far the rupee has
+   moved since. It only touches the hero headline — the model, tables and
+   simulator stay anchored to the verified snapshot to avoid mixing dates.
+   Two independent no-key, CORS-open sources; static value restored on failure
+   or on toggle-off. No network call happens unless the reader clicks. */
+(function initLiveRate() {
+  const wrap = document.querySelector('.hero-live');
+  const btn = document.getElementById('heroLiveBtn');
+  const label = document.getElementById('heroLiveLabel');
+  const note = document.getElementById('heroLiveNote');
+  const rateEl = document.getElementById('heroRate');
+  const dateEl = document.getElementById('heroDate');
+  if (!wrap || !btn || !rateEl || typeof fetch !== 'function') return;
+
+  const STATIC_RATE = parseFloat(rateEl.dataset.counter); // 95.96
+  const STATIC_DATE = dateEl ? dateEl.textContent : '';
+  const decimals = parseInt(rateEl.dataset.decimals || '2');
+  let showingLive = false;
+  let liveShown = null; // remembers the fetched rate for the toggle
+
+  // Reveal the control now that we know fetch is available.
+  wrap.hidden = false;
+
+  // Two sources tried in order. Each returns { rate, asOf } or throws.
+  const SOURCES = [
+    async () => {
+      const r = await fetch('https://open.er-api.com/v6/latest/USD', { cache: 'no-store' });
+      if (!r.ok) throw new Error('er-api ' + r.status);
+      const j = await r.json();
+      const rate = j && j.rates && j.rates.INR;
+      if (!rate) throw new Error('er-api no INR');
+      return { rate, asOf: j.time_last_update_utc ? new Date(j.time_last_update_utc) : new Date() };
+    },
+    async () => {
+      const r = await fetch('https://api.frankfurter.dev/v1/latest?from=USD&to=INR', { cache: 'no-store' });
+      if (!r.ok) throw new Error('frankfurter ' + r.status);
+      const j = await r.json();
+      const rate = j && j.rates && j.rates.INR;
+      if (!rate) throw new Error('frankfurter no INR');
+      return { rate, asOf: j.date ? new Date(j.date + 'T00:00:00Z') : new Date() };
+    }
+  ];
+
+  async function fetchLive() {
+    let lastErr;
+    for (const src of SOURCES) {
+      try {
+        const out = await Promise.race([
+          src(),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 8000))
+        ]);
+        if (out && isFinite(out.rate) && out.rate > 0 && out.rate < 1000) return out;
+      } catch (e) { lastErr = e; }
+    }
+    throw lastErr || new Error('all sources failed');
+  }
+
+  function fmtDate(d) {
+    try {
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase();
+    } catch (e) { return d.toISOString().slice(0, 10); }
+  }
+
+  function showStatic() {
+    showingLive = false;
+    animateCounter(rateEl, STATIC_RATE, decimals, 700);
+    if (dateEl) dateEl.textContent = STATIC_DATE;
+    label.textContent = 'Use live rate';
+    note.textContent = '';
+    note.classList.remove('is-error');
+  }
+
+  function showLive(out) {
+    showingLive = true;
+    liveShown = out;
+    animateCounter(rateEl, out.rate, decimals, 900);
+    if (dateEl) dateEl.textContent = 'LIVE · ' + fmtDate(out.asOf);
+    label.textContent = 'Show snapshot (' + STATIC_RATE.toFixed(decimals) + ')';
+    const delta = out.rate - STATIC_RATE;
+    const dir = delta >= 0 ? 'weaker' : 'stronger';
+    note.classList.remove('is-error');
+    note.textContent = (delta >= 0 ? '+' : '−') + '₹' + Math.abs(delta).toFixed(2)
+      + ' vs the snapshot — the rupee is ' + dir + ' now.';
+  }
+
+  btn.addEventListener('click', async () => {
+    // Toggle back to the static snapshot without re-fetching.
+    if (showingLive) { showStatic(); return; }
+    if (liveShown) { showLive(liveShown); return; }
+
+    btn.disabled = true;
+    btn.classList.add('is-loading');
+    note.classList.remove('is-error');
+    note.textContent = 'Fetching…';
+    try {
+      const out = await fetchLive();
+      showLive(out);
+    } catch (e) {
+      note.classList.add('is-error');
+      note.textContent = 'Couldn\'t reach a live source — showing the verified snapshot.';
+    } finally {
+      btn.disabled = false;
+      btn.classList.remove('is-loading');
+    }
+  });
+})();

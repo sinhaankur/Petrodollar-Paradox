@@ -91,9 +91,16 @@
 
 <header id="top" class="hero">
   <div class="hero-inner">
-    <div class="hero-tag" data-i18n="hero.date">MAY 14, 2026</div>
-    <h1 class="hero-rate"><span class="rupee-symbol">₹</span><span data-counter="95.96" data-decimals="2">0.00</span></h1>
+    <div class="hero-tag" id="heroDate" data-i18n="hero.date">MAY 14, 2026</div>
+    <h1 class="hero-rate"><span class="rupee-symbol">₹</span><span data-counter="95.96" data-decimals="2" id="heroRate">0.00</span></h1>
     <p class="hero-sub" data-i18n="hero.sub">All-time low against the dollar</p>
+    <div class="hero-live" hidden>
+      <button type="button" class="hero-live-btn" id="heroLiveBtn">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span id="heroLiveLabel">Use live rate</span>
+      </button>
+      <span class="hero-live-note" id="heroLiveNote" aria-live="polite"></span>
+    </div>
     <div class="hero-puzzle">
       <div class="puzzle-label" data-i18n="hero.puzzleLabel">THE PUZZLE</div>
       <p data-i18n="hero.puzzle" data-i18n-html="1">The US has been printing dollars for decades.<br>So why is the rupee falling, not the dollar?</p>

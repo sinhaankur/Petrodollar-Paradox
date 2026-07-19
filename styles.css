@@ -407,6 +407,49 @@ body {
   letter-spacing: -0.005em;
 }
 
+.hero-live {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hero-live-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--coral-deep);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.hero-live-btn:hover { border-color: var(--coral-line); background: var(--coral-bg); }
+.hero-live-btn:focus-visible {
+  outline: none;
+  border-color: var(--coral-line);
+  box-shadow: 0 0 0 3px var(--coral-bg);
+}
+.hero-live-btn[disabled] { opacity: 0.6; cursor: default; }
+.hero-live-btn svg { flex: none; transition: transform 0.6s ease; }
+.hero-live-btn.is-loading svg { animation: heroSpin 0.8s linear infinite; }
+@keyframes heroSpin { to { transform: rotate(360deg); } }
+.hero-live-note {
+  font-size: 12px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.hero-live-note.is-error { color: var(--coral-mid); }
+@media (prefers-reduced-motion: reduce) {
+  .hero-live-btn.is-loading svg { animation: none; }
+}
+
 .hero-puzzle {
   margin: 56px auto 0;
   display: block;
