@@ -44,7 +44,7 @@ No network call is made on load. The optional "Use live rate" button is the only
 1. Push to GitHub: `git push origin main`
 2. On GitHub: `Settings → Pages → Build and deployment`
 3. Source: **Deploy from a branch**, Branch: **main**, Folder: **/ (root)**
-4. Save. Site goes live at `https://<user>.github.io/Indian-Rupees/` within a minute or two.
+4. Save. Site goes live at `https://<user>.github.io/Petrodollar-Paradox/` within a minute or two.
 
 ## Run locally
 
