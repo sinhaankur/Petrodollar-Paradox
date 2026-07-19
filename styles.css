@@ -3447,6 +3447,50 @@ body {
   .tl-card-reign, .tl-rupee-stat { margin-left: 0; }
 }
 
+/* Inline per-era source links */
+.tl-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tl-sources-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(245, 241, 232, 0.45);
+  margin-right: 2px;
+}
+
+.tl-sources a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(245, 241, 232, 0.75);
+  text-decoration: none;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  transition: all 0.18s ease;
+}
+
+.tl-sources a:hover {
+  color: #FBD9A6;
+  border-color: rgba(240, 201, 138, 0.4);
+  background: rgba(186, 117, 23, 0.14);
+}
+
+.tl-sources a svg { opacity: 0.6; }
+.tl-sources a:hover svg { opacity: 1; }
+
 /* The anna explainer */
 .tl-anna {
   margin-top: 22px;

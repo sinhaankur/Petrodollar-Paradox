@@ -1522,56 +1522,101 @@ const DYNASTY_ERAS = [
     rise: 'First to master ocean navigation. Control of the spice route round Africa made Lisbon the hub of world trade, and Portuguese gold coin the trusted settlement metal.',
     fall: 'A small population couldn\'t hold a global empire. Spain absorbed the crown (1580) and the trade shifted.',
     injected: 'Pumped African gold and Asian spices into Europe — the first time one small nation set the price of global goods.',
-    impact: 'Established the template: sea power + trade routes = monetary power.'
+    impact: 'Established the template: sea power + trade routes = monetary power.',
+    sources: [
+      { label: 'Reserve currency (history)', url: 'https://en.wikipedia.org/wiki/Reserve_currency#History' },
+      { label: 'Portuguese Empire', url: 'https://en.wikipedia.org/wiki/Portuguese_Empire' }
+    ]
   },
   {
     flag: '🇪🇸', name: 'Spain', unit: 'the silver real / "pieces of eight"', reign: '~1530–1640', span: '≈110 yrs',
     rise: 'New World silver from Potosí and Mexico flooded the globe. The Spanish silver dollar became the first truly worldwide money — accepted from Manila to Amsterdam to the American colonies.',
     fall: 'Too much silver caused inflation ("the price revolution"); endless wars and defaults (Spain defaulted repeatedly) drained the treasury.',
     injected: 'Injected so much silver into world trade that it literally minted the money Asia and Europe used for centuries — the peso underpinned the later US dollar sign.',
-    impact: 'Proved a reserve currency can be inflated away by its own issuer\'s overspending — the first cautionary tale.'
+    impact: 'Proved a reserve currency can be inflated away by its own issuer\'s overspending — the first cautionary tale.',
+    sources: [
+      { label: 'Spanish dollar ("pieces of eight")', url: 'https://en.wikipedia.org/wiki/Spanish_dollar' },
+      { label: 'Price revolution', url: 'https://en.wikipedia.org/wiki/Price_revolution' }
+    ]
   },
   {
     flag: '🇳🇱', name: 'Netherlands', unit: 'the Dutch guilder', reign: '~1640–1720', span: '≈80 yrs',
     rise: 'The Dutch invented modern finance: the first central bank (Amsterdam), the first stock exchange, and the first joint-stock multinational (the VOC). The guilder was backed by the deepest, safest capital market in the world.',
     fall: 'Wars with England and France, plus the 1720 speculative bubbles, sapped the edge. Financial leadership drifted to London.',
     injected: 'Exported credit and trade finance — Dutch capital funded ventures worldwide, showing that finance, not just gold, confers currency power.',
-    impact: 'Introduced the idea that trust in institutions — not just metal — makes a currency global.'
+    impact: 'Introduced the idea that trust in institutions — not just metal — makes a currency global.',
+    sources: [
+      { label: 'Bank of Amsterdam', url: 'https://en.wikipedia.org/wiki/Bank_of_Amsterdam' },
+      { label: 'Dutch East India Company (VOC)', url: 'https://en.wikipedia.org/wiki/Dutch_East_India_Company' }
+    ]
   },
   {
     flag: '🇫🇷', name: 'France', unit: 'the livre / franc', reign: '~1720–1815', span: '≈95 yrs',
     rise: 'Europe\'s largest, richest economy for much of the 18th century. The livre, and later the franc, rivalled sterling as a settlement currency across the continent.',
     fall: 'The John Law paper-money bubble (1720), the cost of the American and Napoleonic wars, and the Revolution\'s hyperinflation (the assignats) destroyed monetary credibility.',
     injected: 'Financed revolutions and wars abroad, spreading French coin — but also spread the first modern paper-money collapse.',
-    impact: 'A second warning: print to fund war and you forfeit the trust a reserve currency runs on.'
+    impact: 'A second warning: print to fund war and you forfeit the trust a reserve currency runs on.',
+    sources: [
+      { label: 'Mississippi Company (John Law bubble)', url: 'https://en.wikipedia.org/wiki/Mississippi_Company' },
+      { label: 'Assignat (Revolution hyperinflation)', url: 'https://en.wikipedia.org/wiki/Assignat' }
+    ]
   },
   {
     flag: '🇬🇧', name: 'Britain', unit: 'the pound sterling £', reign: '~1815–1944', span: '≈130 yrs',
     rise: 'Victory at Waterloo, the Industrial Revolution and a global empire made sterling the anchor of the classic gold standard. By 1900, ~60% of world trade was invoiced in pounds; London was the world\'s bank.',
     fall: 'Two world wars turned Britain from the world\'s biggest creditor into a huge debtor. It sold assets to survive, and the US emerged with the gold and the industry.',
     injected: 'Exported sterling credit across the empire and beyond — the City of London financed global trade for over a century.',
-    impact: 'The clearest modern parallel to the dollar: dominance ended not overnight, but through war debt and a rising challenger already in place.'
+    impact: 'The clearest modern parallel to the dollar: dominance ended not overnight, but through war debt and a rising challenger already in place.',
+    sources: [
+      { label: 'Pound sterling (history)', url: 'https://en.wikipedia.org/wiki/Pound_sterling#History' },
+      { label: 'Gold standard', url: 'https://en.wikipedia.org/wiki/Gold_standard' }
+    ]
   },
   {
     flag: '🇺🇸', name: 'United States', unit: 'the US dollar $', reign: '~1920–today', span: '≈105 yrs & counting', now: true,
     rise: 'WWII left the US with most of the world\'s gold and industry. Bretton Woods (1944) pegged the world to a gold-backed dollar. When Nixon cut the gold link (1971), the petrodollar deal (1974) — oil priced only in dollars — kept demand structural.',
     fall: 'Not fallen — but challenged. Weaponized sanctions (freezing Russia\'s reserves, 2022) pushed rivals toward alternatives; huge deficits and money-printing raise long-run credibility questions.',
     injected: 'The great injector. The US flooded the world with dollars via the Marshall Plan (rebuilding Europe), Bretton Woods reserves, the petrodollar recycling loop, and post-2008/2020 QE (~$8T+). Other central banks hold those dollars as reserves — which is exactly why "printing" doesn\'t sink the dollar.',
-    impact: 'This is the system the rest of this page dissects. India — and the rupee — live downstream of every dollar the US injects.'
+    impact: 'This is the system the rest of this page dissects. India — and the rupee — live downstream of every dollar the US injects.',
+    sources: [
+      { label: 'Bretton Woods system', url: 'https://en.wikipedia.org/wiki/Bretton_Woods_system' },
+      { label: 'Nixon shock (1971)', url: 'https://en.wikipedia.org/wiki/Nixon_shock' },
+      { label: 'Petrodollar', url: 'https://en.wikipedia.org/wiki/Petrodollar' },
+      { label: 'Fed History · Bretton Woods', url: 'https://www.federalreservehistory.org/essays/bretton-woods-created' }
+    ]
   }
 ];
 
 const RUPEE_ERAS = [
-  { year: '1540', title: 'The silver rupee is born', body: 'Sher Shah Suri issues the "rupiya" — a standardized 11.5g silver coin. It becomes the subcontinent\'s money for centuries and one of the longest-lived currencies on Earth.', tag: 'SILVER STANDARD', stat: '1 rupiya = 11.5g silver' },
-  { year: '1835', title: 'One rupee for all of British India', body: 'The Coinage Act makes the silver rupee the single legal tender across British India, ending a patchwork of regional coins. Split into 16 annas, 64 pice.', tag: 'UNIFIED COINAGE', stat: '1 rupee = 16 anna = 64 pice' },
-  { year: '1898', title: 'Pegged to the pound', body: 'India moves onto a gold-exchange standard, fixing the rupee to sterling at 1 shilling 4 pence (≈15 rupees to the pound). The rupee\'s value now rides on Britain\'s.', tag: 'STERLING PEG', stat: '₹15 ≈ £1' },
-  { year: '1947', title: 'Independence — and a dollar rate', body: 'At independence the rupee is worth about ₹4.16 to the US dollar, still tied to sterling. India inherits a currency built for a colonial trade system it must now re-engineer.', tag: 'INDEPENDENCE', stat: '₹4.16 = $1' },
-  { year: '1957', title: 'Decimalization: annas become paise', body: 'The rupee is split into 100 "naye paise" instead of 16 annas / 64 pice. The messy 64-base system gives way to clean decimal maths — simpler pricing, accounting and trade.', tag: 'THE 64 → 100 SHIFT', stat: '1 rupee = 100 paise' },
-  { year: '1966', title: 'First big devaluation', body: 'After war, drought and a balance-of-payments crisis, India devalues the rupee 57% — from ₹4.76 to ₹7.50 per dollar — to boost exports and secure foreign aid. Imports get sharply costlier overnight.', tag: 'DEVALUATION', stat: '₹4.76 → ₹7.50 = $1' },
-  { year: '1991', title: 'The crisis that changed everything', body: 'Foreign reserves fall to two weeks of imports. India airlifts gold to London as collateral, devalues sharply, and launches the liberalization reforms that open the economy. The rupee roughly halves.', tag: 'BOP CRISIS', stat: '₹17.9 = $1' },
-  { year: '1993', title: 'The rupee floats', body: 'India moves to a market-determined exchange rate (a managed float). From now on, oil, capital flows and the dollar — not a government decree — set the rupee\'s daily value. The modern FX era begins.', tag: 'MARKET FLOAT', stat: '~₹31 = $1' },
-  { year: '2026', title: 'Today: ₹95.96 and downstream', body: 'A managed float inside a dollar-centric world. Oil shocks, Fed policy, capital flight and a strong dollar now move the rupee in real time — the forces the simulator on this page lets you play with.', tag: 'ALL-TIME LOW', stat: '₹95.96 = $1', now: true },
+  { year: '1540', title: 'The silver rupee is born', body: 'Sher Shah Suri issues the "rupiya" — a standardized 11.5g silver coin. It becomes the subcontinent\'s money for centuries and one of the longest-lived currencies on Earth.', tag: 'SILVER STANDARD', stat: '1 rupiya = 11.5g silver',
+    sources: [{ label: 'History of the rupee', url: 'https://en.wikipedia.org/wiki/History_of_the_rupee' }, { label: 'Sher Shah Suri', url: 'https://en.wikipedia.org/wiki/Sher_Shah_Suri' }] },
+  { year: '1835', title: 'One rupee for all of British India', body: 'The Coinage Act makes the silver rupee the single legal tender across British India, ending a patchwork of regional coins. Split into 16 annas, 64 pice.', tag: 'UNIFIED COINAGE', stat: '1 rupee = 16 anna = 64 pice',
+    sources: [{ label: 'Indian rupee (British India)', url: 'https://en.wikipedia.org/wiki/Indian_rupee#British_India' }, { label: 'Anna (unit)', url: 'https://en.wikipedia.org/wiki/Anna_(unit)' }] },
+  { year: '1898', title: 'Pegged to the pound', body: 'India moves onto a gold-exchange standard, fixing the rupee to sterling at 1 shilling 4 pence (≈15 rupees to the pound). The rupee\'s value now rides on Britain\'s.', tag: 'STERLING PEG', stat: '₹15 ≈ £1',
+    sources: [{ label: 'History of the rupee', url: 'https://en.wikipedia.org/wiki/History_of_the_rupee' }] },
+  { year: '1947', title: 'Independence — and a dollar rate', body: 'At independence the rupee is worth about ₹4.16 to the US dollar, still tied to sterling. India inherits a currency built for a colonial trade system it must now re-engineer.', tag: 'INDEPENDENCE', stat: '₹4.16 = $1',
+    sources: [{ label: 'Indian rupee (value over time)', url: 'https://en.wikipedia.org/wiki/Indian_rupee#Exchange_rate' }] },
+  { year: '1957', title: 'Decimalization: annas become paise', body: 'The rupee is split into 100 "naye paise" instead of 16 annas / 64 pice. The messy 64-base system gives way to clean decimal maths — simpler pricing, accounting and trade.', tag: 'THE 64 → 100 SHIFT', stat: '1 rupee = 100 paise',
+    sources: [{ label: 'Paisa (decimalization)', url: 'https://en.wikipedia.org/wiki/Paisa#India' }, { label: 'Indian Coinage Act, 1955', url: 'https://en.wikipedia.org/wiki/Indian_rupee#Decimalisation' }] },
+  { year: '1966', title: 'First big devaluation', body: 'After war, drought and a balance-of-payments crisis, India devalues the rupee 57% — from ₹4.76 to ₹7.50 per dollar — to boost exports and secure foreign aid. Imports get sharply costlier overnight.', tag: 'DEVALUATION', stat: '₹4.76 → ₹7.50 = $1',
+    sources: [{ label: '1966 devaluation', url: 'https://en.wikipedia.org/wiki/History_of_the_rupee#Post-independence' }] },
+  { year: '1991', title: 'The crisis that changed everything', body: 'Foreign reserves fall to two weeks of imports. India airlifts gold to London as collateral, devalues sharply, and launches the liberalization reforms that open the economy. The rupee roughly halves.', tag: 'BOP CRISIS', stat: '₹17.9 = $1',
+    sources: [{ label: '1991 economic crisis', url: 'https://en.wikipedia.org/wiki/1991_Indian_economic_crisis' }, { label: 'Economic liberalisation in India', url: 'https://en.wikipedia.org/wiki/Economic_liberalisation_in_India' }] },
+  { year: '1993', title: 'The rupee floats', body: 'India moves to a market-determined exchange rate (a managed float). From now on, oil, capital flows and the dollar — not a government decree — set the rupee\'s daily value. The modern FX era begins.', tag: 'MARKET FLOAT', stat: '~₹31 = $1',
+    sources: [{ label: 'Indian rupee (exchange rate)', url: 'https://en.wikipedia.org/wiki/Indian_rupee#Exchange_rate' }] },
+  { year: '2026', title: 'Today: ₹95.96 and downstream', body: 'A managed float inside a dollar-centric world. Oil shocks, Fed policy, capital flight and a strong dollar now move the rupee in real time — the forces the simulator on this page lets you play with.', tag: 'ALL-TIME LOW', stat: '₹95.96 = $1', now: true,
+    sources: [{ label: 'RBI reference rate', url: 'https://www.rbi.org.in/' }] },
 ];
+
+// Render an inline "Sources" row from an array of {label, url}
+function tlSources(sources) {
+  if (!sources || !sources.length) return '';
+  const links = sources.map(s =>
+    '<a href="' + s.url + '" target="_blank" rel="noopener">' + s.label +
+    '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>'
+  ).join('');
+  return '<div class="tl-sources"><span class="tl-sources-label">Sources</span>' + links + '</div>';
+}
 
 function renderDynasty(i) {
   const e = DYNASTY_ERAS[i];
@@ -1591,6 +1636,7 @@ function renderDynasty(i) {
         '<div class="tl-card-block"><h5>How it injected money into the world</h5><p>' + e.injected + '</p></div>' +
         '<div class="tl-card-block tl-card-block--impact"><h5>Why it matters here</h5><p>' + e.impact + '</p></div>' +
       '</div>' +
+      tlSources(e.sources) +
     '</div>';
 }
 
@@ -1607,6 +1653,7 @@ function renderRupee(i) {
         '<div class="tl-rupee-stat">' + e.stat + '</div>' +
       '</div>' +
       '<p class="tl-rupee-body">' + e.body + '</p>' +
+      tlSources(e.sources) +
     '</div>';
 }
 
