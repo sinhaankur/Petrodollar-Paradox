@@ -3678,3 +3678,94 @@ applyLang(currentLang);
     }
   }
 })();
+
+/* ── Knowledge Base search ───────────────────────────────────────────────
+   Live-filters the glossary + questions columns by term text. Highlights
+   matches, hides items/columns that don't match, and shows a no-results
+   note. Pure text filter over the ~17 <details> items — no index needed. */
+(function initKbSearch() {
+  const input = document.getElementById('kbSearch');
+  const clearBtn = document.getElementById('kbSearchClear');
+  const empty = document.getElementById('kbSearchEmpty');
+  if (!input) return;
+
+  const items = Array.from(document.querySelectorAll('#knowledge .kb-item'));
+  const cols = Array.from(document.querySelectorAll('#knowledge .kb-col'));
+  // Cache each item's original markup so we can strip <mark> between keystrokes.
+  const cache = items.map(it => ({
+    el: it,
+    summary: it.querySelector('summary'),
+    body: it.querySelector('.kb-item-body'),
+    summaryHTML: it.querySelector('summary') ? it.querySelector('summary').innerHTML : '',
+    bodyHTML: it.querySelector('.kb-item-body') ? it.querySelector('.kb-item-body').innerHTML : '',
+    text: (it.textContent || '').toLowerCase()
+  }));
+
+  const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Wrap matches in <mark>, transforming only the text segments so we never
+  // corrupt tags or HTML entities. Splitting on <...> keeps tag chunks intact
+  // and also works when the content is plain text (no tags at all).
+  function highlight(html, re) {
+    return html.split(/(<[^>]+>)/).map(chunk =>
+      chunk.startsWith('<') ? chunk : chunk.replace(re, '<mark>$&</mark>')
+    ).join('');
+  }
+
+  function apply(q) {
+    const query = q.trim().toLowerCase();
+    clearBtn.hidden = query === '';
+
+    if (!query) {
+      cache.forEach(c => {
+        c.el.hidden = false;
+        if (c.summary) c.summary.innerHTML = c.summaryHTML;
+        if (c.body) c.body.innerHTML = c.bodyHTML;
+        c.el.open = false;
+      });
+      cols.forEach(col => { col.hidden = false; });
+      empty.hidden = true;
+      return;
+    }
+
+    const re = new RegExp(escRe(query), 'gi');
+    let matches = 0;
+    cache.forEach(c => {
+      const hit = c.text.includes(query);
+      c.el.hidden = !hit;
+      if (hit) {
+        matches++;
+        if (c.summary) c.summary.innerHTML = highlight(c.summaryHTML, re);
+        if (c.body) c.body.innerHTML = highlight(c.bodyHTML, re);
+        c.el.open = true; // reveal the definition so the match is visible
+      } else {
+        if (c.summary) c.summary.innerHTML = c.summaryHTML;
+        if (c.body) c.body.innerHTML = c.bodyHTML;
+      }
+    });
+
+    // Hide a whole column if none of its items matched.
+    cols.forEach(col => {
+      const anyVisible = Array.from(col.querySelectorAll('.kb-item')).some(el => !el.hidden);
+      col.hidden = !anyVisible;
+    });
+
+    empty.hidden = matches > 0;
+    if (matches === 0) empty.querySelector('span').textContent = q.trim();
+  }
+
+  input.addEventListener('input', () => apply(input.value));
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    apply('');
+    input.focus();
+  });
+  // Esc clears while the box is focused.
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && input.value) {
+      e.preventDefault();
+      input.value = '';
+      apply('');
+    }
+  });
+})();
