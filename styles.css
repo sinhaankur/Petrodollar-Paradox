@@ -2523,6 +2523,30 @@ body {
 .ccy-row-pct.pos { color: var(--teal-deep); }
 
 /* ─── REFERENCES ─── */
+.ref-download {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+}
+.ref-download-label {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  margin-right: 4px;
+}
+.ref-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: 13px;
+}
+.ref-download-btn svg { flex: none; }
+
 .ref-grid {
   margin-top: 40px;
   display: grid;

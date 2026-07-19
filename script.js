@@ -3960,3 +3960,71 @@ applyLang(currentLang);
   root.hidden = false;
   render();
 })();
+
+/* ── Data download (CSV / JSON) ──────────────────────────────────────────
+   Lets readers grab the 2000–2026 series (US M2 vs USD/INR, with the event
+   annotations) that drives the timeline reel. Client-side blob download —
+   no dependency, works offline, self-documenting metadata in the JSON. */
+(function initDataDownload() {
+  const csvBtn = document.getElementById('dlCsv');
+  const jsonBtn = document.getElementById('dlJson');
+  if (!csvBtn || typeof reelData === 'undefined') return;
+
+  const VERIFIED = '2026-05-14';
+  const rows = reelData.map(d => ({
+    year: d.y,
+    us_m2_trillions_usd: d.m2,
+    usd_inr: d.inr,
+    event: d.title,
+    note: d.desc
+  }));
+
+  function download(filename, text, mime) {
+    const blob = new Blob([text], { type: mime + ';charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    // Revoke on the next tick so the download has grabbed the blob.
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
+
+  // RFC-4180 quoting: wrap in quotes and double any embedded quotes.
+  function csvCell(v) {
+    const s = String(v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function toCsv() {
+    const cols = ['year', 'us_m2_trillions_usd', 'usd_inr', 'event', 'note'];
+    const header = cols.join(',');
+    const body = rows.map(r => cols.map(c => csvCell(r[c])).join(',')).join('\n');
+    // Comment lines document provenance without breaking most CSV parsers.
+    const preamble =
+      '# The Petrodollar Paradox — US M2 vs USD/INR, 2000–2026\n' +
+      '# Sources: FRED (M2SL, St. Louis Fed) · RBI Reference Rate (FBIL)\n' +
+      '# Last verified: ' + VERIFIED + '. Educational use; not investment advice.\n';
+    return preamble + header + '\n' + body + '\n';
+  }
+
+  function toJson() {
+    return JSON.stringify({
+      title: 'The Petrodollar Paradox — US M2 vs USD/INR',
+      description: 'Annual snapshots of US M2 money supply (trillions USD) and the USD/INR exchange rate, with the macro event of each year.',
+      sources: [
+        'FRED series M2SL (Federal Reserve Bank of St. Louis)',
+        'RBI Reference Rate (FBIL)'
+      ],
+      last_verified: VERIFIED,
+      disclaimer: 'Educational explainer. Not investment advice.',
+      units: { us_m2_trillions_usd: 'trillions of US dollars', usd_inr: 'rupees per US dollar' },
+      series: rows
+    }, null, 2) + '\n';
+  }
+
+  csvBtn.addEventListener('click', () => download('petrodollar-paradox-m2-vs-usdinr.csv', toCsv(), 'text/csv'));
+  jsonBtn.addEventListener('click', () => download('petrodollar-paradox-m2-vs-usdinr.json', toJson(), 'application/json'));
+})();
