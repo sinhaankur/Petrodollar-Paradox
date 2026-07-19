@@ -3769,3 +3769,194 @@ applyLang(currentLang);
     }
   });
 })();
+
+/* ── Self-test quiz ──────────────────────────────────────────────────────
+   Eight questions on the core content. One correct answer each, with an
+   explanation shown on selection. Answers are grounded in the page's own
+   glossary/sections so the quiz stays consistent with the copy above. */
+(function initQuiz() {
+  const root = document.getElementById('quiz');
+  if (!root) return;
+  const bodyEl = document.getElementById('quizBody');
+  const progEl = document.getElementById('quizProgress');
+  const resultEl = document.getElementById('quizResult');
+  const scoreEl = document.getElementById('quizScore');
+  const verdictEl = document.getElementById('quizVerdict');
+  const retryBtn = document.getElementById('quizRetry');
+
+  const QUESTIONS = [
+    {
+      q: 'What is the "petrodollar" system?',
+      options: [
+        'A special banknote used only to buy oil',
+        'Oil priced and sold in US dollars, which exporters then recycle into US assets',
+        'A digital currency issued by oil-producing nations',
+        'The Fed printing dollars specifically to import oil'
+      ],
+      answer: 1,
+      explain: 'Since the 1970s, crude has been priced and settled mostly in dollars. Exporters earn dollars and "recycle" them into US assets — chiefly Treasuries — keeping global demand for dollars high.'
+    },
+    {
+      q: 'If the US prints trillions of dollars, why doesn\'t the dollar collapse?',
+      options: [
+        'The Fed secretly destroys an equal amount of old cash',
+        'Other countries are legally barred from selling dollars',
+        'The world needs dollars for oil, trade and reserves, so demand absorbs the extra supply',
+        'US gold reserves back every new dollar'
+      ],
+      answer: 2,
+      explain: 'A normal currency weakens when you print it. The dollar is propped up by standing global demand — it\'s everyone else\'s plumbing for oil, trade settlement and reserves (~58% of global reserves).'
+    },
+    {
+      q: 'Why can\'t India simply print rupees to pay for its oil?',
+      options: [
+        'International law forbids printing money for imports',
+        'Oil exporters want dollars, so India must first sell rupees to buy dollars',
+        'India has no printing presses for large denominations',
+        'The RBI is not allowed to increase the money supply'
+      ],
+      answer: 1,
+      explain: 'Saudi Arabia and most exporters want dollars, not rupees. India must sell rupees to buy dollars first — so printing more rupees would weaken the currency and make oil dearer, not cheaper.'
+    },
+    {
+      q: 'What does the Dollar Index (DXY) measure?',
+      options: [
+        'The number of dollars in circulation worldwide',
+        'The dollar\'s strength against a basket of six major currencies',
+        'The interest rate the Fed charges banks',
+        'How many barrels of oil one dollar buys'
+      ],
+      answer: 1,
+      explain: 'DXY tracks the dollar against six majors (euro, yen, pound, and others). When DXY rises the dollar is strong globally — and the rupee tends to weaken regardless of India\'s own fundamentals.'
+    },
+    {
+      q: 'What are "FII/FPI flows," and why do they move the rupee?',
+      options: [
+        'Government-to-government loans that rarely change',
+        'Foreign investment in Indian stocks and bonds — "hot" money that can leave fast',
+        'India\'s foreign aid budget',
+        'The RBI\'s gold purchases'
+      ],
+      answer: 1,
+      explain: 'Foreign Portfolio/Institutional Investment is overseas money in Indian equities and debt. It can exit quickly; that buying and selling moves the rupee in real time. India saw ~$21B of outflows in 2026.'
+    },
+    {
+      q: 'What was the 2013 "taper tantrum"?',
+      options: [
+        'A spike in oil prices after a Gulf conflict',
+        'The rupee being formally devalued by the RBI',
+        'Capital fleeing emerging markets when the Fed hinted it would slow QE',
+        'India defaulting on its foreign debt'
+      ],
+      answer: 2,
+      explain: 'The Fed merely signalled it would slow bond-buying, and money rushed out of emerging markets. The rupee fell from about ₹54 to ₹68 in months — the classic example of India\'s sensitivity to Fed signals.'
+    },
+    {
+      q: 'What does RBI intervention actually achieve for the rupee?',
+      options: [
+        'It permanently fixes the exchange rate',
+        'It smooths sharp moves by selling dollars, but can\'t reverse a structural trend',
+        'It prints rupees to buy oil directly',
+        'It sets global interest rates'
+      ],
+      answer: 1,
+      explain: 'The RBI sells dollars from reserves to slow sharp falls — managing the pace of depreciation rather than preventing it. Fighting a structural trend burns reserves fast, so every dollar spent is one not saved for a future crisis.'
+    },
+    {
+      q: 'Is a weaker rupee bad for everyone in India?',
+      options: [
+        'Yes — it hurts every part of the economy equally',
+        'No — it raises import costs but benefits dollar-earning exporters like IT and pharma',
+        'No — it makes imported oil cheaper',
+        'Yes — it always causes the stock market to crash'
+      ],
+      answer: 1,
+      explain: 'A weaker rupee makes imports and foreign travel costlier, but exporters earning dollars get more rupees per dollar. That\'s why IT and pharma benefit — and why the stock market can hold up even as the currency slides.'
+    }
+  ];
+
+  let idx = 0;
+  let score = 0;
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function render() {
+    const item = QUESTIONS[idx];
+    progEl.textContent = `Question ${idx + 1} of ${QUESTIONS.length}`;
+    resultEl.hidden = true;
+    bodyEl.hidden = false;
+
+    const opts = item.options.map((opt, i) =>
+      `<button type="button" class="quiz-option" data-i="${i}">
+         <span class="quiz-option-key">${String.fromCharCode(65 + i)}</span>
+         <span>${escapeHtml(opt)}</span>
+       </button>`
+    ).join('');
+
+    bodyEl.innerHTML =
+      `<div class="quiz-q" data-q="${idx}">
+         <div class="quiz-q-num">Question ${idx + 1} / ${QUESTIONS.length}</div>
+         <p class="quiz-q-text">${escapeHtml(item.q)}</p>
+         <div class="quiz-options">${opts}</div>
+         <div class="quiz-explain" hidden></div>
+         <div class="quiz-next-wrap" hidden>
+           <button type="button" class="btn btn--primary" data-next>${idx === QUESTIONS.length - 1 ? 'See my score' : 'Next question'}</button>
+         </div>
+       </div>`;
+
+    const optionBtns = Array.from(bodyEl.querySelectorAll('.quiz-option'));
+    const explainEl = bodyEl.querySelector('.quiz-explain');
+    const nextWrap = bodyEl.querySelector('.quiz-next-wrap');
+
+    optionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chosen = Number(btn.dataset.i);
+        const correct = item.answer;
+        optionBtns.forEach(b => { b.disabled = true; });
+        optionBtns[correct].classList.add('is-correct');
+        if (chosen !== correct) btn.classList.add('is-wrong');
+        else score++;
+
+        explainEl.innerHTML = (chosen === correct ? '<strong>Correct.</strong> ' : '<strong>Not quite.</strong> ')
+          + escapeHtml(item.explain);
+        explainEl.hidden = false;
+        nextWrap.hidden = false;
+        nextWrap.querySelector('[data-next]').focus();
+      });
+    });
+
+    nextWrap.querySelector('[data-next]').addEventListener('click', () => {
+      if (idx < QUESTIONS.length - 1) { idx++; render(); }
+      else finish();
+      if (!prefersReduced) root.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  function finish() {
+    bodyEl.hidden = true;
+    resultEl.hidden = false;
+    progEl.textContent = 'Complete';
+    scoreEl.textContent = `${score} / ${QUESTIONS.length}`;
+    let verdict;
+    if (score === QUESTIONS.length) verdict = 'Perfect — you\'ve got the whole chain, from petrodollar to rupee.';
+    else if (score >= 6) verdict = 'Strong. You understand the core forces; skim the sections you missed to lock it in.';
+    else if (score >= 4) verdict = 'A solid start. Revisit the "How printing works" and "Six factors" sections and try again.';
+    else verdict = 'Worth another pass — the Knowledge Base glossary above covers every term you\'ll need.';
+    verdictEl.textContent = verdict;
+    retryBtn.focus();
+  }
+
+  retryBtn.addEventListener('click', () => {
+    idx = 0; score = 0;
+    render();
+    if (!prefersReduced) root.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  // Reveal + start once wired up (kept hidden by default so no-JS users
+  // don't see an empty shell).
+  root.hidden = false;
+  render();
+})();
