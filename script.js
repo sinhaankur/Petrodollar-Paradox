@@ -658,6 +658,127 @@ if (ccyPick) {
   renderCcy(ccyPick.value);
 }
 
+// ─── Puzzle country comparison: print → weaken, everywhere but the dollar ──
+// m2:  approx. broad money (M2) growth since ~2000, in %.
+// fx:  approx. move of the local currency vs USD since ~2000, in % (negative = weaker).
+// imf: bailout / program status. state: 'active' | 'past' | 'none'.
+const PCOMPARE = {
+  TR: { flag: "🇹🇷", country: "Turkey", ccy: "Turkish lira", code: "TRY", verdict: "Crisis", tone: "crisis",
+    m2: 2900, fx: -98,
+    story: "Turkey ran the printing press hard while keeping rates below inflation for years. The result is textbook: an enormous rise in lira supply, and a near-total collapse against the dollar. Credibility, once lost, is brutally expensive to rebuild.",
+    imf: { state: "past", status: "Graduated (2013)", detail: "Turkey repaid its last IMF loans in 2013 and has since avoided a formal program — but markets repeatedly price in the risk of one every time reserves run thin." } },
+  AR: { flag: "🇦🇷", country: "Argentina", ccy: "Argentine peso", code: "ARS", verdict: "Crisis", tone: "crisis",
+    m2: 12000, fx: -99.9,
+    story: "Argentina is the extreme case: chronic deficits financed by money creation, recurring defaults, and a peso that has lost essentially all its dollar value. Multiple parallel exchange rates exist because the official one is a fiction.",
+    imf: { state: "active", status: "Active — $44B EFF", detail: "The IMF's largest program in history. Argentina is a serial borrower: bailout, crisis, bailout — dollars in, repaid in dollars, then borrowed again." } },
+  PK: { flag: "🇵🇰", country: "Pakistan", ccy: "Pakistani rupee", code: "PKR", verdict: "Fragile", tone: "crisis",
+    m2: 1400, fx: -80,
+    story: "Pakistan imports most of its energy and runs a persistent current-account deficit. Each time reserves fall to a few weeks of imports, the currency lurches down and the country returns to the IMF for another lifeline.",
+    imf: { state: "active", status: "Active — $7B EFF (2024)", detail: "Pakistan has entered ~24 IMF programs since 1958 — one of the Fund's most frequent clients. Each Stand-By or EFF releases dollars to keep oil imports flowing." } },
+  EG: { flag: "🇪🇬", country: "Egypt", ccy: "Egyptian pound", code: "EGP", verdict: "Fragile", tone: "crisis",
+    m2: 1600, fx: -90,
+    story: "Egypt devalued sharply and repeatedly after dollar shortages left it unable to pay for wheat and fuel imports. Each devaluation was tied to unlocking external support.",
+    imf: { state: "active", status: "Active — $8B EFF (2024)", detail: "Egypt's program was topped up to $8bn in 2024 alongside Gulf and EU money — a coordinated dollar injection to stop the pound's slide." } },
+  NG: { flag: "🇳🇬", country: "Nigeria", ccy: "Nigerian naira", code: "NGN", verdict: "Fragile", tone: "crisis",
+    m2: 2000, fx: -95,
+    story: "Even as an oil exporter, Nigeria burned through dollar reserves defending an overvalued naira. When it finally floated the currency in 2023, the naira collapsed toward its true market level.",
+    imf: { state: "none", status: "No active program", detail: "Nigeria avoided a formal IMF loan but adopted IMF-style reforms — float the currency, remove fuel subsidies — to court dollar inflows on its own terms." } },
+  IN: { flag: "🇮🇳", country: "India", ccy: "Indian rupee", code: "INR", verdict: "Squeezed", tone: "pressured",
+    m2: 900, fx: -113,
+    story: "India is the story this whole site is about. Broad money grew strongly, and the rupee fell from ~₹45 to ~₹96 per dollar. But its slide is orderly, not a collapse — disciplined rates, a large economy, and a war chest of reserves keep it out of crisis territory.",
+    imf: { state: "past", status: "Last program: 1991", detail: "India's 1991 balance-of-payments crisis forced it to pledge gold and take an IMF loan. It has never gone back — and building reserves to never need to is core policy." } },
+  ID: { flag: "🇮🇩", country: "Indonesia", ccy: "Indonesian rupiah", code: "IDR", verdict: "Pressured", tone: "pressured",
+    m2: 1100, fx: -78,
+    story: "Indonesia grew its money supply steadily and saw the rupiah weaken in line with it. Bank Indonesia intervenes to smooth the moves, but the long-run direction against a rising dollar is down.",
+    imf: { state: "past", status: "Last program: 1997–98", detail: "The Asian Financial Crisis forced Indonesia into a wrenching IMF program. The memory shapes its policy: hoard reserves, never be that exposed to a dollar squeeze again." } },
+  BR: { flag: "🇧🇷", country: "Brazil", ccy: "Brazilian real", code: "BRL", verdict: "Weak", tone: "pressured",
+    m2: 800, fx: -71,
+    story: "Brazil is a major commodity exporter, yet the real still fell hard against the dollar as money supply expanded and fiscal worries mounted. Even good terms of trade can't beat a strengthening dollar.",
+    imf: { state: "past", status: "Last program: 2002", detail: "Brazil took a large IMF loan in 2002 during a confidence crisis, repaid early in 2005, and has stayed out since — now a creditor to the IMF rather than a borrower." } },
+  ZA: { flag: "🇿🇦", country: "South Africa", ccy: "South African rand", code: "ZAR", verdict: "Weak", tone: "pressured",
+    m2: 550, fx: -67,
+    story: "The rand is the emerging world's favourite risk barometer. Money supply rose, growth disappointed, and the currency weakened — falling fastest whenever the dollar catches a bid.",
+    imf: { state: "past", status: "Last major loan: 2020 (COVID)", detail: "South Africa drew a $4.3bn emergency IMF facility during COVID — its first in decades — to shore up dollar liquidity when the pandemic froze markets." } },
+  JP: { flag: "🇯🇵", country: "Japan", ccy: "Japanese yen", code: "JPY", verdict: "Weak", tone: "pressured",
+    m2: 90, fx: -35,
+    story: "Japan barely grew its money supply by emerging-market standards, yet the yen still fell sharply — proof that the yield gap with the Fed, not just printing, drives currencies. A reserve issuer, but not the reserve issuer.",
+    imf: { state: "none", status: "Creditor, never a borrower", detail: "Japan is one of the IMF's largest funders. It has never needed a bailout — but even a wealthy reserve-currency issuer can't keep the yen from sliding against the dollar." } },
+  EU: { flag: "🇪🇺", country: "Eurozone", ccy: "Euro", code: "EUR", verdict: "Resilient", tone: "resilient",
+    m2: 200, fx: -4,
+    story: "The euro is the closest thing to a rival reserve currency, so it barely moves against the dollar despite steady money growth. It has a structural buffer emerging markets can only envy — but it's still a passenger, not the driver.",
+    imf: { state: "none", status: "Members are IMF creditors", detail: "Individual eurozone members (Greece, Ireland, Portugal) took IMF-backed bailouts in the 2010s — but always in euros, alongside EU funds. The bloc as a whole funds the IMF." } }
+};
+
+const PCOMPARE_ORDER = ["TR", "AR", "PK", "EG", "NG", "IN", "ID", "BR", "ZA", "JP", "EU"];
+
+function pcFmtPct(n) {
+  const sign = n >= 0 ? "+" : "−";
+  const abs = Math.abs(n);
+  const s = abs >= 1000 ? abs.toLocaleString("en-US") : abs.toString();
+  return sign + s + "%";
+}
+
+// Log-ish scaling so a +12,000% bar and a +90% bar both read on screen.
+function pcScale(pct) {
+  const v = Math.min(Math.abs(pct), 15000);
+  const w = Math.log10(1 + v) / Math.log10(1 + 15000); // 0..1
+  return Math.max(6, Math.round(w * 100));
+}
+
+function renderPcompare(key) {
+  const d = PCOMPARE[key];
+  if (!d) return;
+
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set("pcFlag", d.flag);
+  set("pcName", d.country);
+  set("pcSub", d.ccy + " · " + d.code);
+
+  const verdict = document.getElementById("pcVerdict");
+  if (verdict) { verdict.textContent = d.verdict; verdict.dataset.tone = d.tone; }
+
+  // Printing bar (always a positive/expansion move).
+  set("pcM2Val", pcFmtPct(d.m2));
+  const m2Fill = document.getElementById("pcM2Fill");
+  if (m2Fill) requestAnimationFrame(() => { m2Fill.style.width = pcScale(d.m2) + "%"; });
+
+  // Currency bar (weakening).
+  set("pcFxVal", pcFmtPct(d.fx));
+  const fxFill = document.getElementById("pcFxFill");
+  if (fxFill) requestAnimationFrame(() => { fxFill.style.width = pcScale(d.fx) + "%"; });
+
+  // The rule verdict line.
+  const ccyShort = d.ccy.split(" ").pop().toLowerCase();
+  set("pcRuleTag", "RULE HOLDS");
+  set("pcRuleText", "More " + ccyShort + " printed → weaker " + ccyShort + ". Textbook supply and demand — the opposite of the dollar.");
+
+  set("pcStory", d.story);
+
+  // IMF strip.
+  const imfEl = document.getElementById("pcImf");
+  if (imfEl) imfEl.dataset.state = d.imf.state;
+  set("pcImfStatus", d.imf.status);
+  set("pcImfDetail", d.imf.detail);
+
+  // Highlight active dropdown option (native select handles this, but keep value synced).
+  const pick = document.getElementById("pcPick");
+  if (pick && pick.value !== key) pick.value = key;
+}
+
+(function initPcompare() {
+  const pick = document.getElementById("pcPick");
+  if (!pick) return;
+
+  pick.innerHTML = PCOMPARE_ORDER.map(k => {
+    const d = PCOMPARE[k];
+    return '<option value="' + k + '">' + d.flag + '  ' + d.country + ' — ' + d.ccy + '</option>';
+  }).join("");
+
+  pick.addEventListener("change", () => renderPcompare(pick.value));
+  renderPcompare(pick.value || PCOMPARE_ORDER[0]);
+})();
+
 // ─── Internationalization (EN / HI) ────────────────────────────
 const I18N = {
   en: {
@@ -700,6 +821,23 @@ const I18N = {
     'puzzle.label': 'THE INTUITION FAILS',
     'puzzle.title': 'More dollars in the world should mean a cheaper dollar.',
     'puzzle.lede': "For any normal currency, that's exactly what happens. But the dollar isn't normal. It's the world's plumbing — and when the world gets anxious, every importing country needs more dollars, faster than the Fed can print them.",
+    'pcompare.label': 'DOES THE RULE HOLD EVERYWHERE?',
+    'pcompare.title': 'Pick a country. Watch its printing press meet its currency.',
+    'pcompare.lede': "Every one of these countries expanded its money supply — and its currency fell against the dollar, exactly as theory predicts. Then look at the United States: it printed the most of all, and its currency rose. That's the paradox. The exception isn't a country. It's <em>the</em> currency.",
+    'pcompare.pick': 'Compare a country',
+    'pcompare.m2': 'Money supply (M2) since 2000',
+    'pcompare.fx': 'Currency vs the US dollar',
+    'pcompare.dxy': 'Dollar vs a basket of currencies',
+    'pcompare.imf': 'IMF PROGRAM',
+    'pcompare.exception': 'the exception',
+    'pcompare.broken': 'RULE BREAKS',
+    'pcompare.usaRule': "The US printed more than anyone here — and the dollar got <em>stronger</em>. Because the world doesn't hold dollars by choice. It holds them to buy oil, settle trade, and stay safe.",
+    'pcompare.imfExplTitle': 'And when a country runs out of dollars? The US refills the tank — through the IMF.',
+    'pcompare.imfExpl1': "When an importer's reserves run dry, it can't pay for oil — and the currency goes into free fall. The lender of last resort is the <strong>International Monetary Fund</strong>. It disburses in SDRs and hard currency (overwhelmingly dollars), which the country immediately spends on imports and debt. In effect, <strong>fresh dollars are re-injected</strong> into the same importer that just ran out.",
+    'pcompare.imfQuota': 'US share of IMF quotas — the largest, and an <strong>effective veto</strong> over major decisions (which need 85%).',
+    'pcompare.imfDollar': 'Share of IMF lending and reserves denominated in or tied to the US dollar.',
+    'pcompare.imfArg': "Argentina's IMF program — the Fund's largest ever. A recurring bailout, repaid in dollars.",
+    'pcompare.imfPunch': "So the loop closes on both ends. Countries need dollars to buy oil. When they run short, the IMF — funded and effectively steered by the US — lends them dollars on the US's terms. The bailout doesn't break the dollar's grip. <strong>It tightens it.</strong>",
     'timeline.label': '26 YEARS, TWO LINES',
     'timeline.title': 'The US printed. The rupee fell. They moved together — not apart.',
     'printing.label': 'HOW USD PRINTING WORKS',

@@ -133,6 +133,133 @@
         <p>Global demand soaks up the extra supply. Strength persists.</p>
       </div>
     </div>
+
+    <!-- ─── COUNTRY COMPARISON: does the print → weaken rule hold everywhere? ─── -->
+    <div class="pcompare" id="pcompare">
+      <div class="pcompare-head">
+        <div class="pcompare-label" data-i18n="pcompare.label">DOES THE RULE HOLD EVERYWHERE?</div>
+        <h3 class="pcompare-title" data-i18n="pcompare.title">Pick a country. Watch its printing press meet its currency.</h3>
+        <p class="pcompare-lede" data-i18n="pcompare.lede" data-i18n-html="1">Every one of these countries expanded its money supply — and its currency fell against the dollar, exactly as theory predicts. Then look at the United States: it printed the most of all, and its currency rose. That's the paradox. The exception isn't a country. It's <em>the</em> currency.</p>
+      </div>
+
+      <div class="pcompare-picker">
+        <label class="pcompare-picker-label" for="pcPick" data-i18n="pcompare.pick">Compare a country</label>
+        <div class="pcompare-select-wrap">
+          <select id="pcPick" class="pcompare-select" aria-label="Choose a country to compare"></select>
+          <svg class="pcompare-caret" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Selected-country panel -->
+      <div class="pcard" id="pcCard" aria-live="polite">
+        <div class="pcard-top">
+          <span class="pcard-flag" id="pcFlag">🇹🇷</span>
+          <div class="pcard-heading">
+            <div class="pcard-name" id="pcName">Turkey</div>
+            <div class="pcard-sub" id="pcSub">Turkish lira · TRY</div>
+          </div>
+          <div class="pcard-verdict" id="pcVerdict" data-tone="crisis">Crisis</div>
+        </div>
+
+        <!-- The two-number proof: printing vs currency -->
+        <div class="pcard-bars">
+          <div class="pcard-bar-row">
+            <div class="pcard-bar-head">
+              <span class="pcard-bar-title" data-i18n="pcompare.m2">Money supply (M2) since 2000</span>
+              <span class="pcard-bar-val pos" id="pcM2Val">+2,900%</span>
+            </div>
+            <div class="pcard-track"><div class="pcard-fill pcard-fill--print" id="pcM2Fill"></div></div>
+          </div>
+          <div class="pcard-bar-row">
+            <div class="pcard-bar-head">
+              <span class="pcard-bar-title" data-i18n="pcompare.fx">Currency vs the US dollar</span>
+              <span class="pcard-bar-val neg" id="pcFxVal">−98%</span>
+            </div>
+            <div class="pcard-track"><div class="pcard-fill pcard-fill--fx" id="pcFxFill"></div></div>
+          </div>
+        </div>
+
+        <div class="pcard-rule" id="pcRule">
+          <span class="pcard-rule-tag" id="pcRuleTag">RULE HOLDS</span>
+          <span class="pcard-rule-text" id="pcRuleText">More lira printed → weaker lira. Textbook supply and demand.</span>
+        </div>
+
+        <p class="pcard-story" id="pcStory"></p>
+
+        <!-- IMF status strip -->
+        <div class="pcard-imf" id="pcImf">
+          <div class="pcard-imf-top">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M2 12h20" stroke-linecap="round"/></svg>
+            <span class="pcard-imf-label" data-i18n="pcompare.imf">IMF PROGRAM</span>
+            <span class="pcard-imf-status" id="pcImfStatus">Active</span>
+          </div>
+          <div class="pcard-imf-detail" id="pcImfDetail"></div>
+        </div>
+      </div>
+
+      <!-- The USA exception, always visible for contrast -->
+      <div class="pcard pcard--usa" id="pcUsa">
+        <div class="pcard-top">
+          <span class="pcard-flag">🇺🇸</span>
+          <div class="pcard-heading">
+            <div class="pcard-name">United States <span class="pcard-name-note" data-i18n="pcompare.exception">the exception</span></div>
+            <div class="pcard-sub">US dollar · USD — the world's reserve currency</div>
+          </div>
+          <div class="pcard-verdict" data-tone="strong">Stronger</div>
+        </div>
+        <div class="pcard-bars">
+          <div class="pcard-bar-row">
+            <div class="pcard-bar-head">
+              <span class="pcard-bar-title" data-i18n="pcompare.m2">Money supply (M2) since 2000</span>
+              <span class="pcard-bar-val pos">+360%</span>
+            </div>
+            <div class="pcard-track"><div class="pcard-fill pcard-fill--print" style="width:62%"></div></div>
+          </div>
+          <div class="pcard-bar-row">
+            <div class="pcard-bar-head">
+              <span class="pcard-bar-title" data-i18n="pcompare.dxy">Dollar vs a basket of currencies</span>
+              <span class="pcard-bar-val pos">+30%</span>
+            </div>
+            <div class="pcard-track pcard-track--up"><div class="pcard-fill pcard-fill--up" style="width:30%"></div></div>
+          </div>
+        </div>
+        <div class="pcard-rule pcard-rule--broken">
+          <span class="pcard-rule-tag" data-i18n="pcompare.broken">RULE BREAKS</span>
+          <span class="pcard-rule-text" data-i18n="pcompare.usaRule" data-i18n-html="1">The US printed more than anyone here — and the dollar got <em>stronger</em>. Because the world doesn't hold dollars by choice. It holds them to buy oil, settle trade, and stay safe.</span>
+        </div>
+      </div>
+
+      <!-- IMF-as-dollar-injection explainer -->
+      <details class="pimf-explainer" id="pImfExplainer">
+        <summary class="pimf-summary">
+          <span class="pimf-summary-icon">＄</span>
+          <span class="pimf-summary-text" data-i18n="pcompare.imfExplTitle">And when a country runs out of dollars? The US refills the tank — through the IMF.</span>
+          <svg class="pimf-summary-caret" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="pimf-body">
+          <p data-i18n="pcompare.imfExpl1" data-i18n-html="1">When an importer's reserves run dry, it can't pay for oil — and the currency goes into free fall. The lender of last resort is the <strong>International Monetary Fund</strong>. It disburses in SDRs and hard currency (overwhelmingly dollars), which the country immediately spends on imports and debt. In effect, <strong>fresh dollars are re-injected</strong> into the same importer that just ran out.</p>
+          <div class="pimf-stats">
+            <div class="pimf-stat">
+              <div class="pimf-stat-val">~16%</div>
+              <div class="pimf-stat-cap" data-i18n="pcompare.imfQuota" data-i18n-html="1">US share of IMF quotas — the largest, and an <strong>effective veto</strong> over major decisions (which need 85%).</div>
+            </div>
+            <div class="pimf-stat">
+              <div class="pimf-stat-val">~60%</div>
+              <div class="pimf-stat-cap" data-i18n="pcompare.imfDollar">Share of IMF lending and reserves denominated in or tied to the US dollar.</div>
+            </div>
+            <div class="pimf-stat">
+              <div class="pimf-stat-val">$44B</div>
+              <div class="pimf-stat-cap" data-i18n="pcompare.imfArg" data-i18n-html="1">Argentina's IMF program — the Fund's largest ever. A recurring bailout, repaid in dollars.</div>
+            </div>
+          </div>
+          <p class="pimf-punch" data-i18n="pcompare.imfPunch" data-i18n-html="1">So the loop closes on both ends. Countries need dollars to buy oil. When they run short, the IMF — funded and effectively steered by the US — lends them dollars on the US's terms. The bailout doesn't break the dollar's grip. <strong>It tightens it.</strong></p>
+          <div class="pimf-refs">
+            <a href="https://www.imf.org/en/About/Factsheets/Sheets/2022/IMF-Quotas" target="_blank" rel="noopener">IMF — Quotas &amp; voting<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a href="https://data.imf.org/cofer" target="_blank" rel="noopener">IMF COFER (reserve shares)<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </details>
+    </div>
   </div>
 </section>
 
