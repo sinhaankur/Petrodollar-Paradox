@@ -329,6 +329,20 @@
             <option value="600">Fast</option>
           </select>
         </div>
+        <div class="reel-speed reel-compare">
+          <label for="reelCompare" data-i18n="graph.compareLabel">COMPARE</label>
+          <select id="reelCompare" aria-label="Overlay another country's currency on the graph">
+            <option value="" data-i18n="graph.compareNone">India only</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Legend — reflects whether a comparison country is overlaid -->
+      <div class="reel-legend" id="reelLegend">
+        <span class="reel-legend-item"><span class="reel-legend-swatch" style="background:#378ADD"></span>US M2</span>
+        <span class="reel-legend-item"><span class="reel-legend-swatch" style="background:#D85A30"></span><span id="reelLegendInr">USD / INR (rupee)</span></span>
+        <span class="reel-legend-item" id="reelLegendCmp" hidden><span class="reel-legend-swatch" id="reelLegendCmpSwatch"></span><span id="reelLegendCmpName"></span></span>
+        <span class="reel-legend-note" id="reelLegendNote" hidden data-i18n="graph.indexNote">indexed to 2000 = 100 · lower = weaker vs the dollar</span>
       </div>
 
       <div class="reel-progress">

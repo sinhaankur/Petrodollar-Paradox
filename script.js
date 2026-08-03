@@ -57,6 +57,44 @@ const reelData = [
   { y: 2026, m2: 22.7, inr: 95.96, title: "Iran–US conflict",        tag: "PERFECT STORM",  desc: "Brent at $105. Rupee at ₹95.96. Asia's weakest currency.", color: "coral" }
 ];
 
+// ─── Comparison countries for the graph overlay ────────────────
+// Each series is a per-year INDEX of the currency vs USD, 2000 = 100.
+// Lower = the currency has weakened against the dollar. Years align 1:1
+// with reelData (2000, 2001, 2003, 2005, 2008, 2010, 2013, 2015, 2018,
+// 2020, 2022, 2023, 2024, 2025, 2026). Values are modelled from each
+// currency's real long-run trajectory against the dollar.
+const REEL_YEARS = reelData.map(d => d.y);
+
+// India's own index, derived from the rupee rate already in reelData
+// (100 * rate2000 / rateYear), so the rupee can be shown on the same
+// indexed axis as any comparison country.
+const INR_INDEX = reelData.map(d => +(100 * reelData[0].inr / d.inr).toFixed(1));
+
+const COMPARE_SERIES = {
+  TR: { name: "Turkey", ccy: "Turkish lira", flag: "🇹🇷", color: "#8E44AD",
+    idx: [100, 96, 82, 74, 60, 55, 47, 40, 25, 16, 7, 5, 3.5, 2.6, 2.0] },
+  AR: { name: "Argentina", ccy: "Argentine peso", flag: "🇦🇷", color: "#C0392B",
+    idx: [100, 98, 34, 34, 33, 32, 22, 12, 7, 4, 1.5, 0.9, 0.5, 0.25, 0.1] },
+  PK: { name: "Pakistan", ccy: "Pakistani rupee", flag: "🇵🇰", color: "#16A085",
+    idx: [100, 96, 90, 88, 79, 74, 60, 57, 52, 47, 32, 26, 22, 21, 20] },
+  EG: { name: "Egypt", ccy: "Egyptian pound", flag: "🇪🇬", color: "#D68910",
+    idx: [100, 82, 74, 74, 72, 71, 70, 68, 63, 55, 33, 22, 15, 12, 10] },
+  NG: { name: "Nigeria", ccy: "Nigerian naira", flag: "🇳🇬", color: "#27AE60",
+    idx: [100, 92, 80, 79, 78, 76, 76, 74, 63, 55, 38, 30, 12, 8, 5] },
+  ID: { name: "Indonesia", ccy: "Indonesian rupiah", flag: "🇮🇩", color: "#E67E22",
+    idx: [100, 82, 74, 84, 78, 80, 74, 66, 58, 55, 45, 44, 43, 41, 39] },
+  BR: { name: "Brazil", ccy: "Brazilian real", flag: "🇧🇷", color: "#2ECC71",
+    idx: [100, 74, 57, 75, 78, 103, 82, 55, 47, 34, 33, 33, 33, 33, 29] },
+  ZA: { name: "South Africa", ccy: "S. African rand", flag: "🇿🇦", color: "#1ABC9C",
+    idx: [100, 76, 78, 100, 78, 82, 62, 52, 45, 38, 40, 40, 38, 35, 33] },
+  JP: { name: "Japan", ccy: "Japanese yen", flag: "🇯🇵", color: "#3498DB",
+    idx: [100, 88, 93, 98, 106, 98, 90, 85, 88, 92, 76, 72, 68, 66, 65] },
+  EU: { name: "Eurozone", ccy: "Euro", flag: "🇪🇺", color: "#2980B9",
+    idx: [100, 95, 122, 118, 130, 122, 118, 100, 108, 108, 96, 100, 100, 98, 96] }
+};
+
+let compareKey = null; // currently selected comparison country (null = none)
+
 const reelColors = {
   amber: { bg: "#FAEEDA", border: "#BA7517", title: "#412402", text: "#854F0B", tagBg: "rgba(186,117,23,0.25)", tagText: "#412402" },
   coral: { bg: "#FAECE7", border: "#D85A30", title: "#4A1B0C", text: "#993C1D", tagBg: "rgba(216,90,48,0.22)",  tagText: "#4A1B0C" },
@@ -106,6 +144,12 @@ function drawChart() {
   const m2Points = reelData.slice(0, reelIdx + 1);
   const inrPoints = reelData.slice(0, reelIdx + 1);
 
+  // In comparison mode the right axis becomes an index (2000 = 100) so any
+  // currency — a resilient rupee or a collapsing lira — fits one shared scale.
+  const cmp = compareKey ? COMPARE_SERIES[compareKey] : null;
+  const idxMin = 0, idxMax = 130; // index range covers appreciation (euro) to near-zero
+  const idxY = (v) => padT + ch - ((v - idxMin) / (idxMax - idxMin)) * ch;
+
   // M2 area fill
   if (m2Points.length > 1) {
     ctx.fillStyle = 'rgba(55, 138, 221, 0.14)';
@@ -134,23 +178,39 @@ function drawChart() {
     ctx.stroke();
   }
 
-  // INR line
+  const xAt = (yr) => padL + ((yr - yMin) / (yMax - yMin)) * cw;
+
+  // INR line — raw rate in normal mode, or indexed (2000 = 100) in compare mode.
   if (inrPoints.length > 1) {
     ctx.strokeStyle = '#D85A30';
     ctx.lineWidth = 3;
     ctx.beginPath();
     inrPoints.forEach((p, i) => {
-      const x = padL + ((p.y - yMin) / (yMax - yMin)) * cw;
-      const y = padT + ch - (p.inr / inrMax) * ch;
+      const x = xAt(p.y);
+      const y = cmp ? idxY(INR_INDEX[i]) : padT + ch - (p.inr / inrMax) * ch;
       if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     });
+    ctx.stroke();
+  }
+
+  // Comparison country line (index mode only), revealed in sync with the reel.
+  if (cmp && reelIdx > 0) {
+    ctx.strokeStyle = cmp.color;
+    ctx.lineWidth = 3;
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    for (let i = 0; i <= reelIdx; i++) {
+      const x = xAt(REEL_YEARS[i]);
+      const y = idxY(cmp.idx[i]);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
     ctx.stroke();
   }
 
   // markers on current point
   if (m2Points.length) {
     const p = m2Points[m2Points.length - 1];
-    const x = padL + ((p.y - yMin) / (yMax - yMin)) * cw;
+    const x = xAt(p.y);
     const y = padT + ch - (p.m2 / m2Max) * ch;
     ctx.fillStyle = '#378ADD';
     ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
@@ -159,9 +219,17 @@ function drawChart() {
   }
   if (inrPoints.length) {
     const p = inrPoints[inrPoints.length - 1];
-    const x = padL + ((p.y - yMin) / (yMax - yMin)) * cw;
-    const y = padT + ch - (p.inr / inrMax) * ch;
+    const x = xAt(p.y);
+    const y = cmp ? idxY(INR_INDEX[reelIdx]) : padT + ch - (p.inr / inrMax) * ch;
     ctx.fillStyle = '#D85A30';
+    ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2); ctx.fill();
+  }
+  if (cmp && reelIdx >= 0) {
+    const x = xAt(REEL_YEARS[reelIdx]);
+    const y = idxY(cmp.idx[reelIdx]);
+    ctx.fillStyle = cmp.color;
     ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#fff';
     ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2); ctx.fill();
@@ -173,7 +241,7 @@ function drawChart() {
   ctx.textAlign = 'left';
   ctx.fillText('US M2 (trillions $)', padL, h - 8);
   ctx.textAlign = 'right';
-  ctx.fillText('USD / INR', w - padR, h - 8);
+  ctx.fillText(cmp ? 'Currency vs USD (2000 = 100)' : 'USD / INR', w - padR, h - 8);
 }
 
 function updateReelUi() {
@@ -277,6 +345,48 @@ document.getElementById('reelSpeed').addEventListener('change', function () {
     reelTimer = setInterval(reelStep, parseInt(this.value));
   }
 });
+
+// ─── Country comparison overlay on the graph ──────────────────
+(function initReelCompare() {
+  const pick = document.getElementById('reelCompare');
+  if (!pick) return;
+
+  // Populate from COMPARE_SERIES (keep the existing "India only" option first).
+  Object.keys(COMPARE_SERIES).forEach(k => {
+    const s = COMPARE_SERIES[k];
+    const opt = document.createElement('option');
+    opt.value = k;
+    opt.textContent = s.flag + '  India vs ' + s.name;
+    pick.appendChild(opt);
+  });
+
+  const legendCmp = document.getElementById('reelLegendCmp');
+  const legendCmpName = document.getElementById('reelLegendCmpName');
+  const legendCmpSwatch = document.getElementById('reelLegendCmpSwatch');
+  const legendNote = document.getElementById('reelLegendNote');
+  const legendInr = document.getElementById('reelLegendInr');
+
+  function updateLegend() {
+    const s = compareKey ? COMPARE_SERIES[compareKey] : null;
+    if (s) {
+      legendCmp.hidden = false;
+      legendCmpName.textContent = s.ccy;
+      legendCmpSwatch.style.background = s.color;
+      legendNote.hidden = false;
+      legendInr.textContent = 'India (rupee)';
+    } else {
+      legendCmp.hidden = true;
+      legendNote.hidden = true;
+      legendInr.textContent = 'USD / INR (rupee)';
+    }
+  }
+
+  pick.addEventListener('change', () => {
+    compareKey = pick.value || null;
+    updateLegend();
+    drawChart();
+  });
+})();
 
 window.addEventListener('resize', () => {
   sizeCanvas();
@@ -840,6 +950,9 @@ const I18N = {
     'pcompare.imfPunch': "So the loop closes on both ends. Countries need dollars to buy oil. When they run short, the IMF — funded and effectively steered by the US — lends them dollars on the US's terms. The bailout doesn't break the dollar's grip. <strong>It tightens it.</strong>",
     'timeline.label': '26 YEARS, TWO LINES',
     'timeline.title': 'The US printed. The rupee fell. They moved together — not apart.',
+    'graph.compareLabel': 'COMPARE',
+    'graph.compareNone': 'India only',
+    'graph.indexNote': 'indexed to 2000 = 100 · lower = weaker vs the dollar',
     'printing.label': 'HOW USD PRINTING WORKS',
     'printing.title': 'When the Fed "prints," it doesn\'t run physical presses.',
     'printing.lede': 'The dollar supply expands through the banking system — and the way it expands determines whether the rupee gets a boost or a beating.',
