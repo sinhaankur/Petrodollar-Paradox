@@ -776,47 +776,125 @@ const PCOMPARE = {
   TR: { flag: "🇹🇷", country: "Turkey", ccy: "Turkish lira", code: "TRY", verdict: "Crisis", tone: "crisis",
     m2: 2900, fx: -98,
     story: "Turkey ran the printing press hard while keeping rates below inflation for years. The result is textbook: an enormous rise in lira supply, and a near-total collapse against the dollar. Credibility, once lost, is brutally expensive to rebuild.",
-    imf: { state: "past", status: "Graduated (2013)", detail: "Turkey repaid its last IMF loans in 2013 and has since avoided a formal program — but markets repeatedly price in the risk of one every time reserves run thin." } },
+    imf: { state: "past", status: "Graduated (2013)", detail: "Turkey repaid its last IMF loans in 2013 and has since avoided a formal program — but markets repeatedly price in the risk of one every time reserves run thin." },
+    econ: {
+      gdp: "$1.3T", gdpRank: "17th", ppp: "$3.5T", growth: "+3.1%", growthNote: "credit-fuelled, inflationary",
+      exports: "$265B", exportsNote: "27% of GDP · autos, textiles",
+      external: "Very high", externalNote: "short-term $ debt, hot money",
+      reserves: "~$150B", reservesNote: "thin, often net-negative",
+      synthesis: "A mid-size economy funded by short-term foreign money, with reserves too thin to defend the lira. When credibility broke, nothing held the currency up.",
+      // forces: signed weights, negative = pushes currency DOWN, positive = holds it UP. Sum ≈ net.
+      forces: { external: -9, reserves: -7, exports: 3, growth: 2, monetary: -9, imf: -1 } } },
   AR: { flag: "🇦🇷", country: "Argentina", ccy: "Argentine peso", code: "ARS", verdict: "Crisis", tone: "crisis",
     m2: 12000, fx: -99.9,
     story: "Argentina is the extreme case: chronic deficits financed by money creation, recurring defaults, and a peso that has lost essentially all its dollar value. Multiple parallel exchange rates exist because the official one is a fiction.",
-    imf: { state: "active", status: "Active — $44B EFF", detail: "The IMF's largest program in history. Argentina is a serial borrower: bailout, crisis, bailout — dollars in, repaid in dollars, then borrowed again." } },
+    imf: { state: "active", status: "Active — $44B EFF", detail: "The IMF's largest program in history. Argentina is a serial borrower: bailout, crisis, bailout — dollars in, repaid in dollars, then borrowed again." },
+    econ: {
+      gdp: "$0.65T", gdpRank: "24th", ppp: "$1.4T", growth: "−1.5%", growthNote: "recession, chronic deficits",
+      exports: "$100B", exportsNote: "15% of GDP · soy, beef, grains",
+      external: "Extreme", externalNote: "default-prone, no market access",
+      reserves: "~$25B", reservesNote: "often net-negative, borrowed",
+      synthesis: "Deficits financed by printing money, no reserves, no market access. The peso has nothing to stand on — the IMF is the only thing between it and zero.",
+      forces: { external: -10, reserves: -9, exports: 2, growth: -3, monetary: -10, imf: -4 } } },
   PK: { flag: "🇵🇰", country: "Pakistan", ccy: "Pakistani rupee", code: "PKR", verdict: "Fragile", tone: "crisis",
     m2: 1400, fx: -80,
     story: "Pakistan imports most of its energy and runs a persistent current-account deficit. Each time reserves fall to a few weeks of imports, the currency lurches down and the country returns to the IMF for another lifeline.",
-    imf: { state: "active", status: "Active — $7B EFF (2024)", detail: "Pakistan has entered ~24 IMF programs since 1958 — one of the Fund's most frequent clients. Each Stand-By or EFF releases dollars to keep oil imports flowing." } },
+    imf: { state: "active", status: "Active — $7B EFF (2024)", detail: "Pakistan has entered ~24 IMF programs since 1958 — one of the Fund's most frequent clients. Each Stand-By or EFF releases dollars to keep oil imports flowing." },
+    econ: {
+      gdp: "$0.37T", gdpRank: "44th", ppp: "$1.6T", growth: "+2.4%", growthNote: "import-constrained",
+      exports: "$32B", exportsNote: "9% of GDP · textiles, narrow base",
+      external: "Very high", externalNote: "energy imports, thin buffer",
+      reserves: "~$12B", reservesNote: "weeks of imports, IMF-topped",
+      synthesis: "A narrow export base can't earn the dollars a big energy-import bill demands. Reserves live on a knife-edge — so the country cycles through IMF programs to stay afloat.",
+      forces: { external: -9, reserves: -8, exports: -4, growth: 0, monetary: -6, imf: 5 } } },
   EG: { flag: "🇪🇬", country: "Egypt", ccy: "Egyptian pound", code: "EGP", verdict: "Fragile", tone: "crisis",
     m2: 1600, fx: -90,
     story: "Egypt devalued sharply and repeatedly after dollar shortages left it unable to pay for wheat and fuel imports. Each devaluation was tied to unlocking external support.",
-    imf: { state: "active", status: "Active — $8B EFF (2024)", detail: "Egypt's program was topped up to $8bn in 2024 alongside Gulf and EU money — a coordinated dollar injection to stop the pound's slide." } },
+    imf: { state: "active", status: "Active — $8B EFF (2024)", detail: "Egypt's program was topped up to $8bn in 2024 alongside Gulf and EU money — a coordinated dollar injection to stop the pound's slide." },
+    econ: {
+      gdp: "$0.38T", gdpRank: "40th", ppp: "$2.2T", growth: "+3.8%", growthNote: "megaprojects, high inflation",
+      exports: "$50B", exportsNote: "12% of GDP · gas, Suez fees, tourism",
+      external: "High", externalNote: "wheat & fuel imports, Gulf loans",
+      reserves: "~$45B", reservesNote: "propped by Gulf & IMF money",
+      synthesis: "A wheat-and-fuel importer whose reserves depend on Gulf deposits and IMF cash. Every dollar shortage forces another devaluation to unlock the next tranche.",
+      forces: { external: -8, reserves: -5, exports: -2, growth: 2, monetary: -7, imf: 6 } } },
   NG: { flag: "🇳🇬", country: "Nigeria", ccy: "Nigerian naira", code: "NGN", verdict: "Fragile", tone: "crisis",
     m2: 2000, fx: -95,
     story: "Even as an oil exporter, Nigeria burned through dollar reserves defending an overvalued naira. When it finally floated the currency in 2023, the naira collapsed toward its true market level.",
-    imf: { state: "none", status: "No active program", detail: "Nigeria avoided a formal IMF loan but adopted IMF-style reforms — float the currency, remove fuel subsidies — to court dollar inflows on its own terms." } },
+    imf: { state: "none", status: "No active program", detail: "Nigeria avoided a formal IMF loan but adopted IMF-style reforms — float the currency, remove fuel subsidies — to court dollar inflows on its own terms." },
+    econ: {
+      gdp: "$0.25T", gdpRank: "53rd", ppp: "$1.5T", growth: "+3.2%", growthNote: "oil-dependent, low per-capita",
+      exports: "$55B", exportsNote: "20% of GDP · ~90% crude oil",
+      external: "High", externalNote: "oil-price hostage, weak inflows",
+      reserves: "~$35B", reservesNote: "drained defending old peg",
+      synthesis: "An oil exporter whose earnings vanish when crude dips — and whose reserves were spent defending a fake exchange rate. Floating the naira just revealed how overvalued it had been.",
+      forces: { external: -6, reserves: -6, exports: 3, growth: 1, monetary: -8, imf: 0 } } },
   IN: { flag: "🇮🇳", country: "India", ccy: "Indian rupee", code: "INR", verdict: "Squeezed", tone: "pressured",
     m2: 900, fx: -113,
     story: "India is the story this whole site is about. Broad money grew strongly, and the rupee fell from ~₹45 to ~₹96 per dollar. But its slide is orderly, not a collapse — disciplined rates, a large economy, and a war chest of reserves keep it out of crisis territory.",
-    imf: { state: "past", status: "Last program: 1991", detail: "India's 1991 balance-of-payments crisis forced it to pledge gold and take an IMF loan. It has never gone back — and building reserves to never need to is core policy." } },
+    imf: { state: "past", status: "Last program: 1991", detail: "India's 1991 balance-of-payments crisis forced it to pledge gold and take an IMF loan. It has never gone back — and building reserves to never need to is core policy." },
+    econ: {
+      gdp: "$4.1T", gdpRank: "4th", ppp: "$17.6T", growth: "+6.5%", growthNote: "domestic-demand-led, broad",
+      exports: "$825B", exportsNote: "20% of GDP · goods + IT services",
+      external: "Moderate", externalNote: "FPI-sensitive but low ext. debt (~19% GDP)",
+      reserves: "~$700B", reservesNote: "~11 months of imports — a war chest",
+      synthesis: "A huge domestic engine, diversified exports including services, low external debt, and $700B in reserves. The rupee slides — but on India's terms, never in free fall.",
+      forces: { external: -4, reserves: 8, exports: 6, growth: 7, monetary: -5, imf: 0 } } },
   ID: { flag: "🇮🇩", country: "Indonesia", ccy: "Indonesian rupiah", code: "IDR", verdict: "Pressured", tone: "pressured",
     m2: 1100, fx: -78,
     story: "Indonesia grew its money supply steadily and saw the rupiah weaken in line with it. Bank Indonesia intervenes to smooth the moves, but the long-run direction against a rising dollar is down.",
-    imf: { state: "past", status: "Last program: 1997–98", detail: "The Asian Financial Crisis forced Indonesia into a wrenching IMF program. The memory shapes its policy: hoard reserves, never be that exposed to a dollar squeeze again." } },
+    imf: { state: "past", status: "Last program: 1997–98", detail: "The Asian Financial Crisis forced Indonesia into a wrenching IMF program. The memory shapes its policy: hoard reserves, never be that exposed to a dollar squeeze again." },
+    econ: {
+      gdp: "$1.5T", gdpRank: "16th", ppp: "$4.7T", growth: "+5.0%", growthNote: "steady, domestic-led",
+      exports: "$290B", exportsNote: "19% of GDP · coal, palm oil, nickel",
+      external: "Moderate", externalNote: "commodity-linked, FPI-sensitive",
+      reserves: "~$150B", reservesNote: "solid, actively defended",
+      synthesis: "A large domestic market and commodity exports give the rupiah real ballast. It drifts down with the dollar, but disciplined reserves keep the slide gentle.",
+      forces: { external: -4, reserves: 4, exports: 4, growth: 5, monetary: -6, imf: 0 } } },
   BR: { flag: "🇧🇷", country: "Brazil", ccy: "Brazilian real", code: "BRL", verdict: "Weak", tone: "pressured",
     m2: 800, fx: -71,
     story: "Brazil is a major commodity exporter, yet the real still fell hard against the dollar as money supply expanded and fiscal worries mounted. Even good terms of trade can't beat a strengthening dollar.",
-    imf: { state: "past", status: "Last program: 2002", detail: "Brazil took a large IMF loan in 2002 during a confidence crisis, repaid early in 2005, and has stayed out since — now a creditor to the IMF rather than a borrower." } },
+    imf: { state: "past", status: "Last program: 2002", detail: "Brazil took a large IMF loan in 2002 during a confidence crisis, repaid early in 2005, and has stayed out since — now a creditor to the IMF rather than a borrower." },
+    econ: {
+      gdp: "$2.2T", gdpRank: "9th", ppp: "$4.7T", growth: "+2.5%", growthNote: "fiscal worries cap it",
+      exports: "$340B", exportsNote: "15% of GDP · soy, iron ore, oil",
+      external: "Moderate", externalNote: "high real rates draw carry flows",
+      reserves: "~$350B", reservesNote: "large, self-insured",
+      synthesis: "Strong commodity exports and big reserves give the real a floor — but chronic fiscal deficits keep spooking investors, so it weakens more than its balance sheet alone would suggest.",
+      forces: { external: -3, reserves: 5, exports: 5, growth: 2, monetary: -6, imf: 0 } } },
   ZA: { flag: "🇿🇦", country: "South Africa", ccy: "South African rand", code: "ZAR", verdict: "Weak", tone: "pressured",
     m2: 550, fx: -67,
     story: "The rand is the emerging world's favourite risk barometer. Money supply rose, growth disappointed, and the currency weakened — falling fastest whenever the dollar catches a bid.",
-    imf: { state: "past", status: "Last major loan: 2020 (COVID)", detail: "South Africa drew a $4.3bn emergency IMF facility during COVID — its first in decades — to shore up dollar liquidity when the pandemic froze markets." } },
+    imf: { state: "past", status: "Last major loan: 2020 (COVID)", detail: "South Africa drew a $4.3bn emergency IMF facility during COVID — its first in decades — to shore up dollar liquidity when the pandemic froze markets." },
+    econ: {
+      gdp: "$0.40T", gdpRank: "39th", ppp: "$1.0T", growth: "+1.2%", growthNote: "power cuts, low potential",
+      exports: "$135B", exportsNote: "34% of GDP · gold, platinum, minerals",
+      external: "High", externalNote: "deep, liquid market = risk proxy",
+      reserves: "~$65B", reservesNote: "modest for its openness",
+      synthesis: "A deeply traded currency with weak growth becomes the world's risk dial. Good mineral exports can't offset the fact that global fear sells the rand first.",
+      forces: { external: -7, reserves: 2, exports: 4, growth: -2, monetary: -4, imf: 0 } } },
   JP: { flag: "🇯🇵", country: "Japan", ccy: "Japanese yen", code: "JPY", verdict: "Weak", tone: "pressured",
     m2: 90, fx: -35,
     story: "Japan barely grew its money supply by emerging-market standards, yet the yen still fell sharply — proof that the yield gap with the Fed, not just printing, drives currencies. A reserve issuer, but not the reserve issuer.",
-    imf: { state: "none", status: "Creditor, never a borrower", detail: "Japan is one of the IMF's largest funders. It has never needed a bailout — but even a wealthy reserve-currency issuer can't keep the yen from sliding against the dollar." } },
+    imf: { state: "none", status: "Creditor, never a borrower", detail: "Japan is one of the IMF's largest funders. It has never needed a bailout — but even a wealthy reserve-currency issuer can't keep the yen from sliding against the dollar." },
+    econ: {
+      gdp: "$4.2T", gdpRank: "5th", ppp: "$6.7T", growth: "+0.8%", growthNote: "mature, ageing, low",
+      exports: "$920B", exportsNote: "22% of GDP · autos, machinery, tech",
+      external: "Very low", externalNote: "world's biggest net creditor",
+      reserves: "~$1.25T", reservesNote: "second-largest on earth",
+      synthesis: "Japan is rich, a huge exporter, the world's top creditor — yet the yen still falls, because near-zero Japanese rates vs high Fed rates pull capital to the dollar. Proof it's the yield gap, not weakness, that moves it.",
+      forces: { external: 6, reserves: 7, exports: 6, growth: -1, monetary: -12, imf: 0 } } },
   EU: { flag: "🇪🇺", country: "Eurozone", ccy: "Euro", code: "EUR", verdict: "Resilient", tone: "resilient",
     m2: 200, fx: -4,
     story: "The euro is the closest thing to a rival reserve currency, so it barely moves against the dollar despite steady money growth. It has a structural buffer emerging markets can only envy — but it's still a passenger, not the driver.",
-    imf: { state: "none", status: "Members are IMF creditors", detail: "Individual eurozone members (Greece, Ireland, Portugal) took IMF-backed bailouts in the 2010s — but always in euros, alongside EU funds. The bloc as a whole funds the IMF." } }
+    imf: { state: "none", status: "Members are IMF creditors", detail: "Individual eurozone members (Greece, Ireland, Portugal) took IMF-backed bailouts in the 2010s — but always in euros, alongside EU funds. The bloc as a whole funds the IMF." },
+    econ: {
+      gdp: "$16T", gdpRank: "—", ppp: "$19T", growth: "+1.0%", growthNote: "slow but stable",
+      exports: "$3.4T", exportsNote: "~50% of GDP · machinery, autos, chemicals",
+      external: "Very low", externalNote: "euro is itself a reserve currency (~20% of reserves)",
+      reserves: "n/a", reservesNote: "issues a reserve currency — doesn't need a war chest",
+      synthesis: "The euro is the #2 reserve currency, so the world holds it by choice. That structural demand — plus a giant, balanced trade bloc — is exactly the cushion emerging markets lack.",
+      forces: { external: 5, reserves: 6, exports: 5, growth: 0, monetary: -4, imf: 0 } } }
 };
 
 const PCOMPARE_ORDER = ["TR", "AR", "PK", "EG", "NG", "IN", "ID", "BR", "ZA", "JP", "EU"];
@@ -863,7 +941,20 @@ function renderPcompare(key) {
   set("pcRuleTag", "RULE HOLDS");
   set("pcRuleText", "More " + ccyShort + " printed → weaker " + ccyShort + ". Textbook supply and demand — the opposite of the dollar.");
 
+  // Economic scorecard.
+  const e = d.econ || {};
+  set("pcGdp", e.gdp);            set("pcGdpNote", (e.gdpRank && e.gdpRank !== "—") ? e.gdpRank + " largest" : "world's #2 bloc");
+  set("pcPpp", e.ppp);
+  set("pcGrowth", e.growth);      set("pcGrowthNote", e.growthNote);
+  set("pcExports", e.exports);    set("pcExportsNote", e.exportsNote);
+  set("pcExternal", e.external);  set("pcExternalNote", e.externalNote);
+  set("pcReserves", e.reserves);  set("pcReservesNote", e.reservesNote);
+
+  // Force breakdown graph.
+  buildForces(e.forces);
+
   set("pcStory", d.story);
+  set("pcSynth", e.synthesis || "");
 
   // IMF strip.
   const imfEl = document.getElementById("pcImf");
@@ -874,6 +965,49 @@ function renderPcompare(key) {
   // Highlight active dropdown option (native select handles this, but keep value synced).
   const pick = document.getElementById("pcPick");
   if (pick && pick.value !== key) pick.value = key;
+}
+
+// Renders the "what actually moves the currency" diverging-bar breakdown.
+// Each force is signed: positive holds the currency up, negative pushes it down.
+const PC_FORCE_META = {
+  external: { label: "External funding" },
+  reserves: { label: "FX reserves" },
+  exports:  { label: "Exports" },
+  growth:   { label: "Internal growth" },
+  monetary: { label: "Money printing / rates" },
+  imf:      { label: "IMF support" }
+};
+const PC_FORCE_ORDER = ["external", "reserves", "exports", "growth", "monetary", "imf"];
+const PC_FORCE_MAX = 12; // magnitude that maps to a full half-bar
+
+function buildForces(forces) {
+  const host = document.getElementById("pcForces");
+  if (!host || !forces) return;
+  host.innerHTML = "";
+  PC_FORCE_ORDER.forEach(k => {
+    const v = forces[k];
+    if (v === undefined) return;
+    const meta = PC_FORCE_META[k];
+    const pct = Math.min(Math.abs(v) / PC_FORCE_MAX, 1) * 100;
+    const up = v >= 0;
+    const row = document.createElement("div");
+    row.className = "pforce-row";
+    // Diverging bar: a centre line, fill extends right (up) or left (down).
+    row.innerHTML =
+      '<span class="pforce-label">' + meta.label + '</span>' +
+      '<span class="pforce-track">' +
+        '<span class="pforce-center"></span>' +
+        '<span class="pforce-fill ' + (up ? 'pforce-fill--up' : 'pforce-fill--down') + '"></span>' +
+      '</span>';
+    host.appendChild(row);
+    const fill = row.querySelector(".pforce-fill");
+    // Animate width from centre.
+    requestAnimationFrame(() => {
+      fill.style.width = (pct / 2) + "%";
+      if (up) { fill.style.left = "50%"; fill.style.right = "auto"; }
+      else    { fill.style.right = "50%"; fill.style.left = "auto"; }
+    });
+  });
 }
 
 (function initPcompare() {
@@ -948,6 +1082,17 @@ const I18N = {
     'pcompare.imfDollar': 'Share of IMF lending and reserves denominated in or tied to the US dollar.',
     'pcompare.imfArg': "Argentina's IMF program — the Fund's largest ever. A recurring bailout, repaid in dollars.",
     'pcompare.imfPunch': "So the loop closes on both ends. Countries need dollars to buy oil. When they run short, the IMF — funded and effectively steered by the US — lends them dollars on the US's terms. The bailout doesn't break the dollar's grip. <strong>It tightens it.</strong>",
+    'pcompare.econLabel': 'THE ECONOMY UNDERNEATH',
+    'pcompare.gdp': 'GDP (nominal)',
+    'pcompare.pppKey': 'GDP (PPP)',
+    'pcompare.pppNote': 'real purchasing power',
+    'pcompare.growth': 'Internal growth',
+    'pcompare.exportsKey': 'Exports',
+    'pcompare.external': 'External funding',
+    'pcompare.reserves': 'FX reserves',
+    'pcompare.forcesTitle': 'What actually moves the currency',
+    'pcompare.holdsUp': 'holds it up',
+    'pcompare.pushesDown': 'pushes it down',
     'timeline.label': '26 YEARS, TWO LINES',
     'timeline.title': 'The US printed. The rupee fell. They moved together — not apart.',
     'graph.compareLabel': 'COMPARE',

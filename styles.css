@@ -895,6 +895,158 @@ body {
   color: var(--ink-2);
 }
 
+/* ── Economic scorecard ── */
+.pcard-econ { margin-top: 22px; }
+
+.pcard-econ-label,
+.pcard-forces-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink-3);
+}
+
+.pcard-econ-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 620px) {
+  .pcard-econ-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.econ-cell {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+
+.econ-key {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.econ-val {
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.econ-note {
+  margin-top: 3px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+
+/* ── "What actually moves the currency" diverging bars ── */
+.pcard-forces { margin-top: 24px; }
+
+.pcard-forces-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.pcard-forces-legend {
+  display: inline-flex;
+  gap: 14px;
+}
+.force-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+.force-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.force-legend-dot--up   { background: var(--teal-mid); }
+.force-legend-dot--down { background: var(--coral-mid); }
+
+.pforces {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.pforce-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  gap: 12px;
+}
+@media (max-width: 520px) {
+  .pforce-row { grid-template-columns: 116px 1fr; gap: 8px; }
+}
+
+.pforce-label {
+  font-size: 12.5px;
+  color: var(--ink-2);
+  text-align: right;
+  font-weight: 500;
+}
+
+.pforce-track {
+  position: relative;
+  height: 16px;
+  background: var(--bg-soft);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.pforce-center {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line-strong);
+  transform: translateX(-0.5px);
+  z-index: 2;
+}
+
+.pforce-fill {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  width: 0;
+  border-radius: 4px;
+  transition: width 0.7s var(--ease-out);
+}
+.pforce-fill--up   { background: linear-gradient(90deg, rgba(29,158,117,0.55), var(--teal-mid)); }
+.pforce-fill--down { background: linear-gradient(270deg, rgba(216,90,48,0.55), var(--coral-mid)); }
+
+/* ── Synthesis line ── */
+.pcard-synth {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--blue-bg), var(--bg-soft));
+  border: 1px solid rgba(55, 138, 221, 0.18);
+  border-left: 3px solid var(--blue-line);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  font-weight: 500;
+}
+
 /* IMF status strip inside the selected card */
 .pcard-imf {
   margin-top: 18px;

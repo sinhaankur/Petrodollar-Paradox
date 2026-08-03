@@ -184,7 +184,59 @@
           <span class="pcard-rule-text" id="pcRuleText">More lira printed → weaker lira. Textbook supply and demand.</span>
         </div>
 
+        <!-- Economic scorecard: the structural fundamentals behind the currency -->
+        <div class="pcard-econ">
+          <div class="pcard-econ-label" data-i18n="pcompare.econLabel">THE ECONOMY UNDERNEATH</div>
+          <div class="pcard-econ-grid">
+            <div class="econ-cell">
+              <div class="econ-key" data-i18n="pcompare.gdp">GDP (nominal)</div>
+              <div class="econ-val" id="pcGdp">$1.3T</div>
+              <div class="econ-note" id="pcGdpNote">17th largest</div>
+            </div>
+            <div class="econ-cell">
+              <div class="econ-key" data-i18n="pcompare.pppKey">GDP (PPP)</div>
+              <div class="econ-val" id="pcPpp">$3.5T</div>
+              <div class="econ-note" data-i18n="pcompare.pppNote">real purchasing power</div>
+            </div>
+            <div class="econ-cell">
+              <div class="econ-key" data-i18n="pcompare.growth">Internal growth</div>
+              <div class="econ-val" id="pcGrowth">+3.1%</div>
+              <div class="econ-note" id="pcGrowthNote">domestic engine</div>
+            </div>
+            <div class="econ-cell">
+              <div class="econ-key" data-i18n="pcompare.exportsKey">Exports</div>
+              <div class="econ-val" id="pcExports">$265B</div>
+              <div class="econ-note" id="pcExportsNote">dollar earnings</div>
+            </div>
+            <div class="econ-cell">
+              <div class="econ-key" data-i18n="pcompare.external">External funding</div>
+              <div class="econ-val" id="pcExternal">Very high</div>
+              <div class="econ-note" id="pcExternalNote">reliance on foreign money</div>
+            </div>
+            <div class="econ-cell">
+              <div class="econ-key" data-i18n="pcompare.reserves">FX reserves</div>
+              <div class="econ-val" id="pcReserves">~$150B</div>
+              <div class="econ-note" id="pcReservesNote">the dollar buffer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Force breakdown: what actually pushes the currency down vs holds it up -->
+        <div class="pcard-forces">
+          <div class="pcard-forces-head">
+            <span class="pcard-forces-title" data-i18n="pcompare.forcesTitle">What actually moves the currency</span>
+            <span class="pcard-forces-legend">
+              <span class="force-legend-item"><span class="force-legend-dot force-legend-dot--up"></span><span data-i18n="pcompare.holdsUp">holds it up</span></span>
+              <span class="force-legend-item"><span class="force-legend-dot force-legend-dot--down"></span><span data-i18n="pcompare.pushesDown">pushes it down</span></span>
+            </span>
+          </div>
+          <div class="pforces" id="pcForces"></div>
+        </div>
+
         <p class="pcard-story" id="pcStory"></p>
+
+        <!-- One-line synthesis: why it holds up or collapses -->
+        <div class="pcard-synth" id="pcSynth"></div>
 
         <!-- IMF status strip -->
         <div class="pcard-imf" id="pcImf">
