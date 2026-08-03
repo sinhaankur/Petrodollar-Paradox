@@ -166,17 +166,18 @@
           <div class="pcard-bar-row">
             <div class="pcard-bar-head">
               <span class="pcard-bar-title" data-i18n="pcompare.m2">Money supply (M2) since 2000</span>
-              <span class="pcard-bar-val pos" id="pcM2Val">+2,900%</span>
+              <span class="pcard-bar-val neutral" id="pcM2Val">+2,900%</span>
             </div>
-            <div class="pcard-track"><div class="pcard-fill pcard-fill--print" id="pcM2Fill"></div></div>
+            <div class="pcard-track" id="pcM2Track"><div class="pcard-fill pcard-fill--print" id="pcM2Fill"></div></div>
           </div>
           <div class="pcard-bar-row">
             <div class="pcard-bar-head">
               <span class="pcard-bar-title" data-i18n="pcompare.fx">Currency vs the US dollar</span>
               <span class="pcard-bar-val neg" id="pcFxVal">−98%</span>
             </div>
-            <div class="pcard-track"><div class="pcard-fill pcard-fill--fx" id="pcFxFill"></div></div>
+            <div class="pcard-track" id="pcFxTrack"><div class="pcard-fill pcard-fill--fx" id="pcFxFill"></div></div>
           </div>
+          <div class="pcard-bars-note" data-i18n="pcompare.logNote">Bars use a log scale so extreme and modest values both fit — read the numbers, not just the length.</div>
         </div>
 
         <div class="pcard-rule" id="pcRule">
@@ -188,35 +189,41 @@
         <div class="pcard-econ">
           <div class="pcard-econ-label" data-i18n="pcompare.econLabel">THE ECONOMY UNDERNEATH</div>
           <div class="pcard-econ-grid">
-            <div class="econ-cell">
+            <div class="econ-cell" id="pcGdpCell">
               <div class="econ-key" data-i18n="pcompare.gdp">GDP (nominal)</div>
               <div class="econ-val" id="pcGdp">$1.3T</div>
               <div class="econ-note" id="pcGdpNote">17th largest</div>
+              <div class="econ-ref" id="pcGdpRef"></div>
             </div>
-            <div class="econ-cell">
+            <div class="econ-cell" id="pcPppCell">
               <div class="econ-key" data-i18n="pcompare.pppKey">GDP (PPP)</div>
               <div class="econ-val" id="pcPpp">$3.5T</div>
               <div class="econ-note" data-i18n="pcompare.pppNote">real purchasing power</div>
+              <div class="econ-ref" id="pcPppRef"></div>
             </div>
-            <div class="econ-cell">
+            <div class="econ-cell" id="pcGrowthCell">
               <div class="econ-key" data-i18n="pcompare.growth">Internal growth</div>
               <div class="econ-val" id="pcGrowth">+3.1%</div>
               <div class="econ-note" id="pcGrowthNote">domestic engine</div>
+              <div class="econ-ref" id="pcGrowthRef"></div>
             </div>
-            <div class="econ-cell">
+            <div class="econ-cell" id="pcExportsCell">
               <div class="econ-key" data-i18n="pcompare.exportsKey">Exports</div>
               <div class="econ-val" id="pcExports">$265B</div>
               <div class="econ-note" id="pcExportsNote">dollar earnings</div>
+              <div class="econ-ref" id="pcExportsRef"></div>
             </div>
-            <div class="econ-cell">
+            <div class="econ-cell" id="pcExternalCell">
               <div class="econ-key" data-i18n="pcompare.external">External funding</div>
               <div class="econ-val" id="pcExternal">Very high</div>
               <div class="econ-note" id="pcExternalNote">reliance on foreign money</div>
+              <div class="econ-ref" id="pcExternalRef"></div>
             </div>
-            <div class="econ-cell">
+            <div class="econ-cell" id="pcReservesCell">
               <div class="econ-key" data-i18n="pcompare.reserves">FX reserves</div>
               <div class="econ-val" id="pcReserves">~$150B</div>
               <div class="econ-note" id="pcReservesNote">the dollar buffer</div>
+              <div class="econ-ref" id="pcReservesRef"></div>
             </div>
           </div>
         </div>
@@ -263,7 +270,7 @@
           <div class="pcard-bar-row">
             <div class="pcard-bar-head">
               <span class="pcard-bar-title" data-i18n="pcompare.m2">Money supply (M2) since 2000</span>
-              <span class="pcard-bar-val pos">+360%</span>
+              <span class="pcard-bar-val neutral">+360%</span>
             </div>
             <div class="pcard-track"><div class="pcard-fill pcard-fill--print" style="width:62%"></div></div>
           </div>

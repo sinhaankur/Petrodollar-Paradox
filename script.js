@@ -943,12 +943,35 @@ function renderPcompare(key) {
 
   // Economic scorecard.
   const e = d.econ || {};
+  const IN = PCOMPARE.IN.econ; // India = the anchor everything is compared against
+  const isIndia = key === "IN";
+
   set("pcGdp", e.gdp);            set("pcGdpNote", (e.gdpRank && e.gdpRank !== "—") ? e.gdpRank + " largest" : "world's #2 bloc");
   set("pcPpp", e.ppp);
   set("pcGrowth", e.growth);      set("pcGrowthNote", e.growthNote);
   set("pcExports", e.exports);    set("pcExportsNote", e.exportsNote);
   set("pcExternal", e.external);  set("pcExternalNote", e.externalNote);
   set("pcReserves", e.reserves);  set("pcReservesNote", e.reservesNote);
+
+  // Color the growth value by sign (a shrinking economy should read red).
+  const growthEl = document.getElementById("pcGrowth");
+  if (growthEl) {
+    growthEl.classList.toggle("neg", /^[−-]/.test(e.growth || ""));
+    growthEl.classList.toggle("pos", /^\+/.test(e.growth || ""));
+  }
+
+  // "vs India" ghost references under each metric (hidden on India's own card).
+  const setRef = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = isIndia ? "" : "India: " + val; };
+  setRef("pcGdpRef", IN.gdp);
+  setRef("pcPppRef", IN.ppp);
+  setRef("pcGrowthRef", IN.growth);
+  setRef("pcExportsRef", IN.exports);
+  setRef("pcExternalRef", IN.external);
+  setRef("pcReservesRef", IN.reserves);
+  ["pcGdpCell","pcPppCell","pcGrowthCell","pcExportsCell","pcExternalCell","pcReservesCell"].forEach(cid => {
+    const cell = document.getElementById(cid);
+    if (cell) cell.classList.toggle("econ-cell--india", isIndia);
+  });
 
   // Force breakdown graph.
   buildForces(e.forces);
@@ -980,6 +1003,13 @@ const PC_FORCE_META = {
 const PC_FORCE_ORDER = ["external", "reserves", "exports", "growth", "monetary", "imf"];
 const PC_FORCE_MAX = 12; // magnitude that maps to a full half-bar
 
+function pcForceMagnitude(abs) {
+  if (abs >= 9) return "strong";
+  if (abs >= 5) return "moderate";
+  if (abs >= 1) return "mild";
+  return "neutral";
+}
+
 function buildForces(forces) {
   const host = document.getElementById("pcForces");
   if (!host || !forces) return;
@@ -988,10 +1018,17 @@ function buildForces(forces) {
     const v = forces[k];
     if (v === undefined) return;
     const meta = PC_FORCE_META[k];
-    const pct = Math.min(Math.abs(v) / PC_FORCE_MAX, 1) * 100;
+    const abs = Math.abs(v);
+    const pct = Math.min(abs / PC_FORCE_MAX, 1) * 100;
     const up = v >= 0;
+    // Accessible + hover text: e.g. "External funding — pushes the currency down (strong)"
+    const dir = abs < 1 ? "roughly neutral" : (up ? "holds the currency up" : "pushes the currency down");
+    const desc = meta.label + " — " + dir + (abs >= 1 ? " (" + pcForceMagnitude(abs) + ")" : "");
     const row = document.createElement("div");
     row.className = "pforce-row";
+    row.setAttribute("role", "img");
+    row.setAttribute("aria-label", desc);
+    row.setAttribute("title", desc);
     // Diverging bar: a centre line, fill extends right (up) or left (down).
     row.innerHTML =
       '<span class="pforce-label">' + meta.label + '</span>' +
@@ -1093,6 +1130,7 @@ const I18N = {
     'pcompare.forcesTitle': 'What actually moves the currency',
     'pcompare.holdsUp': 'holds it up',
     'pcompare.pushesDown': 'pushes it down',
+    'pcompare.logNote': 'Bars use a log scale so extreme and modest values both fit — read the numbers, not just the length.',
     'timeline.label': '26 YEARS, TWO LINES',
     'timeline.title': 'The US printed. The rupee fell. They moved together — not apart.',
     'graph.compareLabel': 'COMPARE',

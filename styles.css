@@ -840,8 +840,17 @@ body {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
-.pcard-bar-val.pos { color: var(--teal-mid); }
-.pcard-bar-val.neg { color: var(--coral-mid); }
+.pcard-bar-val.pos     { color: var(--teal-mid); }
+.pcard-bar-val.neg     { color: var(--coral-mid); }
+.pcard-bar-val.neutral { color: var(--amber-mid); }
+
+.pcard-bars-note {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink-3);
+  font-style: italic;
+}
 
 .pcard-track {
   height: 9px;
@@ -945,8 +954,22 @@ body {
   margin-top: 3px;
   font-size: 11.5px;
   line-height: 1.4;
-  color: var(--ink-3);
+  color: var(--ink-2); /* raised from ink-3 for WCAG AA contrast */
 }
+
+/* Sign-colored economic values (e.g. negative growth reads red) */
+.econ-val.neg { color: var(--coral-mid); }
+.econ-val.pos { color: var(--teal-mid); }
+
+/* Ghost 'vs India' reference under each metric */
+.econ-ref {
+  margin-top: 4px;
+  font-size: 10.5px;
+  letter-spacing: 0.2px;
+  color: var(--ink-3);
+  opacity: 0.85;
+}
+.econ-cell--india .econ-ref { visibility: hidden; }
 
 /* ── "What actually moves the currency" diverging bars ── */
 .pcard-forces { margin-top: 24px; }
