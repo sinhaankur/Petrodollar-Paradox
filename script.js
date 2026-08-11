@@ -44,17 +44,17 @@ const reelData = [
   { y: 2001, m2: 5.4,  inr: 47.2,  title: "Dot-com bust and 9/11",   tag: "FIRST SHOCK",    desc: "Fed slashes rates. M2 jumps. Dollar liquidity expands.", color: "coral" },
   { y: 2003, m2: 6.0,  inr: 45.6,  title: "Iraq war begins",         tag: "OIL SURGE",      desc: "Military spending rises. Oil climbs past $40.", color: "coral" },
   { y: 2005, m2: 6.6,  inr: 44.1,  title: "Bull market boom",        tag: "INFLOW ERA",     desc: "Cheap money fuels global asset bubble. Capital floods India.", color: "teal" },
-  { y: 2008, m2: 8.2,  inr: 48.4,  title: "Global financial crisis", tag: "BIG BANG",       desc: "Fed launches QE1. Trillions printed. Capital flees emerging markets.", color: "coral" },
-  { y: 2010, m2: 8.8,  inr: 45.6,  title: "QE2 launched",            tag: "MORE PRINTING",  desc: "Fed buys $600B more bonds. Dollars flood the system again.", color: "blue" },
-  { y: 2013, m2: 11.0, inr: 61.9,  title: "Taper tantrum",           tag: "RUPEE CRISIS",   desc: "Fed hints at ending QE. Rupee crashes 20% in months.", color: "coral" },
-  { y: 2015, m2: 12.4, inr: 66.3,  title: "Strong dollar era",       tag: "DXY PEAK",       desc: "Fed ends QE. Dollar surges globally. EM currencies weaken.", color: "blue" },
-  { y: 2018, m2: 14.4, inr: 70.1,  title: "Trade war and QT",        tag: "PRESSURE",       desc: "Tariffs and tightening. Oil rises to $80. Rupee crosses ₹70.", color: "amber" },
-  { y: 2020, m2: 19.1, inr: 74.1,  title: "COVID money printer",     tag: "UNPRECEDENTED",  desc: "Fed prints $4T in months. Largest expansion in history.", color: "coral" },
-  { y: 2022, m2: 21.9, inr: 82.8,  title: "Inflation breaks out",    tag: "PAYBACK TIME",   desc: "9% inflation. Fed hikes 525bps. Dollar surges. Rupee past ₹80.", color: "coral" },
-  { y: 2023, m2: 20.8, inr: 83.2,  title: "QT continues",            tag: "TIGHT MONEY",    desc: "Rates highest in 22 years. Dollar stays strong.", color: "blue" },
-  { y: 2024, m2: 21.5, inr: 84.5,  title: "Soft landing hopes",      tag: "STEADY GRIND",   desc: "Fed pauses. M2 starts growing again. Rupee depreciates slowly.", color: "amber" },
-  { y: 2025, m2: 22.4, inr: 88.4,  title: "Growth slowdown",         tag: "OUTFLOW SIGNS",  desc: "FIIs pull out $15B. Rupee crosses ₹88.", color: "amber" },
-  { y: 2026, m2: 22.7, inr: 95.96, title: "Iran–US conflict",        tag: "PERFECT STORM",  desc: "Brent at $105. Rupee at ₹95.96. Asia's weakest currency.", color: "coral" }
+  { y: 2008, m2: 8.2,  inr: 48.4,  title: "Global financial crisis", tag: "BIG BANG",       desc: "Fed launches QE1 — trillions printed. But panicked investors flee to dollars, not away from them. Foreign money bolts India, the rupee sinks from ₹40 to ₹48.", color: "coral" },
+  { y: 2010, m2: 8.8,  inr: 45.6,  title: "QE2 launched",            tag: "MORE PRINTING",  desc: "Fed buys $600B more bonds. Cheap dollars chase yield into India — a brief reprieve where the rupee actually strengthens.", color: "blue" },
+  { y: 2013, m2: 11.0, inr: 61.9,  title: "Taper tantrum",           tag: "RUPEE CRISIS",   desc: "The Fed merely HINTS it will slow printing — and the rupee crashes 20% in months. India's current-account deficit hits 4.8% of GDP; it's named one of the 'Fragile Five'.", color: "coral" },
+  { y: 2015, m2: 12.4, inr: 66.3,  title: "Strong dollar era",       tag: "DXY PEAK",       desc: "Fed ends QE and the dollar surges worldwide. Every emerging-market currency weakens together — the rupee grinds past ₹66.", color: "blue" },
+  { y: 2018, m2: 14.4, inr: 70.1,  title: "Trade war and QT",        tag: "PRESSURE",       desc: "Tariffs, tightening, and oil back at $80 — a triple squeeze on India's import bill. The rupee crosses ₹70 for the first time.", color: "amber" },
+  { y: 2020, m2: 19.1, inr: 74.1,  title: "COVID money printer",     tag: "UNPRECEDENTED",  desc: "Fed prints ~$4T in months — the largest expansion in history. Yet the rupee still falls: in a crisis the world hoards dollars, and India needs them most.", color: "coral" },
+  { y: 2022, m2: 21.9, inr: 82.8,  title: "Inflation breaks out",    tag: "PAYBACK TIME",   desc: "The printed money becomes 9% inflation. The Fed hikes 525bps, the dollar surges, and India's oil bill balloons after the Ukraine war. Rupee past ₹80.", color: "coral" },
+  { y: 2023, m2: 20.8, inr: 83.2,  title: "QT continues",            tag: "TIGHT MONEY",    desc: "US rates hit a 22-year high. Capital stays parked in dollar assets rather than Indian ones. The RBI burns reserves to keep the rupee from sliding faster.", color: "blue" },
+  { y: 2024, m2: 21.5, inr: 84.5,  title: "Soft landing hopes",      tag: "STEADY GRIND",   desc: "The Fed pauses and M2 starts growing again. No crisis — just a slow, relentless drift lower as India's trade gap keeps leaking dollars.", color: "amber" },
+  { y: 2025, m2: 22.4, inr: 88.4,  title: "Growth slowdown",         tag: "OUTFLOW SIGNS",  desc: "Foreign investors pull ~$15B out of Indian markets, converting rupees back to dollars on the way out. Each exit weakens the rupee — and scares the next one out. Past ₹88.", color: "amber" },
+  { y: 2026, m2: 22.7, inr: 95.96, title: "Iran–US conflict",        tag: "PERFECT STORM",  desc: "Every pressure fires at once: Brent at $105, foreign money fleeing, a globally strong dollar. The rupee hits ₹95.96 — Asia's weakest major currency.", color: "coral" }
 ];
 
 // ─── Comparison countries for the graph overlay ────────────────
