@@ -409,7 +409,7 @@ reelTrigger.observe(document.querySelector('.reel-card'));
 
 // ─── Smooth nav highlight ─────────────────────────────────────
 const navLinks = document.querySelectorAll('.nav-links a');
-const sections = ['#puzzle', '#timeline', '#printing', '#history', '#system', '#globe', '#forces', '#simulator', '#scenarios', '#currencies', '#solutions', '#impact', '#knowledge']
+const sections = ['#puzzle', '#timeline', '#printing', '#history', '#system', '#globe', '#forces', '#pillars', '#simulator', '#scenarios', '#currencies', '#solutions', '#impact', '#knowledge']
   .map(id => document.querySelector(id))
   .filter(Boolean);
 
@@ -1070,8 +1070,13 @@ const I18N = {
     'nav.scenarios': 'Scenarios',
     'nav.currencies': 'Currencies',
     'nav.globe': 'The Globe',
+    'nav.pillars': 'Pillars',
     'nav.solutions': 'The Way Out',
     'nav.impact': 'Impact',
+    'pillars.label': 'THE PILLARS OF INDIA',
+    'pillars.title': 'The forces pull the rupee down. These pillars hold it up.',
+    'pillars.lede': "A currency doesn't survive on printing restraint alone — it survives on dollars coming <em>in</em>. India earns them from real, diversified engines: code, refined fuel, the people abroad who send money home, and the world's medicine cabinet. This is why the rupee bends but doesn't break.",
+    'pillars.foot': 'Together these pillars earn well over <strong>$400 billion</strong> a year — the ballast under the rupee. The oil bill pulls one way; code, fuel, family and medicine pull the other. That tug-of-war is the whole story.',
     'nav.learn': 'Learn',
     'globe.label': 'THE SYSTEM ON THE PLANET',
     'globe.title': 'Spin the world. Follow the dollars and the oil.',

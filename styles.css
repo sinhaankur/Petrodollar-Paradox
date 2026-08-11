@@ -2263,6 +2263,23 @@ body {
   margin-bottom: 8px;
 }
 
+/* Pillars are INFLOWS — dollars coming in — so their tag reads in the site's
+   positive teal, the visual opposite of the coral "forces" (outflows). */
+.force-tag--in {
+  color: var(--teal-mid);
+}
+
+/* A closing line under a card grid — sums up what the cards add to. */
+.section-foot {
+  margin: 40px auto 0;
+  max-width: 760px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-2, #444);
+}
+.section-foot strong { color: var(--teal-mid); font-weight: 600; }
+
 .force-card h3 {
   font-family: var(--font-serif);
   font-weight: 400;
