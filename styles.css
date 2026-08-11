@@ -4121,6 +4121,19 @@ body {
   transform: translateX(0);
 }
 
+/* Always show the label for the section you're currently IN — so at a glance you
+   know where you are, not just where you're hovering. Hover still overrides with
+   its own full-strength pill. */
+.section-rail a.is-active .rail-label {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--coral-deep);
+  border-color: var(--coral-line, var(--coral-mid));
+}
+.section-rail a.is-active:not(:hover) .rail-label {
+  opacity: 0.9;
+}
+
 /* Hide the rail where it would crowd narrow screens */
 @media (max-width: 1180px) {
   .section-rail { display: none; }
