@@ -409,7 +409,7 @@ reelTrigger.observe(document.querySelector('.reel-card'));
 
 // ─── Smooth nav highlight ─────────────────────────────────────
 const navLinks = document.querySelectorAll('.nav-links a');
-const sections = ['#puzzle', '#timeline', '#printing', '#history', '#system', '#globe', '#forces', '#pillars', '#simulator', '#scenarios', '#currencies', '#solutions', '#impact', '#knowledge']
+const sections = ['#puzzle', '#timeline', '#printing', '#history', '#system', '#globe', '#forces', '#pillars', '#gaps', '#simulator', '#scenarios', '#currencies', '#solutions', '#impact', '#knowledge']
   .map(id => document.querySelector(id))
   .filter(Boolean);
 
@@ -417,7 +417,8 @@ const sections = ['#puzzle', '#timeline', '#printing', '#history', '#system', '#
 const RAIL_LABELS = {
   puzzle: 'The puzzle', timeline: 'Timeline', printing: 'How printing works',
   history: 'History of money', system: 'The system', globe: 'The globe',
-  forces: 'Four forces', simulator: 'Simulator', currencies: 'Currencies',
+  forces: 'Four forces', pillars: 'Pillars of India', gaps: 'Where India lags',
+  simulator: 'Simulator', currencies: 'Currencies',
   solutions: 'The way out', impact: 'Impact', knowledge: 'Learn'
 };
 const railEl = document.getElementById('sectionRail');
@@ -1077,6 +1078,11 @@ const I18N = {
     'pillars.title': 'The forces pull the rupee down. These pillars hold it up.',
     'pillars.lede': "A currency doesn't survive on printing restraint alone — it survives on dollars coming <em>in</em>. India earns them from real, diversified engines: code, refined fuel, the people abroad who send money home, and the world's medicine cabinet. This is why the rupee bends but doesn't break.",
     'pillars.foot': 'Together these pillars earn well over <strong>$400 billion</strong> a year — the ballast under the rupee. The oil bill pulls one way; code, fuel, family and medicine pull the other. That tug-of-war is the whole story.',
+    'nav.gaps': 'The Gaps',
+    'gaps.label': 'WHERE INDIA IS LACKING',
+    'gaps.title': 'The pillars are real. So are the cracks.',
+    'gaps.lede': "A currency reflects an economy's honest weaknesses as much as its strengths. India's are structural — a factory floor that never scaled, a governance tax that leaks value, incomes that stayed low for most, and a reliance on foreign money that can leave overnight. None of these are fatal. All of them show up in the rupee.",
+    'gaps.foot': "These aren't reasons to write India off — it's still one of the fastest-growing large economies on Earth. They're the honest reasons the rupee stays under pressure even in good years: <strong>fix the cracks and the pillars carry further.</strong>",
     'nav.learn': 'Learn',
     'globe.label': 'THE SYSTEM ON THE PLANET',
     'globe.title': 'Spin the world. Follow the dollars and the oil.',

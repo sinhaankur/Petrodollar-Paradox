@@ -2269,6 +2269,12 @@ body {
   color: var(--teal-mid);
 }
 
+/* Gaps are structural WEAKNESSES — an amber caution tone, distinct from both
+   the coral outflow-forces and the teal inflow-pillars. */
+.force-tag--gap {
+  color: var(--amber-mid);
+}
+
 /* A closing line under a card grid — sums up what the cards add to. */
 .section-foot {
   margin: 40px auto 0;
